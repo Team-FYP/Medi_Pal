@@ -11,4 +11,16 @@
     <string name="doctor_selector_txt">I am a Doctor</string>
     <string name="doctor_icon_txt">Doctor Icon</string>
     <string name="patient_icon_txt">Patient Icon</string>
+    <string name="name_txt">Name</string>
+    <string name="nic_txt">NIC</string>
+    <string name="birthday_txt">Birthday</string>
+    <string name="mobile_txt">Mobile</string>
+    <string name="emergency_contact_txt">Emergency Contact</string>
+    <string name="re_enter_password_txt">Re-Enter Password</string>
+    <string name="gender_txt">Gender</string>
+    <string name="male_txt">Male</string>
+    <string name="female_txt">Female</string>
+    <string name="add_profile_image_icon_txt">add_profile_image_icon</string>
+    <string name="sign_up_txt">Sign Up</string>
+    <string name="register_header_txt">We would like to know about you...</string>
 </resources>

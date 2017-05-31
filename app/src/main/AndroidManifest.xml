@@ -4,6 +4,7 @@
     package="lk.ac.mrt.cse.medipal">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +25,10 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".view.doctor.DoctorMainActivity" />
         <activity android:name=".view.patient.PatientMainActivity" />
-        <activity android:name=".view.UserTypeSelectionActivity"></activity>
+        <activity android:name=".view.UserTypeSelectionActivity" />
+        <activity android:name=".view.doctor.DoctorRegisterActivity" />
+        <activity android:name=".view.patient.PatientRegisterActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

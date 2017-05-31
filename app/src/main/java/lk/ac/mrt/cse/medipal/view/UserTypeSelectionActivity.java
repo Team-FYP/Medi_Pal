@@ -1,8 +1,10 @@
 package lk.ac.mrt.cse.medipal.view;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -12,6 +14,7 @@ import com.willowtreeapps.spruce.sort.CorneredSort;
 import com.willowtreeapps.spruce.sort.LinearSort;
 
 import lk.ac.mrt.cse.medipal.R;
+import lk.ac.mrt.cse.medipal.view.patient.PatientRegisterActivity;
 
 public class UserTypeSelectionActivity extends AppCompatActivity {
     LinearLayout layout_user_selector_container;
@@ -25,6 +28,13 @@ public class UserTypeSelectionActivity extends AppCompatActivity {
         layout_user_selector_container = (LinearLayout) findViewById(R.id.activity_user_type_selection);
         layout_doctor_selector_container = (LinearLayout) findViewById(R.id.layout_doctor_selector);
         layout_patient_selector_container = (LinearLayout) findViewById(R.id.layout_patient_selector);
+        layout_patient_selector_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserTypeSelectionActivity.this, PatientRegisterActivity.class);
+                startActivity(intent);
+            }
+        });
         animate_ui();
     }
     private void animate_ui(){

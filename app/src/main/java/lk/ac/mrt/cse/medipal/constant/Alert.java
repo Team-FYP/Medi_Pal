@@ -8,5 +8,6 @@ public class Alert {
     public static final String NO_MOBILE_NETWORK_ALERT = "Please turn on wifi or mobile data";
     public static final String CANCEL_BTN_TXT = "Cancel";
     public static final String GRANT_PERMISSION_TXT = "You need to provide permisson to access Internet to continue.";
+    public static final String PERMISSION_NOT_GRANTED_TXT = "Permission Not Granted";
     public static final String OK_BTN_TXT = "OK";
 }
