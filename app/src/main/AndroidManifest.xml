@@ -19,10 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.LoginActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".view.LoginActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".view.doctor.DoctorMainActivity" />
-        <activity android:name=".view.patient.PatientMainActivity"></activity>
+        <activity android:name=".view.patient.PatientMainActivity" />
+        <activity android:name=".view.UserTypeSelectionActivity"></activity>
     </application>
 
 </manifest>

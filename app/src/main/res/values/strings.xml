@@ -7,4 +7,8 @@
     <string name="forgot_password"><u>Forgot Password?</u></string>
     <string name="not_yet_registered_txt">Not yet registered?</string>
     <string name="create_account_txt"><u>Create Account</u></string>
+    <string name="patient_selector_txt">I am a Patient</string>
+    <string name="doctor_selector_txt">I am a Doctor</string>
+    <string name="doctor_icon_txt">Doctor Icon</string>
+    <string name="patient_icon_txt">Patient Icon</string>
 </resources>

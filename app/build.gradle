@@ -31,5 +31,5 @@ dependencies {
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
     compile 'io.supercharge:shimmerlayout:0.3.0'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
-
+    compile 'com.willowtreeapps.spruce:spruce-android:1.0.1'
 }
