@@ -14,6 +14,7 @@ import com.willowtreeapps.spruce.sort.CorneredSort;
 import com.willowtreeapps.spruce.sort.LinearSort;
 
 import lk.ac.mrt.cse.medipal.R;
+import lk.ac.mrt.cse.medipal.view.doctor.DoctorRegisterActivity;
 import lk.ac.mrt.cse.medipal.view.patient.PatientRegisterActivity;
 
 public class UserTypeSelectionActivity extends AppCompatActivity {
@@ -32,6 +33,13 @@ public class UserTypeSelectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UserTypeSelectionActivity.this, PatientRegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+        layout_doctor_selector_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserTypeSelectionActivity.this, DoctorRegisterActivity.class);
                 startActivity(intent);
             }
         });

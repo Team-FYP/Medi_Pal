@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    card_view:cardBackgroundColor="#ffffff"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="4dp"
+    card_view:cardMaxElevation="6dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/icon_patient"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/icon_user_male"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+
+            />
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/icon_patient"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/patient_name_txt"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/txt_nic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@id/icon_patient"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="934578457v"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/txt_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_nic"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/icon_patient"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="077xxxxxxx"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14dp" />
+
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/colorAccent"-->
+        <!--android:layout_toEndOf="@id/contact_icon"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_toRightOf="@id/contact_icon"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:layout_marginRight="10dp" />-->
+
+
+        <!--<ImageButton-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:id="@+id/addfriendbtn"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:src="@drawable/addfriendbtn"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--android:adjustViewBounds="true"/>-->
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

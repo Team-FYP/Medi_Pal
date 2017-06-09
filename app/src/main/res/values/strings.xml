@@ -23,4 +23,12 @@
     <string name="add_profile_image_icon_txt">add_profile_image_icon</string>
     <string name="sign_up_txt">Sign Up</string>
     <string name="register_header_txt">We would like to know about you...</string>
+    <string name="registration_id_txt">Registration ID</string>
+    <string name="speciality_txt">Speciality</string>
+    <string name="account_txt">Account</string>
+    <string name="settings_txt">Settings</string>
+    <string name="drawer_open">drawer open</string>
+    <string name="drawer_close">drawer close</string>
+    <string name="doctor_name_txt">Doctor Name</string>
+    <string name="patient_name_txt">Patient Name</string>
 </resources>
