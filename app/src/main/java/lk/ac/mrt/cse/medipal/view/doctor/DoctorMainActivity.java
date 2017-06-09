@@ -2,8 +2,11 @@ package lk.ac.mrt.cse.medipal.view.doctor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,7 +29,12 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.adaptor.PatientRecyclerAdaptor;
+import lk.ac.mrt.cse.medipal.model.Notification;
 import lk.ac.mrt.cse.medipal.model.Patient;
+import zemin.notification.NotificationBoard;
+import zemin.notification.NotificationBuilder;
+import zemin.notification.NotificationDelegater;
+import zemin.notification.NotificationGlobal;
 
 public class DoctorMainActivity extends AppCompatActivity {
     private Activity activity;
@@ -41,15 +50,20 @@ public class DoctorMainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private TextView txt_doctor_name;
     private TextView txt_reg_id;
+    private ImageView btn_notfication;
     private ArrayList<Patient> searchPatientList;
     private PatientRecyclerAdaptor patientRecyclerAdaptor;
     private ArrayList<Patient> patientList;
     private int previousLength = 0;
-
+    int notificationCount = 0;
+    private Handler notificationHandler;
+    private NotificationBoard notificationBoard;
+    Runnable notificationSender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NotificationDelegater.initialize(this, NotificationDelegater.GLOBAL);
         setContentView(R.layout.activity_doctor_main);
         context = this;
         activity = this;
@@ -57,6 +71,52 @@ public class DoctorMainActivity extends AppCompatActivity {
         configureDrawer();
         configureRecyclerView();
         configureSearchText();
+        configureNotifictation();
+    }
+
+    private void configureNotifictation() {
+        NotificationGlobal global = NotificationDelegater.getInstance().global();
+        global.setViewEnabled(true);
+        global.setBoardEnabled(true);
+        notificationHandler = new Handler();
+        notificationSender = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (notificationCount < patientList.size()){
+                        NotificationBuilder.V1 builder = NotificationBuilder.global()
+                                .setIconDrawable(ResourcesCompat.getDrawable(getResources(), patientList.get(notificationCount).getImage(), null))
+                                .setTitle(patientList.get(notificationCount).getName())
+                                .setText("Shared his medical history with you.");
+
+                        NotificationDelegater delegater = NotificationDelegater.getInstance();
+                        delegater.send(builder.getNotification());
+                        notificationCount++;
+                    } else {
+                        notificationHandler.removeCallbacks(notificationSender);
+                    }
+                } finally {
+                    notificationHandler.postDelayed(notificationSender, 7000);
+                }
+            }
+        };
+        notificationSender.run();
+    }
+
+    private void sendNotification(final Notification notification) {
+        notificationHandler = new Handler();
+        notificationHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                NotificationBuilder.V1 builder = NotificationBuilder.global()
+                        .setIconDrawable(ResourcesCompat.getDrawable(getResources(), notification.getPatient().getImage(), null))
+                        .setTitle(notification.getPatient().getName())
+                        .setText(notification.getMessage());
+
+                NotificationDelegater delegater = NotificationDelegater.getInstance();
+                delegater.send(builder.getNotification());
+            }
+        }, 7000);
     }
 
     private void configureUI(){
@@ -75,12 +135,26 @@ public class DoctorMainActivity extends AppCompatActivity {
                         txt_search.setCompoundDrawables(img, null, null, null);
                     }
                 });
-    }
-
-    public void configureDrawer(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        notificationBoard = (NotificationBoard) findViewById(R.id.board);
+        btn_notfication = (ImageView) findViewById(R.id.btn_notfication);
+        btn_notfication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (notificationBoard.isOpened()){
+                    notificationBoard.close();
+                }else {
+                    notificationBoard.open(true);
+                }
+            }
+        });
+    }
+
+    public void configureDrawer(){
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigation_view_docotor_main);
         headerView = navigationView.inflateHeaderView(R.layout.header_drawer);
