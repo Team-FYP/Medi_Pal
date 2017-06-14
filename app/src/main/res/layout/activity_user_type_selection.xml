@@ -36,6 +36,7 @@
             android:textSize="40sp"
             android:textStyle="bold"
             android:gravity="top"
+            android:textColor="@color/white"
             />
 
     </LinearLayout>
@@ -64,6 +65,7 @@
             android:textSize="40sp"
             android:textStyle="bold"
             android:gravity="top"
+            android:textColor="@color/white"
             />
 
     </LinearLayout>

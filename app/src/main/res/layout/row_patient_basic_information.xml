@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/basic_info_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/cardMarginVertical"
+        android:layout_marginLeft="@dimen/cardMarginHorizontal"
+        android:layout_marginRight="@dimen/cardMarginHorizontal"
+        android:layout_marginTop="@dimen/cardMarginVertical"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="false"
+        app:contentPadding="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:id="@+id/title_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Basic Information"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginStart="6dp"/>
+            <RelativeLayout
+                android:layout_below="@id/title_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_basic_info_relative">
+
+                <GridLayout
+                    android:id="@+id/layout_grid_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/image_add_picture"
+                    android:layout_centerInParent="true"
+                    android:columnCount="2"
+                    android:rowCount="5">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/icon_nic"
+                        android:tint="@color/met_baseColor"/>
+
+                    <TextView
+                        android:id="@+id/input_nic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center_vertical"
+                        android:hint="@string/nic_txt" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/icon_name"
+                        android:tint="@color/met_baseColor"/>
+
+                    <TextView
+                        android:id="@+id/input_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center_vertical"
+                        android:hint="@string/name_txt" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/icon_gender"
+                        android:tint="@color/met_baseColor"/>
+
+                    <TextView
+                        android:id="@+id/input_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center_vertical"
+                        android:hint="@string/gender_txt" />
+
+                </GridLayout>
+            </RelativeLayout>
+
+            <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                android:id="@+id/expandablelayout_basic_info_relative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_basic_info_relative"
+                app:ael_expanded="false"
+                app:ael_duration="1000"
+                android:layout_marginStart="30dp"
+                app:ael_interpolator="bounce"
+                app:ael_orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <GridLayout
+                        android:id="@+id/layout_grid_input2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/image_add_picture"
+                        android:layout_centerInParent="true"
+                        android:columnCount="2"
+                        android:rowCount="5">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/icon_birthday"
+                            android:tint="@color/met_baseColor"/>
+
+                        <TextView
+                            android:id="@+id/input_birthday"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:gravity="start|center_vertical"
+                            android:hint="@string/birthday_txt" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/icon_email"
+                            android:tint="@color/met_baseColor"/>
+
+                        <TextView
+                            android:id="@+id/input_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:gravity="start|center_vertical"
+                            android:hint="@string/email_txt" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/icon_mobile"
+                            android:tint="@color/met_baseColor"/>
+
+                        <TextView
+                            android:id="@+id/input_mobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:gravity="start|center_vertical"
+                            android:hint="@string/mobile_txt" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/icon_emergency"
+                            android:tint="@color/met_baseColor"/>
+
+                        <TextView
+                            android:id="@+id/input_emergency_contact"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:gravity="start|center_vertical"
+                            android:hint="@string/emergency_contact_txt" />
+                    </GridLayout>
+                </RelativeLayout>
+            </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+            <Button
+                android:id="@+id/btn_view_more"
+                android:layout_below="@id/expandablelayout_basic_info_relative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="@string/view_more"
+                android:textColor="@color/blue_btn_bg_pressed_color"
+                android:textAllCaps="false"
+                android:background="@android:color/transparent"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</FrameLayout>

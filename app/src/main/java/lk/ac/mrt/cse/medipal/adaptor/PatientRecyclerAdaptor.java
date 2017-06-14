@@ -2,6 +2,7 @@ package lk.ac.mrt.cse.medipal.adaptor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.model.Patient;
+import lk.ac.mrt.cse.medipal.view.doctor.PatientInfoActivity;
 
 /**
  * Created by Lakshan on 2017-01-07.
@@ -72,6 +75,9 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
 
         @Override
         public void onClick(View view) {
+            Intent intent = new Intent(context, PatientInfoActivity.class);
+            intent.putExtra("patient_id", getAdapterPosition());
+            context.startActivity(intent);
         }
     }
 }

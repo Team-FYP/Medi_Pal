@@ -16,20 +16,25 @@
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".view.LoginActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".view.doctor.DoctorMainActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".view.doctor.DoctorMainActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".view.patient.PatientMainActivity" />
         <activity android:name=".view.UserTypeSelectionActivity" />
-        <activity android:name=".view.doctor.DoctorRegisterActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".view.patient.PatientRegisterActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".view.doctor.DoctorRegisterActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".view.patient.PatientRegisterActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".view.doctor.PatientInfoActivity"></activity>
     </application>
 
 </manifest>

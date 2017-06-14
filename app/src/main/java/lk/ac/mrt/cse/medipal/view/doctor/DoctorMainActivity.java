@@ -2,7 +2,6 @@ package lk.ac.mrt.cse.medipal.view.doctor;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -23,7 +22,6 @@ import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -53,7 +51,7 @@ public class DoctorMainActivity extends AppCompatActivity {
     private ImageView btn_notfication;
     private ArrayList<Patient> searchPatientList;
     private PatientRecyclerAdaptor patientRecyclerAdaptor;
-    private ArrayList<Patient> patientList;
+    public static ArrayList<Patient> patientList;
     private int previousLength = 0;
     int notificationCount = 0;
     private Handler notificationHandler;
