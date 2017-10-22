@@ -2,12 +2,17 @@ package lk.ac.mrt.cse.medipal.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Base64;
+
+import lk.ac.mrt.cse.medipal.model.Patient;
 
 /**
  * Created by chand on 2017-06-14.
@@ -42,5 +47,17 @@ public class VectorDrawableUtil {
         drawable.draw(canvas);
 
         return bitmap;
+    }
+
+    public static Bitmap getBitmapfromString(String image) {
+        byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return decodedByte;
+    }
+
+    public static Drawable getDrawablefromString(String image, Context context) {
+        Bitmap decodedByte = getBitmapfromString(image);
+        Drawable d = new BitmapDrawable(context.getResources(), decodedByte);
+        return d;
     }
 }

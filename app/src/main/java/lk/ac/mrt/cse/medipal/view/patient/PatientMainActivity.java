@@ -115,7 +115,7 @@ public class PatientMainActivity extends AppCompatActivity {
 //                        return HeaderDesign.fromColorResAndUrl(
 //                                R.color.red,
 //                                "http://api.androidhive.info/images/nav-menu-header-bg.jpg");
-                        return HeaderDesign.fromColorResAndDrawable(R.color.blue, getResources().getDrawable( patient.getImage(), getTheme() ));
+                        return HeaderDesign.fromColorResAndDrawable(R.color.blue, getResources().getDrawable(patient.getImage(), getTheme() ));
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,

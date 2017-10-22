@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.view.doctor.DoctorMainActivity;
+import lk.ac.mrt.cse.medipal.view.patient.PatientMainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     RelativeLayout layout_login_container;

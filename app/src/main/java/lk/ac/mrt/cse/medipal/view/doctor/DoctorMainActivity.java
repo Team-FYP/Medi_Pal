@@ -29,10 +29,12 @@ import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.adaptor.PatientRecyclerAdaptor;
 import lk.ac.mrt.cse.medipal.model.Notification;
 import lk.ac.mrt.cse.medipal.model.Patient;
+import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 import zemin.notification.NotificationBoard;
 import zemin.notification.NotificationBuilder;
 import zemin.notification.NotificationDelegater;
 import zemin.notification.NotificationGlobal;
+
 
 public class DoctorMainActivity extends AppCompatActivity {
     private Activity activity;
@@ -77,13 +79,15 @@ public class DoctorMainActivity extends AppCompatActivity {
         global.setViewEnabled(true);
         global.setBoardEnabled(true);
         notificationHandler = new Handler();
+//        patientList.get(notificationCount).getImage()
         notificationSender = new Runnable() {
             @Override
             public void run() {
                 try {
                     if (notificationCount < patientList.size()){
+
                         NotificationBuilder.V1 builder = NotificationBuilder.global()
-                                .setIconDrawable(ResourcesCompat.getDrawable(getResources(), patientList.get(notificationCount).getImage(), null))
+                                .setIconDrawable(VectorDrawableUtil.getDrawablefromString(patientList.get(notificationCount).getImage(), context))
                                 .setTitle(patientList.get(notificationCount).getName())
                                 .setText("Shared his medical history with you.");
 
@@ -107,7 +111,7 @@ public class DoctorMainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 NotificationBuilder.V1 builder = NotificationBuilder.global()
-                        .setIconDrawable(ResourcesCompat.getDrawable(getResources(), notification.getPatient().getImage(), null))
+                        .setIconDrawable(VectorDrawableUtil.getDrawablefromString(notification.getPatient().getImage(), context))
                         .setTitle(notification.getPatient().getName())
                         .setText(notification.getMessage());
 
@@ -201,21 +205,21 @@ public class DoctorMainActivity extends AppCompatActivity {
     private void loadRecyclerData(){
         patientList = new ArrayList<>();
 
-        Patient lakshan = new Patient("933030270v","Lakshan Gamage","Male","lakshan@gmail.com","1993-10-29","0773472649","0914931530");
-        Patient shalith = new Patient("923245232v","Shalith Fernando","Male","shalith@gmail.com","1992-05-28","0775543456","0114569857");
-        Patient yasiru = new Patient("922134234v","Yasiru Nilan","Male","shalith@gmail.com","1992-04-22","0712345784","0413254785");
-        Patient darika = new Patient("922124544v","Darika Sellahewa","Female","darika@gmail.com","1992-03-22","0715698748","0412254765");
-        Patient dineth = new Patient("934578451v","Dineth Egodage","Male","dinneth@gmail.com","1993-08-28","0719875485","0412254765");
-        Patient heshan = new Patient("924578457v","Heshan Fernando","Male","hfernando@gmail.com","1992-08-18","0712542015","0112254765");
-        Patient manesh = new Patient("934578451v","Manesh Jayawardene","Male","maneshj@gmail.com","1993-05-18","0715553345","0612254765");
+        Patient lakshan = new Patient("933030270v","Lakshan Gamage","Male","lakshan@gmail.com","1993-10-29","0773472649","0914931530", "1111", "");
+        Patient shalith = new Patient("923245232v","Shalith Fernando","Male","shalith@gmail.com","1992-05-28","0775543456","0114569857", "1111", "");
+        Patient yasiru = new Patient("922134234v","Yasiru Nilan","Male","shalith@gmail.com","1992-04-22","0712345784","0413254785", "1111", "");
+        Patient darika = new Patient("922124544v","Darika Sellahewa","Female","darika@gmail.com","1992-03-22","0715698748","0412254765", "1111", "");
+        Patient dineth = new Patient("934578451v","Dineth Egodage","Male","dinneth@gmail.com","1993-08-28","0719875485","0412254765", "1111", "");
+        Patient heshan = new Patient("924578457v","Heshan Fernando","Male","hfernando@gmail.com","1992-08-18","0712542015","0112254765", "1111", "");
+        Patient manesh = new Patient("934578451v","Manesh Jayawardene","Male","maneshj@gmail.com","1993-05-18","0715553345","0612254765", "1111", "");
 
-        lakshan.setImage(R.drawable.profile_lakshan);
-        shalith.setImage(R.drawable.profile_shalith);
-        yasiru.setImage(R.drawable.profile_yasiru);
-        darika.setImage(R.drawable.profile_darika);
-        dineth.setImage(R.drawable.profile_dineth);
-        heshan.setImage(R.drawable.profile_heshan);
-        manesh.setImage(R.drawable.profile_manesh);
+//        lakshan.setImage(R.drawable.profile_lakshan);
+//        shalith.setImage(R.drawable.profile_shalith);
+//        yasiru.setImage(R.drawable.profile_yasiru);
+//        darika.setImage(R.drawable.profile_darika);
+//        dineth.setImage(R.drawable.profile_dineth);
+//        heshan.setImage(R.drawable.profile_heshan);
+//        manesh.setImage(R.drawable.profile_manesh);
 
         patientList.add(lakshan);
         patientList.add(shalith);

@@ -12,12 +12,13 @@ public class Patient {
     private String birthday;
     private String mobile;
     private String emergency_contact;
-    private int image;
+    private String password;
+    private String image;
 
     public Patient() {
     }
 
-    public Patient(String nic, String name, String gender, String email, String birthday, String mobile, String emergency_contact) {
+    public Patient(String nic, String name, String gender, String email, String birthday, String mobile, String emergency_contact, String password, String image) {
         this.nic = nic;
         this.name = name;
         this.gender = gender;
@@ -25,6 +26,8 @@ public class Patient {
         this.birthday = birthday;
         this.mobile = mobile;
         this.emergency_contact = emergency_contact;
+        this.password = password;
+        this.image = image;
     }
 
     public String getNic() {
@@ -83,11 +86,17 @@ public class Patient {
         this.emergency_contact = emergency_contact;
     }
 
-    public int getImage() {
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

@@ -3,7 +3,10 @@ package lk.ac.mrt.cse.medipal.adaptor;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import java.util.StringTokenizer;
 import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.model.Patient;
+import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 import lk.ac.mrt.cse.medipal.view.doctor.PatientInfoActivity;
 
 /**
@@ -44,7 +48,8 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
         holder.txt_name.setText(patient.getName());
         holder.txt_nic.setText(patient.getNic());
         holder.txt_mobile.setText(patient.getMobile());
-        holder.contact_icon.setImageResource(patient.getImage());
+        Bitmap decodedByte = VectorDrawableUtil.getBitmapfromString(patient.getImage());
+        holder.contact_icon.setImageBitmap(decodedByte);
     }
     @Override
     public int getItemCount() {

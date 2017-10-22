@@ -37,6 +37,7 @@ import java.util.Calendar;
 import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Alert;
+import lk.ac.mrt.cse.medipal.util.ConvertImageUtil;
 
 public class PatientRegisterActivity extends AppCompatActivity {
     private static final int MEDIA_REQUEST_ACTIVITY_CODE = 111;
@@ -58,6 +59,8 @@ public class PatientRegisterActivity extends AppCompatActivity {
     private RadioButton radio_female;
     private Button btn_sign_up;
     private String profileimage;
+
+    private String picturePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +122,14 @@ public class PatientRegisterActivity extends AppCompatActivity {
                 }
             }
         });
+
+//        btn_sign_up = (Button) findViewById(R.id.btn_sign_up);
+//        btn_sign_up.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                uploadImage(v);
+//            }
+//        });
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -197,5 +208,20 @@ public class PatientRegisterActivity extends AppCompatActivity {
                 .sortWith(new LinearSort(80, false, LinearSort.Direction.TOP_TO_BOTTOM))
                 .animateWith(animators)
                 .start();
+    }
+
+    // When Upload button is clicked
+    public void uploadImage(View v) {
+        // When Image is selected from Gallery
+        if (picturePath != null && !picturePath.isEmpty()) {
+            // Convert image to String using Base64
+            ConvertImageUtil.encodeImagetoString();
+            // When Image is not selected from Gallery
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "You must select image from gallery before you try to upload",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }
