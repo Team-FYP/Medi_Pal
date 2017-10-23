@@ -1,5 +1,6 @@
 package lk.ac.mrt.cse.medipal.view.patient;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
+import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 import lk.ac.mrt.cse.medipal.view.doctor.DoctorMainActivity;
 import lk.ac.mrt.cse.medipal.view.doctor.PatientInformationFragment;
 import lk.ac.mrt.cse.medipal.view.doctor.PrescriptionRecyclerFragment;
@@ -31,11 +33,13 @@ public class PatientMainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private ArrayList<Prescription> prescriptionList;
     private Patient patient;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_main);
+        context = this;
         loadRecyclerData();
         patient = patientList.get(0);
         configureMaterialViewPager();
@@ -115,7 +119,7 @@ public class PatientMainActivity extends AppCompatActivity {
 //                        return HeaderDesign.fromColorResAndUrl(
 //                                R.color.red,
 //                                "http://api.androidhive.info/images/nav-menu-header-bg.jpg");
-                        return HeaderDesign.fromColorResAndDrawable(R.color.blue, getResources().getDrawable(patient.getImage(), getTheme() ));
+                        return HeaderDesign.fromColorResAndDrawable(R.color.blue, VectorDrawableUtil.getDrawablefromString(patient.getImage(), context ));
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,
@@ -133,9 +137,9 @@ public class PatientMainActivity extends AppCompatActivity {
     private void loadRecyclerData(){
         patientList = new ArrayList<>();
 
-        Patient yasiru = new Patient("922134234v","Yasiru Nilan","Male","shalith@gmail.com","1992-04-22","0712345784","0413254785");
+        Patient yasiru = new Patient("922134234v","Yasiru Nilan","Male","shalith@gmail.com","1992-04-22","0712345784","0413254785","shasdssadas","sdadses");
 
-        yasiru.setImage(R.drawable.profile_yasiru);
+        yasiru.setImage(VectorDrawableUtil.getBase64fromReource(R.drawable.profile_yasiru, context));
 
         patientList.add(yasiru);
     }

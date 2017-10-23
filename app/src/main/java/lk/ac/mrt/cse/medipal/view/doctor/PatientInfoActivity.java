@@ -1,5 +1,6 @@
 package lk.ac.mrt.cse.medipal.view.doctor;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
+import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 
 public class PatientInfoActivity extends AppCompatActivity {
     private static final int TAB_COUNT = 2;
@@ -24,11 +26,12 @@ public class PatientInfoActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private ArrayList<Prescription> prescriptionList;
     private Patient patient;
-
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_info);
+        context = this;
         patient = DoctorMainActivity.patientList.get(getIntent().getExtras().getInt("patient_id"));
         configureMaterialViewPager();
         configureToolbar();
@@ -107,7 +110,7 @@ public class PatientInfoActivity extends AppCompatActivity {
 //                        return HeaderDesign.fromColorResAndUrl(
 //                                R.color.red,
 //                                "http://api.androidhive.info/images/nav-menu-header-bg.jpg");
-                        return HeaderDesign.fromColorResAndDrawable(R.color.blue, getResources().getDrawable( patient.getImage(), getTheme() ));
+                        return HeaderDesign.fromColorResAndDrawable(R.color.blue, VectorDrawableUtil.getDrawablefromString(patient.getImage(), context));
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,

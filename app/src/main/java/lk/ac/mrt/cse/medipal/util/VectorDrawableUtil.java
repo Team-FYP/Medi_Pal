@@ -12,6 +12,8 @@ import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 
+import java.io.ByteArrayOutputStream;
+
 import lk.ac.mrt.cse.medipal.model.Patient;
 
 /**
@@ -59,5 +61,22 @@ public class VectorDrawableUtil {
         Bitmap decodedByte = getBitmapfromString(image);
         Drawable d = new BitmapDrawable(context.getResources(), decodedByte);
         return d;
+    }
+
+    public static String getBase64fromBitmap(Bitmap bitmap, Context context) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return encoded;
+    }
+
+    public static Bitmap getBitmapfromResource(int resource, Context context) {
+        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource);
+        return bm;
+    }
+
+    public static String getBase64fromReource(int resource, Context context){
+        return getBase64fromBitmap(getBitmapfromResource(resource,context),context);
     }
 }

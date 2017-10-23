@@ -213,13 +213,13 @@ public class DoctorMainActivity extends AppCompatActivity {
         Patient heshan = new Patient("924578457v","Heshan Fernando","Male","hfernando@gmail.com","1992-08-18","0712542015","0112254765", "1111", "");
         Patient manesh = new Patient("934578451v","Manesh Jayawardene","Male","maneshj@gmail.com","1993-05-18","0715553345","0612254765", "1111", "");
 
-//        lakshan.setImage(R.drawable.profile_lakshan);
-//        shalith.setImage(R.drawable.profile_shalith);
-//        yasiru.setImage(R.drawable.profile_yasiru);
-//        darika.setImage(R.drawable.profile_darika);
-//        dineth.setImage(R.drawable.profile_dineth);
-//        heshan.setImage(R.drawable.profile_heshan);
-//        manesh.setImage(R.drawable.profile_manesh);
+        lakshan.setImage(VectorDrawableUtil.getBase64fromReource(R.drawable.profile_lakshan, context));
+        shalith.setImage(VectorDrawableUtil.getBase64fromReource(R.drawable.profile_shalith, context));
+        yasiru.setImage(VectorDrawableUtil.getBase64fromReource(R.drawable.profile_yasiru, context));
+        darika.setImage(VectorDrawableUtil.getBase64fromReource(R.drawable.profile_darika, context));
+        dineth.setImage(VectorDrawableUtil.getBase64fromReource(R.drawable.profile_dineth, context));
+        heshan.setImage(VectorDrawableUtil.getBase64fromReource(R.drawable.profile_heshan, context));
+        manesh.setImage(VectorDrawableUtil.getBase64fromReource(R.drawable.profile_manesh, context));
 
         patientList.add(lakshan);
         patientList.add(shalith);
