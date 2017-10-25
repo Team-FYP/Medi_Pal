@@ -46,4 +46,5 @@ dependencies {
     compile 'com.facebook.fresco:fresco:1.5.0'
     //Async-Http
     compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.3.1'
 }

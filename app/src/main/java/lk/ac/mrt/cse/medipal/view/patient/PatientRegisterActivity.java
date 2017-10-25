@@ -26,11 +26,14 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.theartofdev.edmodo.cropper.CropImage;
 import com.willowtreeapps.spruce.Spruce;
 import com.willowtreeapps.spruce.animation.DefaultAnimations;
 import com.willowtreeapps.spruce.sort.LinearSort;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -138,22 +141,41 @@ public class PatientRegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MEDIA_REQUEST_ACTIVITY_CODE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            CropImage.activity(selectedImage).setAspectRatio(1,1)
+                    .start(this);
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+//                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//
+//                Cursor cursor = getContentResolver().query(resultUri,
+//                        filePathColumn, null, null, null);
+//                assert cursor != null;
+//                cursor.moveToFirst();
+//
+//                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                String picturePath = cursor.getString(columnIndex);
+//                cursor.close();
+                InputStream image_stream = null;
+                try {
+                    image_stream = getContentResolver().openInputStream(resultUri);
+                    Bitmap imagemap= BitmapFactory.decodeStream(image_stream );
+                    //Bitmap imagemap = BitmapFactory.decodeFile(picturePath);
+                    //imagemap = Bitmap.createScaledBitmap(imagemap,imagemap.getWidth(),imagemap.getHeight(),false);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    imagemap.compress(Bitmap.CompressFormat.JPEG, 40, stream); //compress to which format you want.
+                    byte[] byte_arr = stream.toByteArray();
+                    profileimage = Base64.encodeToString(byte_arr,Base64.DEFAULT);
+                    image_add_picture.setBackgroundResource(0);
+                    image_add_picture.setImageBitmap(imagemap);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            Bitmap imagemap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picturePath),300,300,false);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            imagemap.compress(Bitmap.CompressFormat.JPEG, 40, stream); //compress to which format you want.
-            byte[] byte_arr = stream.toByteArray();
-            profileimage = Base64.encodeToString(byte_arr,Base64.DEFAULT);
-            image_add_picture.setBackgroundResource(0);
-            image_add_picture.setImageBitmap(imagemap);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
         }
     }
 
