@@ -4,14 +4,15 @@ import android.Manifest;
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.rengwuxian.materialedittext.validation.METValidator;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.willowtreeapps.spruce.Spruce;
 import com.willowtreeapps.spruce.animation.DefaultAnimations;
@@ -40,7 +42,15 @@ import java.util.Calendar;
 import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Alert;
-import lk.ac.mrt.cse.medipal.util.ConvertImageUtil;
+import lk.ac.mrt.cse.medipal.controller.DoctorController;
+import lk.ac.mrt.cse.medipal.controller.PatientController;
+import lk.ac.mrt.cse.medipal.model.Doctor;
+import lk.ac.mrt.cse.medipal.model.Patient;
+import lk.ac.mrt.cse.medipal.model.network.LoginResponse;
+import lk.ac.mrt.cse.medipal.util.Validator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PatientRegisterActivity extends AppCompatActivity {
     private static final int MEDIA_REQUEST_ACTIVITY_CODE = 111;
@@ -62,8 +72,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
     private RadioButton radio_female;
     private Button btn_sign_up;
     private String profileimage;
-
-    private String picturePath;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +97,15 @@ public class PatientRegisterActivity extends AppCompatActivity {
         layout_radio_gender = (RadioGroup) findViewById(R.id.layout_radio_gender);
         radio_male = (RadioButton) findViewById(R.id.radio_male);
         radio_female = (RadioButton) findViewById(R.id.radio_female);
-
-
         input_gender.setKeyListener(null);
         input_gender.setShowClearButton(false);
         input_gender.setFocusable(false);
+        btn_sign_up = (Button) findViewById(R.id.btn_sign_up);
+        addValidators();
+        addListeners();
+    }
+
+    private void addListeners() {
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -121,18 +134,124 @@ public class PatientRegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (requestPermission()){
-                   open_media_activity();
+                    open_media_activity();
                 }
             }
         });
+        btn_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validate()) {
+                    signUp();
+                }
+            }
+        });
+    }
 
-//        btn_sign_up = (Button) findViewById(R.id.btn_sign_up);
-//        btn_sign_up.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                uploadImage(v);
-//            }
-//        });
+    private void signUp() {
+        progress=new ProgressDialog(this);
+        progress.setMessage("Signing Up");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.show();
+        Callback<LoginResponse> signUpResponse = new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (progress!=null && progress.isShowing()) {
+                    progress.hide();
+                }
+                LoginResponse<Patient> responseObject = response.body();
+                if (response.isSuccessful()) {
+                    if (responseObject.isSuccess()) {
+                        Patient patient = responseObject.getUserData();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(PatientRegisterActivity.this, "Network Failure. Check your connection", Toast.LENGTH_LONG).show();
+            }
+
+        };
+        String nic  = input_nic.getText().toString();
+        String name = input_name.getText().toString();
+        String gender = "Female";
+        if (radio_male.isChecked()) {
+            gender = "Male";
+        }
+        String email = input_email.getText().toString();
+        String birthday = input_birthday.getText().toString();
+        String mobile = input_mobile.getText().toString();
+        String emergency_contact = input_emergency_contact.getText().toString();
+        String password = input_password.getText().toString();
+        String image = profileimage;
+        Patient patient = new Patient(nic,name,gender,email,birthday,mobile,emergency_contact,password,image);
+
+        PatientController patientController = new PatientController();
+        patientController.attemptSignUp(signUpResponse, patient);
+    }
+
+    private void addValidators() {
+
+        input_nic.addValidator(new METValidator("Invalid NIC") {
+            @Override
+            public boolean isValid(@NonNull CharSequence text, boolean isEmpty) {
+                int length = text.length();
+                if (isEmpty || !Validator.isValidNIC(text)) {
+                    return false;
+                }
+                return true;
+            }
+        });
+
+        input_name.addValidator(new METValidator("Enter your name") {
+            @Override
+            public boolean isValid(@NonNull CharSequence text, boolean isEmpty) {
+                return !isEmpty;
+            }
+        });
+
+        input_birthday.addValidator(new METValidator("Enter a valid birthday") {
+            @Override
+            public boolean isValid(@NonNull CharSequence text, boolean isEmpty) {
+                return !isEmpty;
+            }
+        });
+        input_email.addValidator(new METValidator("Enter a valid email") {
+            @Override
+            public boolean isValid(@NonNull CharSequence text, boolean isEmpty) {
+                return Validator.isValidEmail(text);
+            }
+        });
+        input_mobile.addValidator(new METValidator("Enter a valid moibile number") {
+            @Override
+            public boolean isValid(@NonNull CharSequence text, boolean isEmpty) {
+                return Validator.isValidMobile(text);
+            }
+        });
+        input_emergency_contact.addValidator(new METValidator("Enter a valid phone number") {
+            @Override
+            public boolean isValid(@NonNull CharSequence text, boolean isEmpty) {
+                return Validator.isValidPhone(text);
+            }
+        });
+        input_password.addValidator(new METValidator("Enter a password") {
+            @Override
+            public boolean isValid(@NonNull CharSequence text, boolean isEmpty) {
+                return !isEmpty;
+            }
+        });
+        input_reenter_password.addValidator(new METValidator("Password does not match") {
+            @Override
+            public boolean isValid(@NonNull CharSequence text, boolean isEmpty) {
+                if (input_password.getText().toString().equals(text.toString())) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        layout_radio_gender = (RadioGroup) findViewById(R.id.layout_radio_gender);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -233,17 +352,20 @@ public class PatientRegisterActivity extends AppCompatActivity {
     }
 
     // When Upload button is clicked
-    public void uploadImage(View v) {
-        // When Image is selected from Gallery
-        if (picturePath != null && !picturePath.isEmpty()) {
-            // Convert image to String using Base64
-            ConvertImageUtil.encodeImagetoString();
-            // When Image is not selected from Gallery
-        } else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "You must select image from gallery before you try to upload",
-                    Toast.LENGTH_LONG).show();
+    private boolean validate() {
+
+        if (input_nic.validate() &&
+                input_name.validate() &&
+                input_birthday.validate() &&
+                input_email.validate() &&
+                input_mobile.validate() &&
+                input_emergency_contact.validate() &&
+                input_password.validate() &&
+                input_reenter_password.validate()) {
+
+                return true;
         }
+        return false;
     }
+
 }

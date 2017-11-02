@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.0'
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "lk.ac.mrt.cse.medipal"
         minSdkVersion 22
@@ -44,7 +45,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.github.vipulasri:timelineview:1.0.5'
     compile 'com.facebook.fresco:fresco:1.5.0'
-    //Async-Http
-    compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.3.1'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+
 }
