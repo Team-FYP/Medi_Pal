@@ -132,6 +132,7 @@
                         android:padding="5dp"
                         android:textColor="@color/met_baseColor"
                         android:text="@string/male_txt"
+                        android:checked="true"
                         />
 
                     <RadioButton

@@ -23,28 +23,23 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.METValidator;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.willowtreeapps.spruce.Spruce;
 import com.willowtreeapps.spruce.animation.DefaultAnimations;
 import com.willowtreeapps.spruce.sort.LinearSort;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Alert;
-import lk.ac.mrt.cse.medipal.controller.DoctorController;
+import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.controller.PatientController;
-import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.network.LoginResponse;
 import lk.ac.mrt.cse.medipal.util.Validator;
@@ -67,9 +62,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
     private MaterialEditText input_emergency_contact;
     private MaterialEditText input_password;
     private MaterialEditText input_reenter_password;
-    private RadioGroup layout_radio_gender;
     private RadioButton radio_male;
-    private RadioButton radio_female;
     private Button btn_sign_up;
     private String profileimage;
     private ProgressDialog progress;
@@ -94,9 +87,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
         input_password = (MaterialEditText) findViewById(R.id.input_password);
         input_reenter_password = (MaterialEditText) findViewById(R.id.input_reenter_password);
         input_gender = (MaterialEditText) findViewById(R.id.input_gender);
-        layout_radio_gender = (RadioGroup) findViewById(R.id.layout_radio_gender);
         radio_male = (RadioButton) findViewById(R.id.radio_male);
-        radio_female = (RadioButton) findViewById(R.id.radio_female);
         input_gender.setKeyListener(null);
         input_gender.setShowClearButton(false);
         input_gender.setFocusable(false);
@@ -146,50 +137,6 @@ public class PatientRegisterActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void signUp() {
-        progress=new ProgressDialog(this);
-        progress.setMessage("Signing Up");
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.setIndeterminate(true);
-        progress.show();
-        Callback<LoginResponse> signUpResponse = new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (progress!=null && progress.isShowing()) {
-                    progress.hide();
-                }
-                LoginResponse<Patient> responseObject = response.body();
-                if (response.isSuccessful()) {
-                    if (responseObject.isSuccess()) {
-                        Patient patient = responseObject.getUserData();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(PatientRegisterActivity.this, "Network Failure. Check your connection", Toast.LENGTH_LONG).show();
-            }
-
-        };
-        String nic  = input_nic.getText().toString();
-        String name = input_name.getText().toString();
-        String gender = "Female";
-        if (radio_male.isChecked()) {
-            gender = "Male";
-        }
-        String email = input_email.getText().toString();
-        String birthday = input_birthday.getText().toString();
-        String mobile = input_mobile.getText().toString();
-        String emergency_contact = input_emergency_contact.getText().toString();
-        String password = input_password.getText().toString();
-        String image = profileimage;
-        Patient patient = new Patient(nic,name,gender,email,birthday,mobile,emergency_contact,password,image);
-
-        PatientController patientController = new PatientController();
-        patientController.attemptSignUp(signUpResponse, patient);
     }
 
     private void addValidators() {
@@ -251,7 +198,66 @@ public class PatientRegisterActivity extends AppCompatActivity {
                 return false;
             }
         });
-        layout_radio_gender = (RadioGroup) findViewById(R.id.layout_radio_gender);
+    }
+
+    private boolean validate() {
+
+        if (input_nic.validate() &&
+                input_name.validate() &&
+                input_birthday.validate() &&
+                input_email.validate() &&
+                input_mobile.validate() &&
+                input_emergency_contact.validate() &&
+                input_password.validate() &&
+                input_reenter_password.validate()) {
+
+            return true;
+        }
+        return false;
+    }
+
+    private void signUp() {
+        progress=new ProgressDialog(this);
+        progress.setMessage("Signing Up");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.show();
+        Callback<LoginResponse> signUpResponse = new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (progress!=null && progress.isShowing()) {
+                    progress.hide();
+                }
+                LoginResponse<Patient> responseObject = response.body();
+                if (response.isSuccessful()) {
+                    if (responseObject.isSuccess()) {
+                        Patient patient = responseObject.getUserData();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(PatientRegisterActivity.this, "Network Failure. Check your connection", Toast.LENGTH_LONG).show();
+            }
+
+        };
+        String nic  = input_nic.getText().toString();
+        String name = input_name.getText().toString();
+        String gender = Common.FEMALE_TXT;
+        if (radio_male.isChecked()) {
+            gender = Common.MALE_TXT;
+        }
+        String email = input_email.getText().toString();
+        String birthday = input_birthday.getText().toString();
+        String mobile = input_mobile.getText().toString();
+        String emergency_contact = input_emergency_contact.getText().toString();
+        String password = input_password.getText().toString();
+        String image = profileimage;
+        Patient patient = new Patient(nic,name,gender,email,birthday,mobile,emergency_contact,password,image);
+
+        PatientController patientController = new PatientController();
+        patientController.attemptSignUp(signUpResponse, patient);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -266,22 +272,10 @@ public class PatientRegisterActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
-//                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//
-//                Cursor cursor = getContentResolver().query(resultUri,
-//                        filePathColumn, null, null, null);
-//                assert cursor != null;
-//                cursor.moveToFirst();
-//
-//                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                String picturePath = cursor.getString(columnIndex);
-//                cursor.close();
                 InputStream image_stream = null;
                 try {
                     image_stream = getContentResolver().openInputStream(resultUri);
                     Bitmap imagemap= BitmapFactory.decodeStream(image_stream );
-                    //Bitmap imagemap = BitmapFactory.decodeFile(picturePath);
-                    //imagemap = Bitmap.createScaledBitmap(imagemap,imagemap.getWidth(),imagemap.getHeight(),false);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     imagemap.compress(Bitmap.CompressFormat.JPEG, 40, stream); //compress to which format you want.
                     byte[] byte_arr = stream.toByteArray();
@@ -297,7 +291,6 @@ public class PatientRegisterActivity extends AppCompatActivity {
             }
         }
     }
-
     public boolean requestPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -315,6 +308,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
         }
         return true;
     }
+
     private void open_media_activity(){
         Intent i = new Intent(
                 Intent.ACTION_PICK,
@@ -349,23 +343,6 @@ public class PatientRegisterActivity extends AppCompatActivity {
                 .sortWith(new LinearSort(80, false, LinearSort.Direction.TOP_TO_BOTTOM))
                 .animateWith(animators)
                 .start();
-    }
-
-    // When Upload button is clicked
-    private boolean validate() {
-
-        if (input_nic.validate() &&
-                input_name.validate() &&
-                input_birthday.validate() &&
-                input_email.validate() &&
-                input_mobile.validate() &&
-                input_emergency_contact.validate() &&
-                input_password.validate() &&
-                input_reenter_password.validate()) {
-
-                return true;
-        }
-        return false;
     }
 
 }

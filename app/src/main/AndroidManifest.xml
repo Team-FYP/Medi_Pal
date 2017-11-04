@@ -31,7 +31,7 @@
         <activity android:name=".view.UserTypeSelectionActivity" />
         <activity
             android:name=".view.doctor.DoctorRegisterActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustResize"  />
         <activity
             android:name=".view.patient.PatientRegisterActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />

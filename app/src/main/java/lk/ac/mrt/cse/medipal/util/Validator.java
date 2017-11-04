@@ -30,6 +30,14 @@ public class Validator {
         return true;
     }
 
+    public static boolean isValidRegID(CharSequence target) {
+        int length = target.length();
+        if (length > 6 || !Validator.isNumeric(target.toString())){
+            return false;
+        }
+        return true;
+    }
+
     public static boolean isValidPhone(CharSequence target) {
         String number = target.toString();
         if(isNumeric(number) && number.matches("0[0-9]{9}")) {
