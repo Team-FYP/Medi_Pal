@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="wrap_content" android:layout_width="match_parent"
+<ScrollView android:layout_height="wrap_content"
+    android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:elevation="4dp">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
@@ -27,37 +29,63 @@
                     android:layout_marginRight="15dp"
                     android:background="@android:color/black"></LinearLayout>
 
-                <TextView
-                    android:id="@+id/txt_reg_id"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:text="@string/registration_id_txt"
-                    android:layout_gravity="bottom"
-                    android:layout_weight="1"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold"
-                    android:paddingLeft="10dp"
-                    android:textSize="15sp"
-                    android:gravity="center"
-                    android:paddingRight="10dp" />
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/icon_nic"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/cardview_dark_background"
+                        android:src="@drawable/icon_nic"/>
+                    <TextView
+                        android:id="@+id/txt_reg_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="@string/registration_id_txt"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/icon_nic"
+                        android:paddingRight="10dp" />
+                </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:background="@android:color/black"></LinearLayout>
-
-                <TextView
-                    android:id="@+id/txt_doctor_name"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:text="@string/doctor_name_txt"
-                    android:layout_gravity="bottom"
-                    android:layout_weight="1"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold"
-                    android:textSize="15sp"
-                    android:gravity="center" />
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/icon_name"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/cardview_dark_background"
+                        android:src="@drawable/icon_name"/>
+                    <TextView
+                        android:id="@+id/txt_doctor_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="@string/doctor_name_txt"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/icon_name"/>
+                </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -67,17 +95,16 @@
 
 
             </LinearLayout>
-            <de.hdodenhof.circleimageview.CircleImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_user_male"
+                fresco:placeholderImage="@drawable/icon_user_male"
+                fresco:roundAsCircle="true"
                 android:layout_centerInParent="true"
                 android:id="@+id/headerimage"
-                app:civ_border_width="2dp"
-                app:civ_border_color="@color/white"
                 android:layout_above="@id/textlayout"
                 />
         </RelativeLayout>

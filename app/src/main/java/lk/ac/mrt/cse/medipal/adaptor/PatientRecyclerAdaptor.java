@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -12,11 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
+import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 import lk.ac.mrt.cse.medipal.view.doctor.PatientInfoActivity;
@@ -48,8 +54,12 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
         holder.txt_name.setText(patient.getName());
         holder.txt_nic.setText(patient.getNic());
         holder.txt_mobile.setText(patient.getMobile());
-        Bitmap decodedByte = VectorDrawableUtil.getBitmapfromString(patient.getImage());
-        holder.contact_icon.setImageBitmap(decodedByte);
+        Uri imageUri = Uri.parse(patient.getImage());
+        holder.contact_icon.setController(
+                Fresco.newDraweeControllerBuilder()
+                        .setOldController(holder.contact_icon.getController())
+                        .setUri(imageUri)
+                        .build());
     }
     @Override
     public int getItemCount() {
@@ -64,7 +74,7 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
         TextView txt_name;
         TextView txt_mobile;
         TextView txt_nic;
-        CircleImageView contact_icon;
+        SimpleDraweeView contact_icon;
         ArrayList<Patient> patientList = null;
         Context context = null;
         public PatientRecyclerViewHolder(View itemView, Context context, ArrayList<Patient> patientList) {
@@ -74,7 +84,7 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
             txt_name = (TextView) itemView.findViewById(R.id.txt_name);
             txt_mobile = (TextView) itemView.findViewById(R.id.txt_mobile);
             txt_nic = (TextView) itemView.findViewById(R.id.txt_nic);
-            contact_icon = (CircleImageView) itemView.findViewById(R.id.icon_patient);
+            contact_icon = (SimpleDraweeView) itemView.findViewById(R.id.icon_patient);
             contact_icon.setOnClickListener(this);
         }
 

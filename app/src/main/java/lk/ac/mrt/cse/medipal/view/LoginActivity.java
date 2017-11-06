@@ -153,6 +153,9 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, PatientMainActivity.class);
                             startActivity(intent);
                             finish();
+                        } else {
+                            input_password.setError("Wrong password.");
+                            Toast.makeText(LoginActivity.this, "Invalid Username or password. Try again.", Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -189,6 +192,9 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, DoctorMainActivity.class);
                             startActivity(intent);
                             finish();
+                        } else {
+                            input_password.setError("Wrong password.");
+                            Toast.makeText(LoginActivity.this, "Invalid Username or password. Try again.", Toast.LENGTH_LONG).show();
                         }
                     }
                 }
