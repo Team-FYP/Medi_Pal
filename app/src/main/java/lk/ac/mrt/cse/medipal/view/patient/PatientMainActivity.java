@@ -139,7 +139,7 @@ public class PatientMainActivity extends AppCompatActivity {
 
         Patient yasiru = new Patient("922134234v","Yasiru Nilan","Male","shalith@gmail.com","1992-04-22","0712345784","0413254785","shasdssadas","sdadses");
 
-        yasiru.setImage(VectorDrawableUtil.getBase64fromReource(R.drawable.profile_yasiru, context));
+        //yasiru.setImage(VectorDrawableUtil.getBase64fromReource(R.drawable.profile_yasiru, context));
 
         patientList.add(yasiru);
     }

@@ -32,20 +32,39 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             fresco:placeholderImage="@drawable/icon_user_male"
+            fresco:roundAsCircle="true"
             />
-
+        <ImageView
+            android:id="@+id/icon_name"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:tint="@color/cardview_dark_background"
+            android:layout_toRightOf="@id/icon_patient"
+            android:src="@drawable/icon_name"/>
         <TextView
             android:id="@+id/txt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@id/icon_patient"
+            android:layout_toRightOf="@id/icon_name"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/patient_name_txt"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18dp" />
+        <ImageView
+            android:id="@+id/icon_nic"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="7dp"
+            android:tint="@color/cardview_dark_background"
+            android:layout_toRightOf="@id/icon_patient"
+            android:layout_below="@id/icon_name"
+            android:src="@drawable/icon_nic"/>
 
         <TextView
             android:id="@+id/txt_nic"
@@ -55,13 +74,22 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="3dp"
-            android:layout_toRightOf="@id/icon_patient"
+            android:layout_toRightOf="@id/icon_nic"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="934578457v"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="14dp" />
-
+        <ImageView
+            android:id="@+id/icon_mobile"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="16dp"
+            android:tint="@color/cardview_dark_background"
+            android:layout_toRightOf="@id/icon_patient"
+            android:layout_below="@id/icon_nic"
+            android:src="@drawable/icon_mobile"/>
         <TextView
             android:id="@+id/txt_mobile"
             android:layout_width="wrap_content"
@@ -71,7 +99,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="12dp"
-            android:layout_toRightOf="@id/icon_patient"
+            android:layout_toRightOf="@id/icon_mobile"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="077xxxxxxx"

@@ -85,7 +85,6 @@ public class DoctorMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NotificationDelegater.initialize(this, NotificationDelegater.GLOBAL);
         setContentView(R.layout.activity_doctor_main);
         context = this;
         activity = this;
@@ -128,8 +127,6 @@ public class DoctorMainActivity extends AppCompatActivity {
         imageView = (DraweeView) headerView.findViewById(R.id.headerimage);
         txt_doctor_name = (TextView) headerView.findViewById(R.id.txt_doctor_name);
         txt_reg_id = (TextView) headerView.findViewById(R.id.txt_reg_id);
-
-
     }
     public void addListeners(){
         txt_search.getViewTreeObserver()
@@ -168,14 +165,15 @@ public class DoctorMainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
     public void setElementValues(){
-
-        Uri imageUri = Uri.parse(doctor.getImage());
-        imageView.setController(
-                Fresco.newDraweeControllerBuilder()
-                .setOldController(imageView.getController())
-                .setUri(imageUri)
-                .setTapToRetryEnabled(true)
-                .build());
+        if (doctor.getImage() != null) {
+            Uri imageUri = Uri.parse(doctor.getImage());
+            imageView.setController(
+                    Fresco.newDraweeControllerBuilder()
+                            .setOldController(imageView.getController())
+                            .setUri(imageUri)
+                            .setTapToRetryEnabled(true)
+                            .build());
+        }
 
         txt_doctor_name.setText(doctor.getName());
         txt_reg_id.setText(doctor.getRegistration_id());

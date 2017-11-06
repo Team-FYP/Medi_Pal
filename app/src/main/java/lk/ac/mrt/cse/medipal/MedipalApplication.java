@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
+import zemin.notification.NotificationDelegater;
+
 /**
  * Created by lakshan on 10/23/17.
  */
@@ -13,5 +15,6 @@ public class MedipalApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
+        NotificationDelegater.initialize(this, NotificationDelegater.GLOBAL);
     }
 }

@@ -54,12 +54,18 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
         holder.txt_name.setText(patient.getName());
         holder.txt_nic.setText(patient.getNic());
         holder.txt_mobile.setText(patient.getMobile());
-        Uri imageUri = Uri.parse(patient.getImage());
-        holder.contact_icon.setController(
-                Fresco.newDraweeControllerBuilder()
-                        .setOldController(holder.contact_icon.getController())
-                        .setUri(imageUri)
-                        .build());
+        if (patient.getImage() != null) {
+            Uri imageUri = Uri.parse(patient.getImage());
+            holder.contact_icon.setController(
+                    Fresco.newDraweeControllerBuilder()
+                            .setOldController(holder.contact_icon.getController())
+                            .setUri(imageUri)
+                            .build());
+        } else if (patient.getGender().equals(Common.FEMALE_TXT)){
+            holder.contact_icon.setImageResource(R.drawable.icon_user_female);
+        } else if (patient.getGender().equals(Common.MALE_TXT)){
+            holder.contact_icon.setImageResource(R.drawable.icon_user_male);
+        }
     }
     @Override
     public int getItemCount() {

@@ -209,8 +209,8 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         String json = gson.toJson(doctor);
                         editor.putBoolean(SharedPreferencesKeys.IS_LOGGED_IN_KEY, true);
-                        editor.putString(SharedPreferencesKeys.USER_TYPE_KEY, SharedPreferencesKeys.USER_TYPE_PATIENT);
-                        editor.putString(SharedPreferencesKeys.PATIENT_OBJECT_KEY, json);
+                        editor.putString(SharedPreferencesKeys.USER_TYPE_KEY, SharedPreferencesKeys.USER_TYPE_DOCTOR);
+                        editor.putString(SharedPreferencesKeys.DOCTOR_OBJECT_KEY, json);
                         editor.apply();
                         Intent intent = new Intent(DoctorRegisterActivity.this, DoctorMainActivity.class);
                         startActivity(intent);
