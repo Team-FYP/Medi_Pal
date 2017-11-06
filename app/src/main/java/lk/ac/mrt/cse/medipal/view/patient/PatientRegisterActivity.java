@@ -5,7 +5,9 @@ import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +26,8 @@ import android.widget.DatePicker;
 import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.METValidator;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -39,10 +43,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Alert;
 import lk.ac.mrt.cse.medipal.constant.Common;
+import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
 import lk.ac.mrt.cse.medipal.controller.PatientController;
 import lk.ac.mrt.cse.medipal.model.Patient;
-import lk.ac.mrt.cse.medipal.model.network.LoginResponse;
+import lk.ac.mrt.cse.medipal.model.network.DoctorLoginResponse;
+import lk.ac.mrt.cse.medipal.model.network.PatientLoginResponse;
 import lk.ac.mrt.cse.medipal.util.Validator;
+import lk.ac.mrt.cse.medipal.view.LoginActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,11 +73,13 @@ public class PatientRegisterActivity extends AppCompatActivity {
     private Button btn_sign_up;
     private String profileimage;
     private ProgressDialog progress;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_register);
+        context = this;
         configure_ui();
         animate_ui();
     }
@@ -222,22 +231,34 @@ public class PatientRegisterActivity extends AppCompatActivity {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
         progress.show();
-        Callback<LoginResponse> signUpResponse = new Callback<LoginResponse>() {
+        Callback<PatientLoginResponse> signUpResponse = new Callback<PatientLoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<PatientLoginResponse> call, Response<PatientLoginResponse> response) {
                 if (progress!=null && progress.isShowing()) {
                     progress.hide();
                 }
-                LoginResponse<Patient> responseObject = response.body();
+                PatientLoginResponse responseObject = response.body();
                 if (response.isSuccessful()) {
                     if (responseObject.isSuccess()) {
                         Patient patient = responseObject.getUserData();
+                        SharedPreferences preferencs = context.getSharedPreferences(
+                                SharedPreferencesKeys.MEDIPAL_KEY, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferencs.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(patient);
+                        editor.putBoolean(SharedPreferencesKeys.IS_LOGGED_IN_KEY, true);
+                        editor.putString(SharedPreferencesKeys.USER_TYPE_KEY, SharedPreferencesKeys.USER_TYPE_PATIENT);
+                        editor.putString(SharedPreferencesKeys.PATIENT_OBJECT_KEY, json);
+                        editor.apply();
+                        Intent intent = new Intent(PatientRegisterActivity.this, PatientMainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<PatientLoginResponse> call, Throwable t) {
                 Toast.makeText(PatientRegisterActivity.this, "Network Failure. Check your connection", Toast.LENGTH_LONG).show();
             }
 

@@ -70,7 +70,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goToNextActivity() {
-        SharedPreferences mPrefs = getSharedPreferences(SharedPreferencesKeys.USER_LOGIN_KEY, Context.MODE_PRIVATE);
+        SharedPreferences mPrefs = getSharedPreferences(SharedPreferencesKeys.MEDIPAL_KEY, Context.MODE_PRIVATE);
         boolean is_logged_in = mPrefs.getBoolean(SharedPreferencesKeys.IS_LOGGED_IN_KEY, false);
         String user_type = mPrefs.getString(SharedPreferencesKeys.USER_TYPE_KEY, null);
         if (!is_logged_in) {
@@ -80,14 +80,16 @@ public class SplashActivity extends AppCompatActivity {
         } else if (user_type != null && user_type.equals(UserType.DOCTOR)){
 
             Intent intent = new Intent(this, DoctorMainActivity.class);
-            intent.putExtra(SharedPreferencesKeys.USER_ID_KEY, mPrefs.getString(SharedPreferencesKeys.USER_ID_KEY, null));
+            intent.putExtra(SharedPreferencesKeys.USER_TYPE_KEY, UserType.DOCTOR);
+            intent.putExtra(SharedPreferencesKeys.DOCTOR_OBJECT_KEY, mPrefs.getString(SharedPreferencesKeys.DOCTOR_OBJECT_KEY,null));
             startActivity(intent);
             finish();
 
         }else if (user_type != null && user_type.equals(UserType.PATIENT)){
 
             Intent intent = new Intent(this, PatientMainActivity.class);
-            intent.putExtra(SharedPreferencesKeys.USER_ID_KEY, mPrefs.getString(SharedPreferencesKeys.USER_ID_KEY, null));
+            intent.putExtra(SharedPreferencesKeys.USER_TYPE_KEY, UserType.PATIENT);
+            intent.putExtra(SharedPreferencesKeys.PATIENT_OBJECT_KEY, mPrefs.getString(SharedPreferencesKeys.PATIENT_OBJECT_KEY,null));
             startActivity(intent);
             finish();
         }

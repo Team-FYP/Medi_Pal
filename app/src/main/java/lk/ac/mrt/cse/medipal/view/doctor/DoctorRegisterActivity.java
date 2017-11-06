@@ -4,7 +4,9 @@ import android.Manifest;
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +24,8 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.METValidator;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -35,10 +39,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Alert;
 import lk.ac.mrt.cse.medipal.constant.Common;
+import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
 import lk.ac.mrt.cse.medipal.controller.DoctorController;
 import lk.ac.mrt.cse.medipal.model.Doctor;
-import lk.ac.mrt.cse.medipal.model.network.LoginResponse;
+import lk.ac.mrt.cse.medipal.model.network.DoctorLoginResponse;
 import lk.ac.mrt.cse.medipal.util.Validator;
+import lk.ac.mrt.cse.medipal.view.patient.PatientMainActivity;
+import lk.ac.mrt.cse.medipal.view.patient.PatientRegisterActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,12 +67,13 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private Button btn_sign_up;
     private String profileimage;
     private ProgressDialog progress;
-
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_register);
+        context = this;
         configure_ui();
         animate_ui();
     }
@@ -185,22 +193,34 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
         progress.show();
-        Callback<LoginResponse> signUpResponse = new Callback<LoginResponse>() {
+        Callback<DoctorLoginResponse> signUpResponse = new Callback<DoctorLoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<DoctorLoginResponse> call, Response<DoctorLoginResponse> response) {
                 if (progress!=null && progress.isShowing()) {
                     progress.hide();
                 }
-                LoginResponse<Doctor> responseObject = response.body();
+                DoctorLoginResponse responseObject = response.body();
                 if (response.isSuccessful()) {
                     if (responseObject.isSuccess()) {
                         Doctor doctor = responseObject.getUserData();
+                        SharedPreferences preferencs = context.getSharedPreferences(
+                                SharedPreferencesKeys.MEDIPAL_KEY, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferencs.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(doctor);
+                        editor.putBoolean(SharedPreferencesKeys.IS_LOGGED_IN_KEY, true);
+                        editor.putString(SharedPreferencesKeys.USER_TYPE_KEY, SharedPreferencesKeys.USER_TYPE_PATIENT);
+                        editor.putString(SharedPreferencesKeys.PATIENT_OBJECT_KEY, json);
+                        editor.apply();
+                        Intent intent = new Intent(DoctorRegisterActivity.this, DoctorMainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<DoctorLoginResponse> call, Throwable t) {
                 Toast.makeText(DoctorRegisterActivity.this, "Network Failure. Check your connection", Toast.LENGTH_LONG).show();
             }
 

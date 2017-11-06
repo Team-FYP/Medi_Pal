@@ -1,26 +1,27 @@
 package lk.ac.mrt.cse.medipal.model.network;
 
+import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Patient;
 
 /**
  * Created by lakshan on 11/2/17.
  */
 
-public class LoginResponse <T>{
-    boolean success;
-    String message;
-    T userData;
+public class DoctorLoginResponse {
+    private boolean success;
+    private String message;
+    private Doctor userData;
 
-    public LoginResponse() {
+    public DoctorLoginResponse() {
     }
 
-    public LoginResponse(boolean success, String message, T userData) {
+    public DoctorLoginResponse(boolean success, String message, Doctor userData) {
         this.success = success;
         this.message = message;
         this.userData = userData;
     }
 
-    public LoginResponse(boolean success, String message) {
+    public DoctorLoginResponse(boolean success, String message) {
         this.success = success;
         this.message = message;
     }
@@ -41,11 +42,11 @@ public class LoginResponse <T>{
         this.message = message;
     }
 
-    public T getUserData() {
+    public Doctor getUserData() {
         return userData;
     }
 
-    public void setUserData(T userData) {
+    public void setUserData(Doctor userData) {
         this.userData = userData;
     }
 }

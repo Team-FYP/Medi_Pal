@@ -32,4 +32,5 @@
     <string name="doctor_name_txt">Doctor Name</string>
     <string name="patient_name_txt">Patient Name</string>
     <string name="view_more"><![CDATA[View More >]]></string>
+    <string name="username_txt">Username</string>
 </resources>

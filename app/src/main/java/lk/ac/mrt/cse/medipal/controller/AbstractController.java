@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by lakshan on 11/2/17.
  */
 
-public class AbstractController {
+public abstract class AbstractController {
     Gson gson;
     Retrofit retrofit;
     MedipalAPI medipalAPI;

@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:hint="@string/email_txt"
+                android:hint="@string/username_txt"
                 android:inputType="textEmailAddress"
                 app:met_autoValidate="true"
                 app:met_baseColor="@color/met_baseColor"
