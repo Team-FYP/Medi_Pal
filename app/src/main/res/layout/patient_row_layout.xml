@@ -22,7 +22,12 @@
         android:paddingRight="15dp"
         android:background="@color/white"
         android:gravity="center_vertical">
-
+        <ImageView
+            android:id="@+id/btn_pop_up"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_overflow"
+            android:layout_alignParentEnd="true"/>
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/icon_patient"
             android:layout_width="80dp"

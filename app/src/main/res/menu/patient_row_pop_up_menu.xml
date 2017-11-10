@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/view"
+        android:title="@string/view_profile_txt"
+        android:icon="@android:drawable/ic_menu_info_details"/>
+
+    <item
+        android:id="@+id/remove"
+        android:title="@string/remove_patient_txt"
+        android:icon="@android:drawable/ic_menu_delete"/>
+    <item
+        android:id="@+id/hide"
+        android:title="@string/hide_patient_txt"
+        android:icon="@android:drawable/ic_menu_view"/>
+</menu>

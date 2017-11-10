@@ -26,6 +26,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.doctor.DoctorMainActivity"
+            android:theme="@style/doctor_main"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".view.patient.PatientMainActivity" />
         <activity android:name=".view.UserTypeSelectionActivity" />

@@ -34,4 +34,7 @@
     <string name="view_more"><![CDATA[View More >]]></string>
     <string name="username_txt">Username</string>
     <string name="no_patient_txt">You currently don\'t have any patient</string>
+    <string name="remove_patient_txt">Remove Patient</string>
+    <string name="hide_patient_txt">Hide Patient</string>
+    <string name="view_profile_txt">View Profile</string>
 </resources>
