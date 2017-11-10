@@ -8,15 +8,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
-
 import lk.ac.mrt.cse.medipal.R;
+import lk.ac.mrt.cse.medipal.constant.ObjectType;
+import lk.ac.mrt.cse.medipal.constant.UserType;
+import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
+import lk.ac.mrt.cse.medipal.util.JsonConvertor;
 import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 
 public class PatientInfoActivity extends AppCompatActivity {
@@ -32,14 +35,36 @@ public class PatientInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_info);
         context = this;
-        patient = DoctorMainActivity.patientList.get(getIntent().getExtras().getInt("patient_id"));
-        configureMaterialViewPager();
-        configureToolbar();
+        patient = (Patient) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_PATIENT, Patient.class);
+        getElements();
+        addListeners();
+        setElementValues();
     }
-
-    private void configureViewPager() {
-
+    private void getElements(){
+        mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
         viewPager = mViewPager.getViewPager();
+        toolbar = mViewPager.getToolbar();
+    }
+    public void addListeners() {
+        mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+            @Override
+            public HeaderDesign getHeaderDesign(int page) {
+//                switch (page) {
+//                    case 0:
+//                        return HeaderDesign.fromColorResAndUrl(R.color.blue, patient.getImage());
+//                    case 1:
+//                        return HeaderDesign.fromColorResAndUrl(
+//                                R.color.blue,
+//                                "http://demo.geekslabs.com/materialize/v2.1/layout01/images/user-profile-bg.jpg");
+//                }
+                //execute others actions if needed (ex : modify your header logo)
+                if (patient.getImage() != null) {
+                    return HeaderDesign.fromColorResAndUrl(R.color.white, patient.getImage());
+                }
+                return HeaderDesign.fromColorResAndDrawable(R.color.white, VectorDrawableUtil.getDrawable(context, R.drawable.patient_info_background));
+            }
+        });
+
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
             @Override
@@ -48,17 +73,17 @@ public class PatientInfoActivity extends AppCompatActivity {
                     case 0:
                         PatientInformationFragment patientInformationFragment = new PatientInformationFragment();
                         Bundle infoBundle = new Bundle();
-                        infoBundle.putInt("patient_id",getIntent().getExtras().getInt("patient_id"));
+                        infoBundle.putString(ObjectType.OBJECT_TYPE_PATIENT,getIntent().getStringExtra(ObjectType.OBJECT_TYPE_PATIENT));
                         patientInformationFragment.setArguments(infoBundle);
                         return patientInformationFragment;
                     case 1:
-                    //    return RecyclerViewFragment.newInstance();
-                    //case 2:
-                    //    return WebViewFragment.newInstance();
+                        //    return RecyclerViewFragment.newInstance();
+                        //case 2:
+                        //    return WebViewFragment.newInstance();
                     default:
                         PrescriptionRecyclerFragment prescriptionRecyclerFragment = new PrescriptionRecyclerFragment();
                         Bundle dataBundle = new Bundle();
-                        dataBundle.putInt("patient_id",getIntent().getExtras().getInt("patient_id"));
+                        dataBundle.putString(ObjectType.OBJECT_TYPE_PATIENT,getIntent().getStringExtra(ObjectType.OBJECT_TYPE_PATIENT));
                         prescriptionRecyclerFragment.setArguments(dataBundle);
                         return prescriptionRecyclerFragment;
                 }
@@ -80,17 +105,12 @@ public class PatientInfoActivity extends AppCompatActivity {
                 return "";
             }
         });
-
+    }
+    public void setElementValues() {
         viewPager.setOffscreenPageLimit(viewPager.getAdapter().getCount());
         mViewPager.getPagerTitleStrip().setViewPager(viewPager);
-    }
-
-    private void configureToolbar() {
-        toolbar = mViewPager.getToolbar();
-
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
@@ -99,31 +119,4 @@ public class PatientInfoActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
         }
     }
-
-    private void configureMaterialViewPager() {
-        mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
-        mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
-            @Override
-            public HeaderDesign getHeaderDesign(int page) {
-                switch (page) {
-                    case 0:
-//                        return HeaderDesign.fromColorResAndUrl(
-//                                R.color.red,
-//                                "http://api.androidhive.info/images/nav-menu-header-bg.jpg");
-                        return HeaderDesign.fromColorResAndDrawable(R.color.blue, VectorDrawableUtil.getDrawablefromString(patient.getImage(), context));
-                    case 1:
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.blue,
-                                "http://demo.geekslabs.com/materialize/v2.1/layout01/images/user-profile-bg.jpg");
-                }
-
-                //execute others actions if needed (ex : modify your header logo)
-
-                return null;
-            }
-        });
-        configureViewPager();
-    }
-
-
 }

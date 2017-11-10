@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -27,6 +28,8 @@ import java.util.StringTokenizer;
 import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Common;
+import lk.ac.mrt.cse.medipal.constant.ObjectType;
+import lk.ac.mrt.cse.medipal.constant.UserType;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 import lk.ac.mrt.cse.medipal.view.doctor.PatientInfoActivity;
@@ -49,8 +52,7 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
     public PatientRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_row_layout,parent,false);
-        PatientRecyclerViewHolder recyclerViewHolder = new PatientRecyclerViewHolder(view, context, patientList);
-        return recyclerViewHolder;
+        return new PatientRecyclerViewHolder(view, context, patientList);
     }
     @Override
     public void onBindViewHolder(PatientRecyclerViewHolder holder, int position) {
@@ -110,9 +112,7 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
         @Override
         public void onClick(View view) {
             if (view.getId() == contact_icon.getId()){
-                Intent intent = new Intent(context, PatientInfoActivity.class);
-                intent.putExtra("patient_id", getAdapterPosition());
-                context.startActivity(intent);
+                openNextActivity();
             } else if(view.getId() == btn_pup_up.getId()) {
                 popupMenu.show();
             }
@@ -121,11 +121,17 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             if (item.getItemId() ==  R.id.view) {
-                Intent intent = new Intent(context, PatientInfoActivity.class);
-                intent.putExtra("patient_id", getAdapterPosition());
-                context.startActivity(intent);
+                openNextActivity();
             }
             return true;
+        }
+
+        private void openNextActivity(){
+            Intent intent = new Intent(context, PatientInfoActivity.class);
+            Gson gson = new Gson();
+            String json = gson.toJson(patientList.get(getAdapterPosition()));
+            intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
+            context.startActivity(intent);
         }
     }
 }

@@ -25,6 +25,7 @@ import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Alert;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.Connection;
+import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
 import lk.ac.mrt.cse.medipal.constant.UserType;
 import lk.ac.mrt.cse.medipal.view.doctor.DoctorMainActivity;
@@ -80,8 +81,7 @@ public class SplashActivity extends AppCompatActivity {
         } else if (user_type != null && user_type.equals(UserType.DOCTOR)){
 
             Intent intent = new Intent(this, DoctorMainActivity.class);
-            intent.putExtra(SharedPreferencesKeys.USER_TYPE_KEY, UserType.DOCTOR);
-            intent.putExtra(SharedPreferencesKeys.DOCTOR_OBJECT_KEY, mPrefs.getString(SharedPreferencesKeys.DOCTOR_OBJECT_KEY,null));
+            intent.putExtra(ObjectType.OBJECT_TYPE_DOCTOR, mPrefs.getString(SharedPreferencesKeys.DOCTOR_OBJECT_KEY,null));
             startActivity(intent);
             finish();
 

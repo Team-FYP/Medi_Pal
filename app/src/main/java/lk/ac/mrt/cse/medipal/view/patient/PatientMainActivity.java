@@ -18,11 +18,6 @@ import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
-import lk.ac.mrt.cse.medipal.view.doctor.DoctorMainActivity;
-import lk.ac.mrt.cse.medipal.view.doctor.PatientInformationFragment;
-import lk.ac.mrt.cse.medipal.view.doctor.PrescriptionRecyclerFragment;
-
-import static lk.ac.mrt.cse.medipal.view.doctor.DoctorMainActivity.patientList;
 
 public class PatientMainActivity extends AppCompatActivity {
 

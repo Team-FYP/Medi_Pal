@@ -21,6 +21,7 @@ import com.willowtreeapps.spruce.Spruce;
 import com.willowtreeapps.spruce.animation.DefaultAnimations;
 import com.willowtreeapps.spruce.sort.CorneredSort;
 import lk.ac.mrt.cse.medipal.R;
+import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
 import lk.ac.mrt.cse.medipal.controller.DoctorController;
 import lk.ac.mrt.cse.medipal.controller.PatientController;
@@ -190,6 +191,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString(SharedPreferencesKeys.DOCTOR_OBJECT_KEY, json);
                             editor.apply();
                             Intent intent = new Intent(LoginActivity.this, DoctorMainActivity.class);
+                            intent.putExtra(ObjectType.OBJECT_TYPE_DOCTOR, json);
                             startActivity(intent);
                             finish();
                         } else {

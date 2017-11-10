@@ -32,17 +32,16 @@ import com.facebook.drawee.view.DraweeView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.adaptor.PatientRecyclerAdaptor;
-import lk.ac.mrt.cse.medipal.constant.Common;
+import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
 import lk.ac.mrt.cse.medipal.controller.DoctorController;
 import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Notification;
 import lk.ac.mrt.cse.medipal.model.Patient;
-import lk.ac.mrt.cse.medipal.model.network.DoctorLoginResponse;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
+import lk.ac.mrt.cse.medipal.util.JsonConvertor;
 import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 import lk.ac.mrt.cse.medipal.view.LoginActivity;
 import retrofit2.Call;
@@ -71,7 +70,7 @@ public class DoctorMainActivity extends AppCompatActivity {
     private ImageView btn_notfication;
     private ArrayList<Patient> searchPatientList;
     private PatientRecyclerAdaptor patientRecyclerAdaptor;
-    public static ArrayList<Patient> patientList;
+    private ArrayList<Patient> patientList;
     private int previousLength = 0;
     private int notificationCount = 0;
     private Handler notificationHandler;
@@ -88,20 +87,13 @@ public class DoctorMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_doctor_main);
         context = this;
         activity = this;
-        retrieveDoctorDetails();
+        doctor = (Doctor) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_DOCTOR, Doctor.class);
         getElements();
         addListeners();
         setElementValues();
         loadRecyclerData();
         configureSearchText();
         //configureNotification();
-    }
-    private void retrieveDoctorDetails(){
-        Intent intent = getIntent();
-        Gson gson = new Gson();
-        SharedPreferences mPrefs = getSharedPreferences(SharedPreferencesKeys.MEDIPAL_KEY, Context.MODE_PRIVATE);
-        String json = mPrefs.getString(SharedPreferencesKeys.DOCTOR_OBJECT_KEY, "");
-        doctor = gson.fromJson(json, Doctor.class);
     }
     private void getElements(){
         //main elements

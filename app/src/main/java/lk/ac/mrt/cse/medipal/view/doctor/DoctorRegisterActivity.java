@@ -39,7 +39,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Alert;
 import lk.ac.mrt.cse.medipal.constant.Common;
+import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
+import lk.ac.mrt.cse.medipal.constant.UserType;
 import lk.ac.mrt.cse.medipal.controller.DoctorController;
 import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.network.DoctorLoginResponse;
@@ -213,6 +215,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                         editor.putString(SharedPreferencesKeys.DOCTOR_OBJECT_KEY, json);
                         editor.apply();
                         Intent intent = new Intent(DoctorRegisterActivity.this, DoctorMainActivity.class);
+                        intent.putExtra(ObjectType.OBJECT_TYPE_DOCTOR, json);
                         startActivity(intent);
                         finish();
                     }
