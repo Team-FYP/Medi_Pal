@@ -39,4 +39,5 @@
     <string name="view_profile_txt">View Profile</string>
     <string name="view_less"> &lt; View Less</string>
     <string name="txt_current_medications">Current Medications</string>
+    <string name="condition_txt">Condition</string>
 </resources>

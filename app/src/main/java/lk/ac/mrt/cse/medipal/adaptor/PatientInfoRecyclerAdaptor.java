@@ -74,12 +74,8 @@ public class PatientInfoRecyclerAdaptor extends RecyclerView.Adapter<RecyclerVie
                 RecentMedRecyclerViewHolder medHolder = ((RecentMedRecyclerViewHolder)holder);
                 if (prescriptionDrugs.size() <= 3){
                     medHolder.btn_view_more.setVisibility(View.GONE);
-
                 } else {
                     medHolder.btn_view_more.setVisibility(View.VISIBLE);
-                    for (int i = 0; i < 3; i++){
-
-                    }
                 }
 
                 for (int i = 0; i < prescriptionDrugs.size(); i++){
@@ -98,7 +94,7 @@ public class PatientInfoRecyclerAdaptor extends RecyclerView.Adapter<RecyclerVie
         return 2;
     }
 
-    public class InfoRecyclerViewHolder extends RecyclerView.ViewHolder {
+    public class InfoRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView input_nic;
         private TextView input_name;
         private TextView input_gender;
@@ -119,24 +115,23 @@ public class PatientInfoRecyclerAdaptor extends RecyclerView.Adapter<RecyclerVie
             input_gender = (TextView) itemView.findViewById(R.id.input_gender);
             btn_view_more = (Button) itemView.findViewById(R.id.btn_view_more);
             expandable_relative_layout = (ExpandableRelativeLayout) itemView.findViewById(R.id.expandablelayout_basic_info_relative);
-
-
-            btn_view_more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (expandable_relative_layout.isExpanded()) {
-                        expandable_relative_layout.collapse();
-                        btn_view_more.setText(R.string.view_more);
-                    } else {
-                        expandable_relative_layout.expand();
-                        btn_view_more.setText(R.string.view_less);
-                    }
-                }
-            });
+            btn_view_more.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.btn_view_more) {
+                if (expandable_relative_layout.isExpanded()) {
+                    expandable_relative_layout.collapse();
+                    btn_view_more.setText(R.string.view_more);
+                } else {
+                    expandable_relative_layout.expand();
+                    btn_view_more.setText(R.string.view_less);
+                }
+            }
+        }
     }
-    public class RecentMedRecyclerViewHolder extends RecyclerView.ViewHolder {
+    public class RecentMedRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private LinearLayout layout_curr_med_linear;
         private LinearLayout expandable_curr_med_linear;
         private ExpandableRelativeLayout expandablelayout_curr_med_relative;
@@ -149,18 +144,20 @@ public class PatientInfoRecyclerAdaptor extends RecyclerView.Adapter<RecyclerVie
             btn_view_more = itemView.findViewById(R.id.btn_view_more);
             expandablelayout_curr_med_relative = itemView.findViewById(R.id.expandablelayout_curr_med_relative);
 
-            btn_view_more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (expandablelayout_curr_med_relative.isExpanded()) {
-                        expandablelayout_curr_med_relative.collapse();
-                        btn_view_more.setText(R.string.view_more);
-                    } else {
-                        expandablelayout_curr_med_relative.expand();
-                        btn_view_more.setText(R.string.view_less);
-                    }
+            btn_view_more.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.btn_view_more) {
+                if (expandablelayout_curr_med_relative.isExpanded()) {
+                    expandablelayout_curr_med_relative.collapse();
+                    btn_view_more.setText(R.string.view_more);
+                } else {
+                    expandablelayout_curr_med_relative.expand();
+                    btn_view_more.setText(R.string.view_less);
                 }
-            });
+            }
         }
     }
     private void addMedicinetoLinear(PrescriptionDrug prescriptionDrug, LinearLayout linearLayout){

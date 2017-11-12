@@ -2,6 +2,7 @@ package lk.ac.mrt.cse.medipal.rest;
 
 import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Patient;
+import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.model.network.LoginRequest;
@@ -35,4 +36,7 @@ public interface MedipalAPI {
 
     @GET("app/prescription/patient/{id}/currentprescriptions")
     Call<ListWrapper<PrescriptionDrug>> patientCurrentMed(@Path("id") String nic);
+
+    @GET("/app/prescription/patient/{id}")
+    Call<ListWrapper<Prescription>> patientPrescriptionList(@Path("id") String nic);
 }

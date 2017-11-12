@@ -12,6 +12,15 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="horizontal">
+        <TextView
+            android:id="@+id/pres_date_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2017
+08/09"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:layout_gravity="center"/>
         <com.github.vipulasri.timelineview.TimelineView
             android:id="@+id/time_marker"
             android:layout_width="wrap_content"
@@ -19,13 +28,14 @@
             app:markerSize="20dp"
             app:lineSize="3dp"
             app:line="@color/colorPrimary"
-            android:layout_marginEnd="40dp"
+            android:layout_marginStart="5dp"
             />
+
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/prescription_card_view"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="@dimen/cardMarginHorizontal"
             android:layout_marginRight="@dimen/cardMarginHorizontal"
@@ -34,7 +44,109 @@
             app:cardElevation="2dp"
             app:cardPreventCornerOverlap="false"
             app:contentPadding="0dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/condition_layout_relative"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/rounded_corner_border_rectangle"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:id="@+id/condition_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/condition_txt"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginStart= "10dp"/>
+                    <TextView
+                        android:id="@+id/disease_txt"
+                        android:layout_below="@id/condition_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Diabetes Type II"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/layout_curr_med_linear"
+                    android:layout_below="@id/condition_layout_relative"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp">
 
+                </LinearLayout>
+                <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                    android:id="@+id/expandablelayout_curr_med_relative"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_curr_med_linear"
+                    app:ael_expanded="false"
+                    app:ael_duration="1000"
+                    app:ael_interpolator="bounce"
+                    app:ael_orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/expandable_curr_med_linear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        >
+                    </LinearLayout>
+                </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+                <Button
+                    android:id="@+id/btn_view_more"
+                    android:layout_below="@id/expandablelayout_curr_med_relative"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/view_more"
+                    android:textColor="@color/met_baseColor"
+                    android:textAllCaps="false"
+                    android:background="@android:color/transparent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="-10dp"
+                    android:layout_marginTop="-10dp"/>
+                <RelativeLayout
+                    android:layout_below="@id/btn_view_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/rounded_corner_solid_orange"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5dp"
+                    >
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/doctor_image_drawee"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:placeholderImage="@drawable/icon_user_male"
+                        app:roundAsCircle="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart= "7dp"
+                        />
+                    <TextView
+                        android:id="@+id/txt_doctor_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dr. Lakshan Gamage"
+                        android:layout_toRightOf="@id/doctor_image_drawee"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
 </FrameLayout>

@@ -63,7 +63,6 @@ public class PatientInformationFragment extends Fragment {
     private void getElements(View view){
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_patient_info);
         progressBar = view.findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.GONE);
     }
 
     private void setElementValues(){
@@ -71,6 +70,7 @@ public class PatientInformationFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
+        progressBar.setVisibility(View.GONE);
     }
 
     private void retrieveCurrentMedicines(){

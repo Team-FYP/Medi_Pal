@@ -3,14 +3,12 @@ package lk.ac.mrt.cse.medipal.view.doctor;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import lk.ac.mrt.cse.medipal.R;
@@ -102,7 +100,7 @@ public class PatientInfoActivity extends AppCompatActivity {
         };
     }
     private void setElementValues() {
-        viewPager.setOffscreenPageLimit(viewPager.getAdapter().getCount());
+        viewPager.setOffscreenPageLimit(0);
         mViewPager.getPagerTitleStrip().setViewPager(viewPager);
         //mViewPager.getPagerTitleStrip().setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.whiteTransparent, getTheme()));
         mViewPager.getPagerTitleStrip().setTextColorStateListResource(R.color.white);

@@ -26,11 +26,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.DraweeView;
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.adaptor.PatientRecyclerAdaptor;
@@ -51,7 +48,6 @@ import zemin.notification.NotificationBoard;
 import zemin.notification.NotificationBuilder;
 import zemin.notification.NotificationDelegater;
 import zemin.notification.NotificationGlobal;
-
 
 public class DoctorMainActivity extends AppCompatActivity {
     private Activity activity;
