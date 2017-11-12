@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 
@@ -25,7 +26,8 @@ import lk.ac.mrt.cse.medipal.model.Prescription;
 public class PrescriptionRecyclerFragment extends Fragment {
     private static final boolean GRID_LAYOUT = false;
     private ArrayList<Prescription> prescriptionList;
-    RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -43,7 +45,7 @@ public class PrescriptionRecyclerFragment extends Fragment {
         }
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_prescription);
-
+        progressBar = view.findViewById(R.id.progress_bar);
         //setup materialviewpager
 
         if (GRID_LAYOUT) {

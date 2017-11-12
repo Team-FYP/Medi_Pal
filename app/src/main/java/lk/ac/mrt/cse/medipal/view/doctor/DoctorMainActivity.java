@@ -120,7 +120,7 @@ public class DoctorMainActivity extends AppCompatActivity {
         txt_doctor_name = (TextView) headerView.findViewById(R.id.txt_doctor_name);
         txt_reg_id = (TextView) headerView.findViewById(R.id.txt_reg_id);
     }
-    public void addListeners(){
+    private void addListeners(){
         txt_search.getViewTreeObserver()
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
@@ -156,7 +156,7 @@ public class DoctorMainActivity extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
-    public void setElementValues(){
+    private void setElementValues(){
         if (doctor.getImage() != null) {
             Uri imageUri = Uri.parse(doctor.getImage());
             imageView.setController(

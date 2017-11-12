@@ -95,7 +95,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    class CheckInternet extends AsyncTask<String, String, String> {
+    private class CheckInternet extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
 

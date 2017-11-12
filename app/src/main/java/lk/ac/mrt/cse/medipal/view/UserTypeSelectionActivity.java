@@ -6,13 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
 import com.willowtreeapps.spruce.Spruce;
 import com.willowtreeapps.spruce.animation.DefaultAnimations;
-import com.willowtreeapps.spruce.sort.CorneredSort;
 import com.willowtreeapps.spruce.sort.LinearSort;
-
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.view.doctor.DoctorRegisterActivity;
 import lk.ac.mrt.cse.medipal.view.patient.PatientRegisterActivity;
@@ -50,7 +46,7 @@ public class UserTypeSelectionActivity extends AppCompatActivity {
                 DefaultAnimations.shrinkAnimator(layout_user_selector_container, /*duration=*/800),
                 DefaultAnimations.fadeInAnimator(layout_user_selector_container, /*duration=*/800)
         };
-        Animator spruceAnimator = new Spruce
+        new Spruce
                 .SpruceBuilder(layout_user_selector_container)
                 .sortWith(new LinearSort(500, false, LinearSort.Direction.RIGHT_TO_LEFT))
                 .animateWith(animators)

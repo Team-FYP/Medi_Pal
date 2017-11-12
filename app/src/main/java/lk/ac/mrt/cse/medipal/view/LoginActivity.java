@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                 .start();
     }
 
-    public void addListeners(){
+    private void addListeners(){
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void addValidators(){
+    private void addValidators(){
         input_email.addValidator(new METValidator("Invalid Username") {
             @Override
             public boolean isValid(@NonNull CharSequence text, boolean isEmpty) {

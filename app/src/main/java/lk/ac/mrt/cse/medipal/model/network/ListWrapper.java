@@ -7,20 +7,20 @@ import java.util.List;
  */
 
 public class ListWrapper <T> {
-    private List<T> items;
+    private List<T> itemsList;
 
     public ListWrapper() {
     }
 
     public ListWrapper(List<T> items) {
-        this.items = items;
+        this.itemsList = items;
     }
 
     public List<T> getItems() {
-        return items;
+        return itemsList;
     }
 
     public void setItems(List<T> items) {
-        this.items = items;
+        this.itemsList = items;
     }
 }

@@ -212,14 +212,14 @@
                 android:layout_below="@id/expandablelayout_basic_info_relative"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
                 android:text="@string/view_more"
                 android:textColor="@color/blue_btn_bg_pressed_color"
                 android:textAllCaps="false"
                 android:background="@android:color/transparent"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="-5dp"
+                android:layout_marginTop="-10dp"/>
         </RelativeLayout>
-
     </android.support.v7.widget.CardView>
 </FrameLayout>

@@ -3,22 +3,20 @@ package lk.ac.mrt.cse.medipal.view.doctor;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
 import lk.ac.mrt.cse.medipal.R;
+import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
-import lk.ac.mrt.cse.medipal.constant.UserType;
-import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Patient;
-import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.util.JsonConvertor;
 import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 
@@ -27,7 +25,6 @@ public class PatientInfoActivity extends AppCompatActivity {
     private MaterialViewPager mViewPager;
     private Toolbar toolbar;
     private ViewPager viewPager;
-    private ArrayList<Prescription> prescriptionList;
     private Patient patient;
     private Context context;
     @Override
@@ -45,7 +42,7 @@ public class PatientInfoActivity extends AppCompatActivity {
         viewPager = mViewPager.getViewPager();
         toolbar = mViewPager.getToolbar();
     }
-    public void addListeners() {
+    private void addListeners() {
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
             public HeaderDesign getHeaderDesign(int page) {
@@ -64,8 +61,10 @@ public class PatientInfoActivity extends AppCompatActivity {
                 return HeaderDesign.fromColorResAndDrawable(R.color.white, VectorDrawableUtil.getDrawable(context, R.drawable.patient_info_background));
             }
         });
-
-        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+        viewPager.setAdapter(getFragmentAdapter());
+    }
+    private FragmentStatePagerAdapter getFragmentAdapter(){
+        return new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
             @Override
             public Fragment getItem(int position) {
@@ -76,10 +75,6 @@ public class PatientInfoActivity extends AppCompatActivity {
                         infoBundle.putString(ObjectType.OBJECT_TYPE_PATIENT,getIntent().getStringExtra(ObjectType.OBJECT_TYPE_PATIENT));
                         patientInformationFragment.setArguments(infoBundle);
                         return patientInformationFragment;
-                    case 1:
-                        //    return RecyclerViewFragment.newInstance();
-                        //case 2:
-                        //    return WebViewFragment.newInstance();
                     default:
                         PrescriptionRecyclerFragment prescriptionRecyclerFragment = new PrescriptionRecyclerFragment();
                         Bundle dataBundle = new Bundle();
@@ -98,25 +93,38 @@ public class PatientInfoActivity extends AppCompatActivity {
             public CharSequence getPageTitle(int position) {
                 switch (position % TAB_COUNT) {
                     case 0:
-                        return "Information";
+                        return Common.TAB_INFORMATION;
                     case 1:
-                        return "Prescription";
+                        return Common.TAB_PRESCRITIONS;
                 }
                 return "";
             }
-        });
+        };
     }
-    public void setElementValues() {
+    private void setElementValues() {
         viewPager.setOffscreenPageLimit(viewPager.getAdapter().getCount());
         mViewPager.getPagerTitleStrip().setViewPager(viewPager);
+        //mViewPager.getPagerTitleStrip().setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.whiteTransparent, getTheme()));
+        mViewPager.getPagerTitleStrip().setTextColorStateListResource(R.color.white);
+
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayUseLogoEnabled(false);
             actionBar.setHomeButtonEnabled(true);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

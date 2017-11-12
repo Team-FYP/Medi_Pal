@@ -276,7 +276,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         }
     }
 
-    public boolean requestPermission() {
+    private boolean requestPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
