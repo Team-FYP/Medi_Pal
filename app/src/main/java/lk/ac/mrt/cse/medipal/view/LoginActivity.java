@@ -21,6 +21,7 @@ import com.willowtreeapps.spruce.Spruce;
 import com.willowtreeapps.spruce.animation.DefaultAnimations;
 import com.willowtreeapps.spruce.sort.CorneredSort;
 import lk.ac.mrt.cse.medipal.R;
+import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
 import lk.ac.mrt.cse.medipal.controller.DoctorController;
@@ -163,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<PatientLoginResponse> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this, "Network Failure. Check your connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
                 }
 
             };
@@ -203,7 +204,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<DoctorLoginResponse> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this, "Network Failure. Check your connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
                 }
 
             };

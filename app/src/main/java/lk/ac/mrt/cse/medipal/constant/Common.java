@@ -11,7 +11,8 @@ public class Common {
     public static final String FEMALE_TXT = "Female";
     public static final String TAB_INFORMATION = "Information";
     public static final String TAB_PRESCRITIONS = "Prescriptions";
-
+    public static final String ERROR_NETWORK = "Network Failure. Check your connection";
+    public static final String ERROR_OCCURED_TXT = "Error Occured: ";
     public static final String DOSAGE_TXT_VALUE = "%s Units %s";
     public static final String DURATION_TXT_VALUE = "%s From %s";
     public static class URL {

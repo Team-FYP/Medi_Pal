@@ -30,6 +30,7 @@ import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.constant.UserType;
+import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 import lk.ac.mrt.cse.medipal.view.doctor.PatientInfoActivity;
@@ -39,13 +40,15 @@ import lk.ac.mrt.cse.medipal.view.doctor.PatientInfoActivity;
  */
 
 public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecyclerAdaptor.PatientRecyclerViewHolder> implements View.OnClickListener{
-    ArrayList<Patient> patientList = null;
-    Context context = null;
-    Activity activity;
-    public PatientRecyclerAdaptor(ArrayList<Patient> patientList, Context context, Activity activity) {
+    private ArrayList<Patient> patientList = null;
+    private Context context = null;
+    private Activity activity;
+    private Doctor doctor;
+    public PatientRecyclerAdaptor(ArrayList<Patient> patientList, Context context, Activity activity, Doctor doctor) {
         this.context = context;
         this.patientList = patientList;
         this.activity = activity;
+        this.doctor = doctor;
     }
 
     @Override
@@ -131,6 +134,8 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
             Gson gson = new Gson();
             String json = gson.toJson(patientList.get(getAdapterPosition()));
             intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
+            json = gson.toJson(doctor);
+            intent.putExtra(ObjectType.OBJECT_TYPE_DOCTOR, json);
             context.startActivity(intent);
         }
     }

@@ -18,6 +18,7 @@ import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDeco
 import java.util.ArrayList;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.adaptor.PatientInfoRecyclerAdaptor;
+import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.controller.PrescriptionDrugController;
 import lk.ac.mrt.cse.medipal.model.Patient;
@@ -87,13 +88,13 @@ public class PatientInformationFragment extends Fragment {
                         refreshRecyclerView();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Error Occured: "+response.message(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), Common.ERROR_OCCURED_TXT+response.message(), Toast.LENGTH_LONG).show();
                 }
                 progressBar.setVisibility(View.GONE);
             }
             @Override
             public void onFailure(Call<ListWrapper<PrescriptionDrug>> call, Throwable t) {
-                Toast.makeText(getActivity(), "Network Failure. Check your connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
             }
         };

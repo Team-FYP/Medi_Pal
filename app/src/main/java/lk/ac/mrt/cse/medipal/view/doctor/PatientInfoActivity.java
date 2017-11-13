@@ -14,6 +14,8 @@ import com.github.florent37.materialviewpager.header.HeaderDesign;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
+import lk.ac.mrt.cse.medipal.controller.DoctorController;
+import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.util.JsonConvertor;
 import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
@@ -24,6 +26,7 @@ public class PatientInfoActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ViewPager viewPager;
     private Patient patient;
+    private Doctor doctor;
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class PatientInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_patient_info);
         context = this;
         patient = (Patient) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_PATIENT, Patient.class);
+        doctor = (Doctor) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_DOCTOR, Doctor.class);
         getElements();
         addListeners();
         setElementValues();
@@ -77,6 +81,7 @@ public class PatientInfoActivity extends AppCompatActivity {
                         PrescriptionRecyclerFragment prescriptionRecyclerFragment = new PrescriptionRecyclerFragment();
                         Bundle dataBundle = new Bundle();
                         dataBundle.putString(ObjectType.OBJECT_TYPE_PATIENT,getIntent().getStringExtra(ObjectType.OBJECT_TYPE_PATIENT));
+                        dataBundle.putString(ObjectType.OBJECT_TYPE_DOCTOR,getIntent().getStringExtra(ObjectType.OBJECT_TYPE_DOCTOR));
                         prescriptionRecyclerFragment.setArguments(dataBundle);
                         return prescriptionRecyclerFragment;
                 }

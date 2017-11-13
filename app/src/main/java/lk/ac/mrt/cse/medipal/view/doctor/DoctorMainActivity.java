@@ -31,6 +31,7 @@ import com.facebook.drawee.view.DraweeView;
 import java.util.ArrayList;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.adaptor.PatientRecyclerAdaptor;
+import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
 import lk.ac.mrt.cse.medipal.controller.DoctorController;
@@ -199,7 +200,7 @@ public class DoctorMainActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(DoctorMainActivity.this, "Error Occured: "+response.message(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(DoctorMainActivity.this, Common.ERROR_OCCURED_TXT+response.message(), Toast.LENGTH_LONG).show();
                 }
                 if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
@@ -207,7 +208,7 @@ public class DoctorMainActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<ListWrapper<Patient>> call, Throwable t) {
-                Toast.makeText(DoctorMainActivity.this, "Network Failure. Check your connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(DoctorMainActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
                 no_patient_text.setVisibility(View.VISIBLE);
                 if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
@@ -220,11 +221,9 @@ public class DoctorMainActivity extends AppCompatActivity {
     }
     private void configureRecyclerView(){
         searchPatientList.addAll(patientList);
-        patientRecyclerAdaptor = new PatientRecyclerAdaptor(searchPatientList,context, activity);
+        patientRecyclerAdaptor = new PatientRecyclerAdaptor(searchPatientList,context, activity, doctor);
         patientRecyclerView.setAdapter(patientRecyclerAdaptor);
         patientRecyclerView.setNestedScrollingEnabled(true);
-
-
     }
     private void configureSearchText(){
         txt_search = (EditText) findViewById(R.id.txt_search);
@@ -259,7 +258,7 @@ public class DoctorMainActivity extends AppCompatActivity {
                     searchPatientList = new ArrayList<Patient>();
                     searchPatientList.addAll(patientList);
                 }
-                patientRecyclerAdaptor = new PatientRecyclerAdaptor(searchPatientList,context, activity);
+                patientRecyclerAdaptor = new PatientRecyclerAdaptor(searchPatientList,context, activity, doctor);
                 patientRecyclerView.setAdapter(patientRecyclerAdaptor);
             }
 

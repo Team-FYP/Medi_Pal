@@ -13,4 +13,8 @@ public class PrescriptionController extends AbstractController{
     public void getPatientPrescriptionList(Callback<ListWrapper<Prescription>> prescriptionListCallBack, String nic) {
         medipalAPI.patientPrescriptionList(nic).enqueue(prescriptionListCallBack);
     }
+
+    public void getLastPrescriptionOfDisease(Callback<Prescription> lastPrescriptionCallBack, String nic, String disease_id) {
+        medipalAPI.lastPrescriptionofDisease(nic, disease_id).enqueue(lastPrescriptionCallBack);
+    }
 }

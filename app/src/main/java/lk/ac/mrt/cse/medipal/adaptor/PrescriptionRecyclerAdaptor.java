@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.github.vipulasri.timelineview.TimelineView;
@@ -49,7 +51,11 @@ public class PrescriptionRecyclerAdaptor extends RecyclerView.Adapter<Prescripti
         holder.pres_date_txt.setText(StringUtil.getDateIn2LineFormat(prescription.getPrescription_date()));
         holder.doctor_name_txt.setText(StringUtil.getDoctorName(prescription.getDoctor().getName()));
         Uri doc_image_uri = Uri.parse(prescription.getDoctor().getImage());
-        holder.doctor_image_drawee.setImageURI(doc_image_uri);
+        holder.doctor_image_drawee.setController(
+                Fresco.newDraweeControllerBuilder()
+                        .setOldController(holder.doctor_image_drawee.getController())
+                        .setUri(doc_image_uri)
+                        .build());
         holder.disease_txt.setText(prescription.getDisease());
         ArrayList<PrescriptionDrug> prescriptionDrugs = prescription.getPrescription_drugs();
         if (prescriptionDrugs.size() <= 2){

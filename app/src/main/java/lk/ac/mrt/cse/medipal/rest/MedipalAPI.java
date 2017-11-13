@@ -1,5 +1,6 @@
 package lk.ac.mrt.cse.medipal.rest;
 
+import lk.ac.mrt.cse.medipal.model.Disease;
 import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
@@ -39,4 +40,10 @@ public interface MedipalAPI {
 
     @GET("/app/prescription/patient/{id}")
     Call<ListWrapper<Prescription>> patientPrescriptionList(@Path("id") String nic);
+
+    @GET("/app/prescription/patient/{id}/lastprescription/{disease}")
+    Call<Prescription> lastPrescriptionofDisease(@Path("id") String nic , @Path("disease") String disease);
+
+    @GET("/app/disease/diseases")
+    Call<ListWrapper<Disease>> allDiseaseList();
 }

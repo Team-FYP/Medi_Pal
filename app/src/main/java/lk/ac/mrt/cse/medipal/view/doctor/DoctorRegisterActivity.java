@@ -224,7 +224,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<DoctorLoginResponse> call, Throwable t) {
-                Toast.makeText(DoctorRegisterActivity.this, "Network Failure. Check your connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(DoctorRegisterActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
             }
 
         };
