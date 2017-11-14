@@ -57,7 +57,7 @@ public class PatientInfoActivity extends AppCompatActivity {
 //                                "http://demo.geekslabs.com/materialize/v2.1/layout01/images/user-profile-bg.jpg");
 //                }
                 //execute others actions if needed (ex : modify your header logo)
-                if (patient.getImage() != null) {
+                if (!patient.getImage().equals(Common.URL.ICON_USER_MALE) && !patient.getImage().equals(Common.URL.ICON_USER_FEMALE)) {
                     return HeaderDesign.fromColorResAndUrl(R.color.white, patient.getImage());
                 }
                 return HeaderDesign.fromColorResAndDrawable(R.color.white, VectorDrawableUtil.getDrawable(context, R.drawable.patient_info_background));
