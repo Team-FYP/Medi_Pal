@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '25.0.0'
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "lk.ac.mrt.cse.medipal"
-        minSdkVersion 22
-        targetSdkVersion 25
+        minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -50,5 +50,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     testCompile 'junit:junit:4.12'
-    compile 'gr.escsoft.michaelprimez.searchablespinner:SearchableSpinner:1.0.9'
+    compile project(":app:libs:searchablespinner")
+    //compile 'gr.escsoft.michaelprimez.searchablespinner:SearchableSpinner:1.0.9'
 }
