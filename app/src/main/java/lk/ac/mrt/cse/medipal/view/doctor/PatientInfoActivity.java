@@ -14,7 +14,6 @@ import com.github.florent37.materialviewpager.header.HeaderDesign;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
-import lk.ac.mrt.cse.medipal.controller.DoctorController;
 import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.util.JsonConvertor;
@@ -57,9 +56,9 @@ public class PatientInfoActivity extends AppCompatActivity {
 //                                "http://demo.geekslabs.com/materialize/v2.1/layout01/images/user-profile-bg.jpg");
 //                }
                 //execute others actions if needed (ex : modify your header logo)
-                if (!patient.getImage().equals(Common.URL.ICON_USER_MALE) && !patient.getImage().equals(Common.URL.ICON_USER_FEMALE)) {
-                    return HeaderDesign.fromColorResAndUrl(R.color.white, patient.getImage());
-                }
+//                if (!patient.getImage().equals(Common.URL.ICON_USER_MALE) && !patient.getImage().equals(Common.URL.ICON_USER_FEMALE)) {
+//                    return HeaderDesign.fromColorResAndUrl(R.color.white, patient.getImage());
+//                }
                 return HeaderDesign.fromColorResAndDrawable(R.color.white, VectorDrawableUtil.getDrawable(context, R.drawable.patient_info_background));
             }
         });

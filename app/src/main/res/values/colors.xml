@@ -11,6 +11,7 @@
     <color name="colorCustomerBackground">#96000000</color>
     <color name="met_textColor">#388E3C</color>
     <color name="met_baseColor">#388E3C</color>
+    <color name="met_baseColorBlue">#00838F</color>
     <color name="met_primaryColor">#FF9800</color>
     <color name="met_errorColor">#F44336</color>
 </resources>

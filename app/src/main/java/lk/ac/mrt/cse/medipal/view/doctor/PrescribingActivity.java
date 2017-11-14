@@ -2,15 +2,19 @@ package lk.ac.mrt.cse.medipal.view.doctor;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,10 +52,13 @@ public class PrescribingActivity extends AppCompatActivity {
     private DiseaseSpinnerAdaptor disease_spinner_adaptor;
     private ArrayList<String> diseaseNameList = new ArrayList<>();
     private ArrayList<Disease> diseaseList = new ArrayList<>();
-    private ProgressBar progressBar;
+    private ContentLoadingProgressBar progressBar;
     private Context context;
     private LinearLayout pres_med_layout_linear;
     private Prescription currentPrescription;
+    private boolean isLastPrescriptionAvailable = true;
+    private int _xDelta;
+    private int _yDelta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +105,7 @@ public class PrescribingActivity extends AppCompatActivity {
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
-    private void retrieveAllDisease(){
+    private void retrieveAllDisease() {
         progressBar.setVisibility(View.VISIBLE);
 
         Callback<ListWrapper<Disease>> allDiseaseListCallback = new Callback<ListWrapper<Disease>>() {
@@ -116,10 +123,11 @@ public class PrescribingActivity extends AppCompatActivity {
                         refreshDiseaseSpinner();
                     }
                 } else {
-                    Toast.makeText(context, Common.ERROR_OCCURED_TXT+response.message(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, Common.ERROR_OCCURED_TXT + response.message(), Toast.LENGTH_LONG).show();
                 }
                 progressBar.setVisibility(View.GONE);
             }
+
             @Override
             public void onFailure(Call<ListWrapper<Disease>> call, Throwable t) {
                 Toast.makeText(context, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
@@ -136,7 +144,7 @@ public class PrescribingActivity extends AppCompatActivity {
         disease_spinner.setAdapter(disease_spinner_adaptor);
     }
 
-    private void addListeners(){
+    private void addListeners() {
         disease_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(View view, int position, long id) {
@@ -150,7 +158,7 @@ public class PrescribingActivity extends AppCompatActivity {
         });
     }
 
-    private void retrieveCurrentPrescription(String disease_id){
+    private void retrieveCurrentPrescription(String disease_id) {
         progressBar.setVisibility(View.VISIBLE);
 
         Callback<Prescription> currentPrescriptionResponse = new Callback<Prescription>() {
@@ -159,21 +167,26 @@ public class PrescribingActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     currentPrescription = response.body();
                     addMedicinetoLinear();
+                    if (isLastPrescriptionAvailable) {
+
+                    }
                 } else {
-                    Toast.makeText(context, Common.ERROR_OCCURED_TXT+response.message(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, Common.ERROR_OCCURED_TXT + response.message(), Toast.LENGTH_LONG).show();
                 }
                 progressBar.setVisibility(View.GONE);
             }
+
             @Override
             public void onFailure(Call<Prescription> call, Throwable t) {
                 Toast.makeText(context, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
             }
         };
-        String patient_nic  = patient.getNic();
+        String patient_nic = patient.getNic();
         PrescriptionController prescriptionController = new PrescriptionController();
         prescriptionController.getLastPrescriptionOfDisease(currentPrescriptionResponse, patient_nic, disease_id);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -184,25 +197,24 @@ public class PrescribingActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void addMedicinetoLinear(){
+    private void addMedicinetoLinear() {
         pres_med_layout_linear.removeAllViews();
         if (currentPrescription != null) {
             ArrayList<PrescriptionDrug> prescriptionDrugs = currentPrescription.getPrescription_drugs();
-            if (prescriptionDrugs != null && !prescriptionDrugs.isEmpty() ){
+            if (prescriptionDrugs != null && !prescriptionDrugs.isEmpty()) {
                 for (PrescriptionDrug prescriptionDrug : prescriptionDrugs) {
                     LayoutInflater li = LayoutInflater.from(context);
                     View single_medication_row = li.inflate(R.layout.single_medication_row_small, null);
                     TextView image_txt = single_medication_row.findViewById(R.id.image_txt);
                     TextView drugNmae_txt = single_medication_row.findViewById(R.id.drugNmae_txt);
-                    TextView unit_size_txt= single_medication_row.findViewById(R.id.unit_size_txt);
-                    TextView dosage_txt= single_medication_row.findViewById(R.id.dosage_txt);
+                    TextView unit_size_txt = single_medication_row.findViewById(R.id.unit_size_txt);
+                    TextView dosage_txt = single_medication_row.findViewById(R.id.dosage_txt);
                     TextView use_time_txt = single_medication_row.findViewById(R.id.use_time_txt);
                     TextView duration_txt = single_medication_row.findViewById(R.id.duration_txt);
-
-                    image_txt.setText(prescriptionDrug.getDrug().getDrug_name().substring(0,1).toUpperCase());
+                    image_txt.setText(prescriptionDrug.getDrug().getDrug_name().substring(0, 1).toUpperCase());
                     drugNmae_txt.setText(prescriptionDrug.getDrug().getDrug_name());
                     unit_size_txt.setText(prescriptionDrug.getUnitSize());
-                    dosage_txt.setText(String.format(Common.DOSAGE_TXT_VALUE,prescriptionDrug.getDosage(), prescriptionDrug.getFrequency()));
+                    dosage_txt.setText(String.format(Common.DOSAGE_TXT_VALUE, prescriptionDrug.getDosage(), prescriptionDrug.getFrequency()));
                     use_time_txt.setText(prescriptionDrug.getUseTime());
                     duration_txt.setText(String.format(Common.DURATION_TXT_VALUE, prescriptionDrug.getDuration(), prescriptionDrug.getStartDate()));
                     pres_med_layout_linear.addView(single_medication_row);
