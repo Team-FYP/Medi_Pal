@@ -44,4 +44,7 @@
     <string name="txt_prescribing_for">Prescribing for</string>
     <string name="txt_unit_size">Unit Size</string>
     <string name="unit_s">Unit(s)</string>
+    <string name="txt_dosage">Dosage</string>
+    <string name="txt_frequency">Frequency</string>
+    <string name="txt_duration">Duration</string>
 </resources>

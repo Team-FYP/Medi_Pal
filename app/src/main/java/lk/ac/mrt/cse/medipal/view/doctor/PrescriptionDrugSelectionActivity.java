@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -130,8 +131,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                     }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {  //not removing items if cancel is done
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            pres_drug_select_recyc_adaptor.notifyItemRemoved(position);    //notifies the RecyclerView Adapter that data in adapter has been removed at a particular position.
-                            pres_drug_select_recyc_adaptor.notifyItemRangeChanged(position, pres_drug_select_recyc_adaptor.getItemCount());   //notifies the RecyclerView Adapter that positions of element in adapter has been changed from position(removed element index to end of list), please update it.
+                            pres_drug_select_recyc_adaptor.notifyDataSetChanged();
                             return;
                         }
                     }).show();  //show alert dialog
@@ -231,5 +231,14 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         drugAutoCompleteAdaptor = new DrugAutoCompleteAdaptor(this, R.layout.drug_adaptor_item_layout, drugList, drugCategoryList);
         drugAutoCompleteAdaptor.notifyDataSetChanged();
         drug_auto_txt.setAdapter(drugAutoCompleteAdaptor);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
