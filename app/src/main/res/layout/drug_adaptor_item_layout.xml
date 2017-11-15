@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/met_baseColor"
+    android:padding="3dp">
+
+    <TextView
+        android:id="@+id/image_txt"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:background="@drawable/plain_circle"
+        android:text="D"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:textColor="@color/met_primaryColor"
+        android:layout_marginStart="10dp"/><!--Make sure image is present in Drawable folder-->
+
+    <TextView
+        android:id="@+id/drug_category_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ctegory"
+        android:textSize="10sp"
+        android:textColor="@color/met_primaryColor"
+        android:layout_marginStart="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+
+        />
+    <TextView
+        android:id="@+id/drug_txt"
+        android:layout_toRightOf="@id/image_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Demo"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop= "10dp"
+        />
+</RelativeLayout>

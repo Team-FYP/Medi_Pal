@@ -7,4 +7,5 @@ package lk.ac.mrt.cse.medipal.constant;
 public class ObjectType {
     public static final String OBJECT_TYPE_DOCTOR = UserType.DOCTOR;
     public static final String OBJECT_TYPE_PATIENT = UserType.PATIENT;
+    public static final String OBJECT_TYPE_DISEASE = "disease";
 }

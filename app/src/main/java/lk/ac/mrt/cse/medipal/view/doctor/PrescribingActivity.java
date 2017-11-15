@@ -1,25 +1,24 @@
 package lk.ac.mrt.cse.medipal.view.doctor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+import com.rilixtech.materialfancybutton.MaterialFancyButton;
 
 import java.util.ArrayList;
 
@@ -42,23 +41,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PrescribingActivity extends AppCompatActivity {
+public class PrescribingActivity extends AppCompatActivity implements View.OnClickListener{
+    private Context context;
     private Doctor doctor;
     private Patient patient;
+    private Disease prescribingDisease;
     private Toolbar toolbar;
+    private ContentLoadingProgressBar progressBar;
     private TextView patient_name_txt;
     private SimpleDraweeView patient_image_drawee;
     private SearchableSpinner disease_spinner;
     private DiseaseSpinnerAdaptor disease_spinner_adaptor;
     private ArrayList<String> diseaseNameList = new ArrayList<>();
     private ArrayList<Disease> diseaseList = new ArrayList<>();
-    private ContentLoadingProgressBar progressBar;
-    private Context context;
     private LinearLayout pres_med_layout_linear;
     private Prescription currentPrescription;
     private boolean isLastPrescriptionAvailable = true;
-    private int _xDelta;
-    private int _yDelta;
+    private MaterialFancyButton btn_level_down;
+    private MaterialFancyButton btn_level_up;
+    private MaterialFancyButton btn_continue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,9 @@ public class PrescribingActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         disease_spinner_adaptor = new DiseaseSpinnerAdaptor(this, diseaseList);
         pres_med_layout_linear = findViewById(R.id.pres_med_layout_linear);
+        btn_level_down = findViewById(R.id.btn_level_down);
+        btn_level_up= findViewById(R.id.btn_level_up);
+        btn_continue = findViewById(R.id.btn_continue);
     }
 
     private void setElementValues() {
@@ -148,14 +152,17 @@ public class PrescribingActivity extends AppCompatActivity {
         disease_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(View view, int position, long id) {
-                retrieveCurrentPrescription(diseaseList.get(position).getDisease_id());
+                prescribingDisease = diseaseList.get(position);
+                retrieveCurrentPrescription(prescribingDisease.getDisease_id());
             }
-
             @Override
             public void onNothingSelected() {
 
             }
         });
+        btn_level_up.setOnClickListener(this);
+        btn_level_down.setOnClickListener(this);
+        btn_continue.setOnClickListener(this);
     }
 
     private void retrieveCurrentPrescription(String disease_id) {
@@ -211,7 +218,7 @@ public class PrescribingActivity extends AppCompatActivity {
                     TextView dosage_txt = single_medication_row.findViewById(R.id.dosage_txt);
                     TextView use_time_txt = single_medication_row.findViewById(R.id.use_time_txt);
                     TextView duration_txt = single_medication_row.findViewById(R.id.duration_txt);
-                    image_txt.setText(prescriptionDrug.getDrug().getDrug_name().substring(0, 1).toUpperCase());
+                    image_txt.setText(prescriptionDrug.getDrug().getDrug_name().substring(0,1).toUpperCase());
                     drugNmae_txt.setText(prescriptionDrug.getDrug().getDrug_name());
                     unit_size_txt.setText(prescriptionDrug.getUnitSize());
                     dosage_txt.setText(String.format(Common.DOSAGE_TXT_VALUE, prescriptionDrug.getDosage(), prescriptionDrug.getFrequency()));
@@ -221,6 +228,26 @@ public class PrescribingActivity extends AppCompatActivity {
                 }
             }
         }
+    }
 
+    @Override
+    public void onClick(View view) {
+        if (prescribingDisease != null) {
+            Intent intent = new Intent(PrescribingActivity.this, PrescriptionDrugSelectionActivity.class);
+            Gson gson = new Gson();
+            switch (view.getId()) {
+                case R.id.btn_level_up:
+                    String json = gson.toJson(patient);
+                    intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
+                    json = gson.toJson(doctor);
+                    intent.putExtra(ObjectType.OBJECT_TYPE_DOCTOR, json);
+                    json = gson.toJson(prescribingDisease);
+                    intent.putExtra(ObjectType.OBJECT_TYPE_DISEASE, json);
+                    break;
+            }
+            startActivity(intent);
+        } else {
+            Toast.makeText(context, "Select a disease first", Toast.LENGTH_LONG).show();
+        }
     }
 }
