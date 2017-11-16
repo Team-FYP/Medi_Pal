@@ -193,7 +193,7 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
                     if (charSequence.length() != 0){
                         prescriptionDrug.setUnitSize(charSequence+""+unit_type_spinner.getSelectedItem());
                     } else {
-                        prescriptionDrug.setUnitSize(null);
+                        prescriptionDrug.setUnitSize("");
                     }
                     unit_size_txt.setText(prescriptionDrug.getUnitSize());
                 }
@@ -215,9 +215,13 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
                     if (charSequence.length() != 0){
                         prescriptionDrug.setDosage(charSequence +" "+Common.Prescription.UNITS_TXT);
                     } else {
-                        prescriptionDrug.setDosage(null);
+                        prescriptionDrug.setDosage("");
                     }
-                    dosage_txt.setText(prescriptionDrug.getDosage());
+                    if (prescriptionDrug.getFrequency() != null) {
+                        dosage_txt.setText(prescriptionDrug.getDosage() + " " + prescriptionDrug.getFrequency());
+                    }else {
+                        dosage_txt.setText(prescriptionDrug.getDosage());
+                    }
                 }
 
                 @Override
@@ -237,9 +241,13 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
                     if (charSequence.length() != 0){
                         prescriptionDrug.setFrequency(charSequence +" "+Common.Prescription.TIMES_TXT+(String)frequency_type_spinner.getSelectedItem());
                     } else {
-                        prescriptionDrug.setFrequency(null);
+                        prescriptionDrug.setFrequency("");
                     }
-                    dosage_txt.setText(dosage_txt.getText()+" "+prescriptionDrug.getFrequency());
+                    if (prescriptionDrug.getDosage() != null) {
+                        dosage_txt.setText(prescriptionDrug.getDosage() + " " + prescriptionDrug.getFrequency());
+                    }else {
+                        dosage_txt.setText(prescriptionDrug.getFrequency());
+                    }
                 }
 
                 @Override
@@ -259,10 +267,11 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
                     if (charSequence.length() != 0){
                         int no_of_days = getDurationInDays(charSequence);
                         prescriptionDrug.setDuration(no_of_days);
+                        duration_txt.setText(String.valueOf(prescriptionDrug.getDuration()) + " " + Common.Prescription.DAYS_TXT +" "+ Common.Prescription.FROM_TXT+" "+prescriptionDrug.getStartDate());
                     } else {
                         prescriptionDrug.setDuration(0);
+                        duration_txt.setText(String.valueOf( Common.Prescription.FROM_TXT+" "+prescriptionDrug.getStartDate()));
                     }
-                    duration_txt.setText(String.valueOf(prescriptionDrug.getDuration()) + " " + Common.Prescription.DAYS_TXT);
                 }
 
                 @Override
@@ -281,10 +290,12 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
                     PrescriptionDrug prescriptionDrug = prescriptionDrugList.get(getAdapterPosition());
                     if (charSequence.length() != 0){
                         prescriptionDrug.setStartDate(charSequence.toString());
+                        if (prescriptionDrug.getDuration() != 0)
+                        duration_txt.setText(prescriptionDrug.getDuration()+" "+Common.Prescription.DAYS_TXT+" "+ Common.Prescription.FROM_TXT + " " +prescriptionDrug.getStartDate());
+                        else duration_txt.setText(Common.Prescription.FROM_TXT + " " +prescriptionDrug.getStartDate());
                     } else {
                         prescriptionDrug.setDuration(0);
                     }
-                    duration_txt.setText(duration_txt.getText() +" "+ Common.Prescription.FROM_TXT + " " +String.valueOf(prescriptionDrug.getDuration()) + " " + Common.Prescription.DAYS_TXT);
                 }
 
                 @Override
@@ -292,32 +303,47 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
 
                 }
             });
-            use_time_spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            use_time_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     PrescriptionDrug prescriptionDrug = prescriptionDrugList.get(getAdapterPosition());
                     prescriptionDrug.setUseTime(useTimeAdaptor.getItem(i));
                     use_time_txt.setText(prescriptionDrug.getUseTime());
                 }
-            });
-            unit_type_spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            unit_type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     PrescriptionDrug prescriptionDrug = prescriptionDrugList.get(getAdapterPosition());
                     if (prescriptionDrug.getUnitSize() != null && !prescriptionDrug.getUnitSize().isEmpty()) {
                         prescriptionDrug.setUnitSize(StringUtil.getPreNumericValue(prescriptionDrug.getUnitSize())+unitTypeAdaptor.getItem(i));
                         unit_size_txt.setText(prescriptionDrug.getUnitSize());
                     }
                 }
-            });
-            frequency_type_spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            frequency_type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     PrescriptionDrug prescriptionDrug = prescriptionDrugList.get(getAdapterPosition());
                     if (prescriptionDrug.getFrequency() != null && !prescriptionDrug.getFrequency().isEmpty()) {
                         prescriptionDrug.setFrequency(StringUtil.getPreNumericValue(prescriptionDrug.getFrequency())+" "+Common.Prescription.TIMES_TXT+frequencyTypeAdaptor.getItem(i));
-                        dosage_txt.setText(dosage_txt.getText()+" "+prescriptionDrug.getFrequency());
+                        dosage_txt.setText(prescriptionDrug.getDosage()+" "+prescriptionDrug.getFrequency());
                     }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
                 }
             });
             duration_type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -326,7 +352,7 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
                     PrescriptionDrug prescriptionDrug = prescriptionDrugList.get(getAdapterPosition());
                     if (prescriptionDrug.getDuration() != 0) {
                         prescriptionDrug.setDuration(getDurationInDays(input_duration.getText()));
-                        duration_txt.setText(String.valueOf(prescriptionDrug.getDuration()) + " " + Common.Prescription.DAYS_TXT);
+                        duration_txt.setText(String.valueOf(prescriptionDrug.getDuration()) + " " + Common.Prescription.DAYS_TXT+" "+ Common.Prescription.FROM_TXT+" "+prescriptionDrug.getStartDate());
                     }
                 }
 
@@ -399,11 +425,10 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
             holder.duration_txt.setText("");
         }
         if (prescriptionDrug.getStartDate() != null && !prescriptionDrug.getStartDate().isEmpty()){
-            holder.duration_txt.setText(holder.duration_txt.getText() +" "+ Common.Prescription.FROM_TXT + " " +String.valueOf(prescriptionDrug.getDuration()) + " " + Common.Prescription.DAYS_TXT);
+            holder.duration_txt.setText(holder.duration_txt.getText() +" "+ Common.Prescription.FROM_TXT + " " +prescriptionDrug.getStartDate());
 
             holder.input_start_date.setText(prescriptionDrug.getStartDate());
         } else {
-            holder.duration_txt.setText(holder.duration_txt.getText() +" "+ Common.Prescription.FROM_TXT + " " +String.valueOf(prescriptionDrug.getDuration()) + " " + Common.Prescription.DAYS_TXT);
             holder.input_start_date.setText(getCurrentDate());
         }
     }
