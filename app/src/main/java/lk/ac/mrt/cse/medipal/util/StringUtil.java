@@ -20,5 +20,12 @@ public class StringUtil {
         return "Dr. "+ doctorName;
     }
 
+    public static String getPreNumericValue(String string){
+        return string.replaceAll("\\D+","");
+    }
+
+    public static String getPostAlphebeticValue(String string){
+        return string.replaceAll("[^A-Za-z]+", "");
+    }
 
 }
