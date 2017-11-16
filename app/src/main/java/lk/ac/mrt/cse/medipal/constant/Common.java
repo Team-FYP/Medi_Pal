@@ -25,6 +25,8 @@ public class Common {
         public static final String USE_TIME_BEFORE_MEAL = "Before Meal";
         public static final String TIMES_TXT = "Times/";
         public static final String FROM_TXT = "from";
+        public static final int DAYS_IN_WEEK = 7;
+        public static final int DAYS_IN_MONTH = 30;
     }
     public static class URL {
         public static final String ICON_USER_MALE = "http://medipal.projects.mrt.ac.lk/images/profile/icon_user_male.png";
