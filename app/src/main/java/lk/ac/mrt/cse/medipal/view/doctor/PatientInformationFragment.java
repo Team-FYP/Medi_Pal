@@ -106,4 +106,10 @@ public class PatientInformationFragment extends Fragment {
     private void refreshRecyclerView(){
         mRecyclerView.setAdapter(new PatientInfoRecyclerAdaptor(context, patient, currentDrugs));
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        retrieveCurrentMedicines();
+    }
 }

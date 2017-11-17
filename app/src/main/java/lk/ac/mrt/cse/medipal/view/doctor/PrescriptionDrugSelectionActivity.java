@@ -40,11 +40,13 @@ import lk.ac.mrt.cse.medipal.controller.DiseaseController;
 import lk.ac.mrt.cse.medipal.controller.DrugCategoryController;
 import lk.ac.mrt.cse.medipal.controller.DrugController;
 import lk.ac.mrt.cse.medipal.controller.PatientController;
+import lk.ac.mrt.cse.medipal.controller.PrescriptionController;
 import lk.ac.mrt.cse.medipal.model.Disease;
 import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Drug;
 import lk.ac.mrt.cse.medipal.model.DrugCategory;
 import lk.ac.mrt.cse.medipal.model.Patient;
+import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
 import lk.ac.mrt.cse.medipal.model.network.DataWriteResponse;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
@@ -114,70 +116,35 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         });
     }
 
-    private void confirmPrescription() {
-        btn_confirm_prescription.setVisibility(View.GONE);
-        progress_bar_confirm.setVisibility(View.VISIBLE);
-
-        Callback<DataWriteResponse> confirmPressResponse = new Callback<DataWriteResponse>() {
-            @Override
-            public void onResponse(Call<DataWriteResponse> call, Response<DataWriteResponse> response) {
-                DataWriteResponse responseObject = response.body();
-                if (response.isSuccessful()) {
-                    if (responseObject.isSuccess()) {
-                        Intent resultIntent = new Intent();
-                        setResult(Activity.RESULT_OK, resultIntent);
-                        finish();
-                    }
-                    btn_confirm_prescription.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<DataWriteResponse> call, Throwable t) {
-                Toast.makeText(PrescriptionDrugSelectionActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
-            }
-
-        };
-        String nic  = input_nic.getText().toString();
-        String name = input_name.getText().toString();
-        String gender = Common.FEMALE_TXT;
-        if (radio_male.isChecked()) {
-            gender = Common.MALE_TXT;
-        }
-        String email = input_email.getText().toString();
-        String birthday = input_birthday.getText().toString();
-        String mobile = input_mobile.getText().toString();
-        String emergency_contact = input_emergency_contact.getText().toString();
-        String password = input_password.getText().toString();
-        String image = profileimage;
-        Patient patient = new Patient(nic,name,gender,email,birthday,mobile,emergency_contact,password,image);
-
-        PatientController patientController = new PatientController();
-        patientController.attemptSignUp(confirmPressResponse, patient);
-    }
-
     private boolean validatePrescription() {
+        if (prescriptionDrugList.isEmpty()){
+            Toast.makeText(PrescriptionDrugSelectionActivity.this, "No drugs in the prescription", Toast.LENGTH_LONG).show();
+            return false;
+        }
         PrescriptionDrug prescriptionDrug = null;
         for (int i = 0; i < prescriptionDrugList.size(); i++) {
             prescriptionDrug = prescriptionDrugList.get(i);
-            if (isNullOrEmpty(prescriptionDrug.getDosage())){
-                PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
-                        viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
-                        pres_med_recycler.findViewHolderForAdapterPosition(i);
-                viewHolder.getInput_dosage().setError("Please Fill this field");
-                return false;
-            }
             if (isNullOrEmpty(prescriptionDrug.getUnitSize())){
                 PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
                         viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
                         pres_med_recycler.findViewHolderForAdapterPosition(i);
+                viewHolder.getExpandablelayout_pres_med_linear().expand();
                 viewHolder.getInput_unitsize().setError("Please Fill this field");
+                return false;
+            }
+            if (isNullOrEmpty(prescriptionDrug.getDosage())){
+                PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
+                        viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
+                        pres_med_recycler.findViewHolderForAdapterPosition(i);
+                viewHolder.getExpandablelayout_pres_med_linear().expand();
+                viewHolder.getInput_dosage().setError("Please Fill this field");
                 return false;
             }
             if (isNullOrEmpty(prescriptionDrug.getFrequency())){
                 PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
                         viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
                         pres_med_recycler.findViewHolderForAdapterPosition(i);
+                viewHolder.getExpandablelayout_pres_med_linear().expand();
                 viewHolder.getInput_frequency().setError("Please Fill this field");
                 return false;
             }
@@ -332,13 +299,53 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         DrugCategoryController drugCategoryController = new DrugCategoryController();
         drugCategoryController.getAllDrugCategoryList(drugCategoryListCallback);
     }
+
     private void refreshRecyclerView(){
        pres_drug_select_recyc_adaptor.notifyDataSetChanged();
     }
+
     private void refreshDrugAutoCompleteSpinner() {
         drugAutoCompleteAdaptor = new DrugAutoCompleteAdaptor(this, R.layout.drug_adaptor_item_layout, drugList, drugCategoryList);
         drugAutoCompleteAdaptor.notifyDataSetChanged();
         drug_auto_txt.setAdapter(drugAutoCompleteAdaptor);
+    }
+
+    private void confirmPrescription() {
+        btn_confirm_prescription.setVisibility(View.GONE);
+        progress_bar_confirm.setVisibility(View.VISIBLE);
+
+        Callback<DataWriteResponse> confirmPressResponse = new Callback<DataWriteResponse>() {
+            @Override
+            public void onResponse(Call<DataWriteResponse> call, Response<DataWriteResponse> response) {
+                DataWriteResponse responseObject = response.body();
+                if (response.isSuccessful()) {
+                    if (responseObject.isSuccess()) {
+                        Intent resultIntent = new Intent();
+                        setResult(Activity.RESULT_OK, resultIntent);
+                        finish();
+                    }else {
+                        progress_bar_confirm.setVisibility(View.GONE);
+                        Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Tey Again.", Toast.LENGTH_LONG).show();
+                        btn_confirm_prescription.setVisibility(View.VISIBLE);
+                    }
+                }else {
+                    progress_bar_confirm.setVisibility(View.GONE);
+                    Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Tey Again.", Toast.LENGTH_LONG).show();
+                    btn_confirm_prescription.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataWriteResponse> call, Throwable t) {
+                progress_bar_confirm.setVisibility(View.GONE);
+                Toast.makeText(PrescriptionDrugSelectionActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
+                btn_confirm_prescription.setVisibility(View.VISIBLE);
+            }
+
+        };
+        Prescription prescription = new Prescription(doctor,patient,disease.getDisease_id(),doctor.getRegistration_id(), prescriptionDrugList);
+        PrescriptionController prescriptionController = new PrescriptionController();
+        prescriptionController.savePrescription(confirmPressResponse, prescription);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
