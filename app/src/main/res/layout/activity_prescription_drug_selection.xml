@@ -104,7 +104,36 @@
                 android:paddingEnd="10dp"
                 android:orientation="vertical">
             </android.support.v7.widget.RecyclerView>
-
+            <RelativeLayout
+                android:layout_below="@id/pres_med_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <com.rilixtech.materialfancybutton.MaterialFancyButton
+                    android:id="@+id/btn_confirm_prescription"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content"
+                    fancy:mfb_icon="@string/fawi_check_square_o"
+                    fancy:mfb_fontIconSize="20dp"
+                    fancy:mfb_iconPosition="left"
+                    fancy:mfb_radius="5dp"
+                    fancy:mfb_textFont="fontawesome.ttf"
+                    fancy:mfb_text="Confirm Prescription"
+                    fancy:mfb_defaultColor="@color/met_errorColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    />
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progress_bar_confirm"
+                    style="@style/Widget.AppCompat.ProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+            </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
     <android.support.v4.widget.ContentLoadingProgressBar

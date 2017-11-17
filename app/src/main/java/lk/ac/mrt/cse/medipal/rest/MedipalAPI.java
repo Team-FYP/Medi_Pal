@@ -7,6 +7,7 @@ import lk.ac.mrt.cse.medipal.model.DrugCategory;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
+import lk.ac.mrt.cse.medipal.model.network.DataWriteResponse;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.model.network.LoginRequest;
 import lk.ac.mrt.cse.medipal.model.network.DoctorLoginResponse;
@@ -54,4 +55,7 @@ public interface MedipalAPI {
 
     @GET("/app/disease/{id}/drugs")
     Call<ListWrapper<Drug>> allDiseaseMedicineList(@Path("id") String disease_id);
+
+    @POST("app/prescription/addprescription")
+    Call<DataWriteResponse> savePrescription(@Body Prescription prescription);
 }
