@@ -56,7 +56,7 @@ public class PrescriptionRecyclerAdaptor extends RecyclerView.Adapter<Prescripti
                         .setOldController(holder.doctor_image_drawee.getController())
                         .setUri(doc_image_uri)
                         .build());
-        holder.disease_txt.setText(prescription.getDisease());
+        holder.disease_txt.setText(prescription.getDisease_id());
         ArrayList<PrescriptionDrug> prescriptionDrugs = prescription.getPrescription_drugs();
         if (prescriptionDrugs.size() <= 2){
             holder.btn_view_more.setVisibility(View.GONE);
@@ -120,7 +120,6 @@ public class PrescriptionRecyclerAdaptor extends RecyclerView.Adapter<Prescripti
                 }
             }
         }
-
     }
 
     private void addMedicinetoLinear(PrescriptionDrug prescriptionDrug, LinearLayout linearLayout){
@@ -136,7 +135,7 @@ public class PrescriptionRecyclerAdaptor extends RecyclerView.Adapter<Prescripti
         image_txt.setText(prescriptionDrug.getDrug().getDrug_name().substring(0,1).toUpperCase());
         drugNmae_txt.setText(prescriptionDrug.getDrug().getDrug_name());
         unit_size_txt.setText(prescriptionDrug.getUnitSize());
-        dosage_txt.setText(String.format(Common.DOSAGE_TXT_VALUE,prescriptionDrug.getDosage(), prescriptionDrug.getFrequency()));
+        dosage_txt.setText(prescriptionDrug.getDosage()+" "+ prescriptionDrug.getFrequency());
         use_time_txt.setText(prescriptionDrug.getUseTime());
         duration_txt.setText(String.format(Common.DURATION_TXT_VALUE, prescriptionDrug.getDuration(), prescriptionDrug.getStartDate()));
         linearLayout.addView(single_medication_row);

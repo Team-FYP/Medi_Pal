@@ -259,7 +259,7 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
         switch(requestCode) {
             case (PRESCRIPTION_DRUG_SELECTION_REQUEST_CODE) : {
                 if (resultCode == Activity.RESULT_OK) {
-                    String returnValue = data.getStringExtra("some_key");
+                    finish();
                 }
                 break;
             }

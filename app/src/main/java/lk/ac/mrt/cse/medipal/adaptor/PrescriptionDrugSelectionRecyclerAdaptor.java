@@ -391,6 +391,10 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
         public MaterialEditText getInput_duration() {
             return input_duration;
         }
+
+        public ExpandableLinearLayout getExpandablelayout_pres_med_linear() {
+            return expandablelayout_pres_med_linear;
+        }
     }
 
     private void setElementValues(PrescriptiontionDrugRecyclerViewHolder holder, int position){

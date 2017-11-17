@@ -155,4 +155,10 @@ public class PrescriptionRecyclerFragment extends Fragment {
     private void refreshRecyclerView(){
         mRecyclerView.setAdapter(new PrescriptionRecyclerAdaptor(prescriptionList,getContext()));
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        retrievePrescriptions();
+    }
 }
