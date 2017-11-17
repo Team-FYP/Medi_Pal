@@ -15,7 +15,7 @@ public class Common {
     public static final String ERROR_NETWORK = "Network Failure. Check your connection";
     public static final String ERROR_OCCURED_TXT = "Error Occured: ";
     public static final String DOSAGE_TXT_VALUE = "%s Units %s";
-    public static final String DURATION_TXT_VALUE = "%s From %s";
+    public static final String DURATION_TXT_VALUE = "%s days From %s";
     public static class Prescription {
         public static final String UNITS_TXT = "Unit(s)";
         public static final String DAYS_TXT = "days";
@@ -25,8 +25,11 @@ public class Common {
         public static final String USE_TIME_BEFORE_MEAL = "Before Meal";
         public static final String TIMES_TXT = "Times/";
         public static final String FROM_TXT = "from";
+        public static final String TXT_SHOW_ALTERNATIVES = "Show Alternatives";
+        public static final String TXT_HIDE_ALTERNATIVES = "Hide Alternatives";
         public static final int DAYS_IN_WEEK = 7;
         public static final int DAYS_IN_MONTH = 30;
+
     }
     public static class URL {
         public static final String ICON_USER_MALE = "http://medipal.projects.mrt.ac.lk/images/profile/icon_user_male.png";

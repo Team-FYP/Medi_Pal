@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -19,27 +20,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.google.gson.Gson;
 import com.rilixtech.materialfancybutton.MaterialFancyButton;
 
 import java.util.ArrayList;
 
 import lk.ac.mrt.cse.medipal.R;
-import lk.ac.mrt.cse.medipal.adaptor.DiseaseSpinnerAdaptor;
 import lk.ac.mrt.cse.medipal.adaptor.DrugAutoCompleteAdaptor;
 import lk.ac.mrt.cse.medipal.adaptor.PrescriptionDrugSelectionRecyclerAdaptor;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
-import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
-import lk.ac.mrt.cse.medipal.controller.DiseaseController;
 import lk.ac.mrt.cse.medipal.controller.DrugCategoryController;
 import lk.ac.mrt.cse.medipal.controller.DrugController;
-import lk.ac.mrt.cse.medipal.controller.PatientController;
 import lk.ac.mrt.cse.medipal.controller.PrescriptionController;
 import lk.ac.mrt.cse.medipal.model.Disease;
 import lk.ac.mrt.cse.medipal.model.Doctor;
@@ -51,8 +49,6 @@ import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
 import lk.ac.mrt.cse.medipal.model.network.DataWriteResponse;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.util.JsonConvertor;
-import lk.ac.mrt.cse.medipal.view.patient.PatientMainActivity;
-import lk.ac.mrt.cse.medipal.view.patient.PatientRegisterActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -109,6 +105,12 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         btn_confirm_prescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                for (int i = 0; i < prescriptionDrugList.size(); i++) {
+                    PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
+                            viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
+                            pres_med_recycler.findViewHolderForAdapterPosition(i);
+                    viewHolder.collapse();
+                }
                 if(validatePrescription()){
                     confirmPrescription();
                 }

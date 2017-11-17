@@ -71,7 +71,7 @@ public class DrugAutoCompleteAdaptor extends ArrayAdapter<Drug> {
             image_txt.setText(drug.getDrug_name().substring(0, 1).toUpperCase());
             drug_txt.setText(drug.getDrug_name());
             if (!drugCategories.isEmpty()) {
-                drug_category_txt.setText(drugCategories.get(Integer.parseInt(drug.getCategory_id())).getCategory_name());
+                drug_category_txt.setText(drugCategories.get(Integer.parseInt(drug.getCategory_id())-1).getCategory_name());
             } else {
                 drug_category_txt.setText("");
             }

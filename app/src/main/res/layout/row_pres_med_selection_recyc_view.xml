@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/layout_outer_linear">
 
     <RelativeLayout
         android:id="@+id/drug_row_layout_rel"
@@ -95,7 +97,16 @@
             android:layout_alignParentBottom="true"
             android:background="@color/met_primaryColor" />
     </RelativeLayout>
-
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progressTint="@color/met_baseColor"
+        android:indeterminateTint="@color/met_baseColorBlue"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:indeterminate="true"/>
     <com.github.aakira.expandablelayout.ExpandableLinearLayout
         android:id="@+id/expandablelayout_pres_med_linear"
         android:layout_width="match_parent"
@@ -105,13 +116,36 @@
         app:ael_expanded="false"
         app:ael_interpolator="linear"
         app:ael_orientation="vertical"
-        android:layout_marginBottom="-90dp">
+        android:layout_marginBottom="-270dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/alternative_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:background="@color/white"
+                />
+            <com.rilixtech.materialfancybutton.MaterialFancyButton
+                android:id="@+id/btn_show_alternatives"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fancy:mfb_icon="@string/fawi_chevron_down"
+                fancy:mfb_fontIconSize="12dp"
+                fancy:mfb_iconPosition="right"
+                fancy:mfb_radius="5dp"
+                fancy:mfb_textSize="12sp"
+                fancy:mfb_textFont="fontawesome.ttf"
+                fancy:mfb_text="@string/txt_show_alternatives"
+                fancy:mfb_defaultColor="@color/white"
+                fancy:mfb_textColor="@color/gray_btn_bg_pressed_color"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"
+                />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -144,7 +178,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/input_dosage"
                     android:layout_width="@dimen/pres_edit_text_width"
@@ -288,5 +321,4 @@
             </RelativeLayout>
         </LinearLayout>
     </com.github.aakira.expandablelayout.ExpandableLinearLayout>
-
 </LinearLayout>
