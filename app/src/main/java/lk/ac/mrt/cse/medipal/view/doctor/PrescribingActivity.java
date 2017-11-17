@@ -1,5 +1,6 @@
 package lk.ac.mrt.cse.medipal.view.doctor;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -42,6 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PrescribingActivity extends AppCompatActivity implements View.OnClickListener{
+    public static final int PRESCRIPTION_DRUG_SELECTION_REQUEST_CODE = 125;
     private Context context;
     private Doctor doctor;
     private Patient patient;
@@ -245,9 +247,22 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
                     intent.putExtra(ObjectType.OBJECT_TYPE_DISEASE, json);
                     break;
             }
-            startActivity(intent);
+            startActivityForResult(intent, PRESCRIPTION_DRUG_SELECTION_REQUEST_CODE);
         } else {
             Toast.makeText(context, "Select a disease first", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (PRESCRIPTION_DRUG_SELECTION_REQUEST_CODE) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    String returnValue = data.getStringExtra("some_key");
+                }
+                break;
+            }
         }
     }
 }

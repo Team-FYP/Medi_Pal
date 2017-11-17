@@ -2,6 +2,7 @@ package lk.ac.mrt.cse.medipal.controller;
 
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
+import lk.ac.mrt.cse.medipal.model.network.DataWriteResponse;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import retrofit2.Callback;
 
@@ -16,5 +17,9 @@ public class PrescriptionController extends AbstractController{
 
     public void getLastPrescriptionOfDisease(Callback<Prescription> lastPrescriptionCallBack, String nic, String disease_id) {
         medipalAPI.lastPrescriptionofDisease(nic, disease_id).enqueue(lastPrescriptionCallBack);
+    }
+
+    public void savePrescription(Callback<DataWriteResponse> prescriptionSavingCallBack, Prescription prescription) {
+        medipalAPI.savePrescription(prescription).enqueue(prescriptionSavingCallBack);
     }
 }

@@ -1,7 +1,10 @@
 package lk.ac.mrt.cse.medipal.view.doctor;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.ActionBar;
@@ -21,6 +24,8 @@ import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+import com.rilixtech.materialfancybutton.MaterialFancyButton;
 
 import java.util.ArrayList;
 
@@ -30,17 +35,22 @@ import lk.ac.mrt.cse.medipal.adaptor.DrugAutoCompleteAdaptor;
 import lk.ac.mrt.cse.medipal.adaptor.PrescriptionDrugSelectionRecyclerAdaptor;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
+import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
 import lk.ac.mrt.cse.medipal.controller.DiseaseController;
 import lk.ac.mrt.cse.medipal.controller.DrugCategoryController;
 import lk.ac.mrt.cse.medipal.controller.DrugController;
+import lk.ac.mrt.cse.medipal.controller.PatientController;
 import lk.ac.mrt.cse.medipal.model.Disease;
 import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Drug;
 import lk.ac.mrt.cse.medipal.model.DrugCategory;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
+import lk.ac.mrt.cse.medipal.model.network.DataWriteResponse;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.util.JsonConvertor;
+import lk.ac.mrt.cse.medipal.view.patient.PatientMainActivity;
+import lk.ac.mrt.cse.medipal.view.patient.PatientRegisterActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,7 +65,9 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
     private AutoCompleteTextView drug_auto_txt;
     private SimpleDraweeView patient_image_drawee;
     private ContentLoadingProgressBar progressBar;
+    private ContentLoadingProgressBar progress_bar_confirm;
     private RecyclerView pres_med_recycler;
+    private MaterialFancyButton btn_confirm_prescription;
     private ArrayList<Drug> drugList = new ArrayList<>();
     private ArrayList<DrugCategory> drugCategoryList = new ArrayList<>();
     private ArrayList<PrescriptionDrug> prescriptionDrugList = new ArrayList<>();
@@ -92,6 +104,99 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 drug_auto_txt.setText("");
             }
         });
+        btn_confirm_prescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(validatePrescription()){
+                    confirmPrescription();
+                }
+            }
+        });
+    }
+
+    private void confirmPrescription() {
+        btn_confirm_prescription.setVisibility(View.GONE);
+        progress_bar_confirm.setVisibility(View.VISIBLE);
+
+        Callback<DataWriteResponse> confirmPressResponse = new Callback<DataWriteResponse>() {
+            @Override
+            public void onResponse(Call<DataWriteResponse> call, Response<DataWriteResponse> response) {
+                DataWriteResponse responseObject = response.body();
+                if (response.isSuccessful()) {
+                    if (responseObject.isSuccess()) {
+                        Intent resultIntent = new Intent();
+                        setResult(Activity.RESULT_OK, resultIntent);
+                        finish();
+                    }
+                    btn_confirm_prescription.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataWriteResponse> call, Throwable t) {
+                Toast.makeText(PrescriptionDrugSelectionActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
+            }
+
+        };
+        String nic  = input_nic.getText().toString();
+        String name = input_name.getText().toString();
+        String gender = Common.FEMALE_TXT;
+        if (radio_male.isChecked()) {
+            gender = Common.MALE_TXT;
+        }
+        String email = input_email.getText().toString();
+        String birthday = input_birthday.getText().toString();
+        String mobile = input_mobile.getText().toString();
+        String emergency_contact = input_emergency_contact.getText().toString();
+        String password = input_password.getText().toString();
+        String image = profileimage;
+        Patient patient = new Patient(nic,name,gender,email,birthday,mobile,emergency_contact,password,image);
+
+        PatientController patientController = new PatientController();
+        patientController.attemptSignUp(confirmPressResponse, patient);
+    }
+
+    private boolean validatePrescription() {
+        PrescriptionDrug prescriptionDrug = null;
+        for (int i = 0; i < prescriptionDrugList.size(); i++) {
+            prescriptionDrug = prescriptionDrugList.get(i);
+            if (isNullOrEmpty(prescriptionDrug.getDosage())){
+                PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
+                        viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
+                        pres_med_recycler.findViewHolderForAdapterPosition(i);
+                viewHolder.getInput_dosage().setError("Please Fill this field");
+                return false;
+            }
+            if (isNullOrEmpty(prescriptionDrug.getUnitSize())){
+                PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
+                        viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
+                        pres_med_recycler.findViewHolderForAdapterPosition(i);
+                viewHolder.getInput_unitsize().setError("Please Fill this field");
+                return false;
+            }
+            if (isNullOrEmpty(prescriptionDrug.getFrequency())){
+                PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
+                        viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
+                        pres_med_recycler.findViewHolderForAdapterPosition(i);
+                viewHolder.getInput_frequency().setError("Please Fill this field");
+                return false;
+            }
+            if (prescriptionDrug.getDuration() == 0){
+                PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
+                        viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
+                        pres_med_recycler.findViewHolderForAdapterPosition(i);
+                viewHolder.getInput_duration().setError("Please Fill this field");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isNullOrEmpty(String value){
+        if (value == null || value.isEmpty()){
+            return true;
+        }
+        return false;
     }
 
     public void getElements() {
@@ -99,9 +204,11 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         disease_name_txt = findViewById(R.id.disease_name_txt);
         patient_image_drawee = findViewById(R.id.patient_image_drawee);
         progressBar = findViewById(R.id.progress_bar);
+        progress_bar_confirm = findViewById(R.id.progress_bar_confirm);
         drug_auto_txt = findViewById(R.id.drug_auto_txt);
         pres_med_recycler = findViewById(R.id.pres_med_recycler);
         prescriptionDruglayoutManager = new LinearLayoutManager(this);
+        btn_confirm_prescription = findViewById(R.id.btn_confirm_prescription);
         attachRecycleItemTouchHelper();
     }
 
@@ -160,11 +267,12 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                         .setUri(image_uri)
                         .build());
         progressBar.setVisibility(View.GONE);
+        progress_bar_confirm.setVisibility(View.GONE);
         pres_med_recycler.setLayoutManager(prescriptionDruglayoutManager);
         drug_auto_txt.setThreshold(0);
         pres_drug_select_recyc_adaptor = new PrescriptionDrugSelectionRecyclerAdaptor(this, prescriptionDrugList, drugList);
         pres_med_recycler.setAdapter(pres_drug_select_recyc_adaptor);
-        pres_med_recycler.setNestedScrollingEnabled(true);
+        pres_med_recycler.setNestedScrollingEnabled(false);
     }
 
     private void retrieveDiseaseMedicine() {

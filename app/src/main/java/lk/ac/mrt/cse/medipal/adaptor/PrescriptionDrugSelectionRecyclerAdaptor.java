@@ -375,6 +375,22 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
             }
             return no_of_days;
         }
+
+        public MaterialEditText getInput_unitsize() {
+            return input_unitsize;
+        }
+
+        public MaterialEditText getInput_frequency() {
+            return input_frequency;
+        }
+
+        public MaterialEditText getInput_dosage() {
+            return input_dosage;
+        }
+
+        public MaterialEditText getInput_duration() {
+            return input_duration;
+        }
     }
 
     private void setElementValues(PrescriptiontionDrugRecyclerViewHolder holder, int position){
