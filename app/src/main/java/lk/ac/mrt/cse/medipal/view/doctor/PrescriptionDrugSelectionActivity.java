@@ -105,6 +105,12 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         btn_confirm_prescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                for (int i = 0; i < prescriptionDrugList.size(); i++) {
+                    PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
+                            viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
+                            pres_med_recycler.findViewHolderForAdapterPosition(i);
+                    viewHolder.collapse();
+                }
                 if(validatePrescription()){
                     confirmPrescription();
                 }
@@ -342,13 +348,6 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         Prescription prescription = new Prescription(doctor,patient,disease.getDisease_id(),doctor.getRegistration_id(), prescriptionDrugList);
         PrescriptionController prescriptionController = new PrescriptionController();
         prescriptionController.savePrescription(confirmPressResponse, prescription);
-    }
-    private void setConflictBackground(PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder viewHolder){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            viewHolder.getDrug_row_layout_rel().setBackgroundColor(getResources().getColor(R.color.colorPrimary, getTheme()));
-        }else {
-            viewHolder.getDrug_row_layout_rel().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

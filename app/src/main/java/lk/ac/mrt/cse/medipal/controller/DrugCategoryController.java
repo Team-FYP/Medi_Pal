@@ -13,4 +13,8 @@ public class DrugCategoryController extends AbstractController{
     public void getAllDrugCategoryList(Callback<ListWrapper<DrugCategory>> drugCategoryListCallBack) {
         medipalAPI.allDrugCategoryList().enqueue(drugCategoryListCallBack);
     }
+
+    public void getAllCategoryDrugList(Callback<ListWrapper<Drug>> categoryDrugListCallBack, String category_id) {
+        medipalAPI.allCategoryMedicineList(category_id).enqueue(categoryDrugListCallBack);
+    }
 }

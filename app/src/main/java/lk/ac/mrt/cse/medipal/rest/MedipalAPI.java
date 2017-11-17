@@ -56,6 +56,9 @@ public interface MedipalAPI {
     @GET("/app/disease/{id}/drugs")
     Call<ListWrapper<Drug>> allDiseaseMedicineList(@Path("id") String disease_id);
 
+    @GET("/app/category/{id}/drugs")
+    Call<ListWrapper<Drug>> allCategoryMedicineList(@Path("id") String category_id);
+
     @POST("app/prescription/addprescription")
     Call<DataWriteResponse> savePrescription(@Body Prescription prescription);
 }
