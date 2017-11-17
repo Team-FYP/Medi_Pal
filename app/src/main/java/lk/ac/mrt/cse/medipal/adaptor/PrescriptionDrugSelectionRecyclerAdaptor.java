@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -394,6 +395,10 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
 
         public ExpandableLinearLayout getExpandablelayout_pres_med_linear() {
             return expandablelayout_pres_med_linear;
+        }
+
+        public RelativeLayout getDrug_row_layout_rel() {
+            return drug_row_layout_rel;
         }
     }
 

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/layout_outer_linear">
 
     <RelativeLayout
         android:id="@+id/drug_row_layout_rel"
@@ -95,7 +96,15 @@
             android:layout_alignParentBottom="true"
             android:background="@color/met_primaryColor" />
     </RelativeLayout>
-
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progressTint="@color/met_baseColor"
+        android:indeterminateTint="@color/met_baseColorBlue"
+        android:layout_alignParentBottom="true"
+        android:indeterminate="true"/>
     <com.github.aakira.expandablelayout.ExpandableLinearLayout
         android:id="@+id/expandablelayout_pres_med_linear"
         android:layout_width="match_parent"
@@ -288,5 +297,4 @@
             </RelativeLayout>
         </LinearLayout>
     </com.github.aakira.expandablelayout.ExpandableLinearLayout>
-
 </LinearLayout>
