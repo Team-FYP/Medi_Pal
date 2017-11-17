@@ -26,6 +26,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //material viewpager
+    compile project(":app:libs:searchablespinner")
+    //compile 'gr.escsoft.michaelprimez.searchablespinner:SearchableSpinner:1.0.9'
     compile 'com.android.support:appcompat-v7:26.0.1'
     compile 'com.android.support:design:26.0.1'
     compile 'cn.pedant.sweetalert:library:1.3'
@@ -49,7 +51,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    compile 'com.rilixtech:materialfancybuttons:1.8.7'
+    compile 'com.rilixtech:fontawesome-typeface:4.7.0.4'
     testCompile 'junit:junit:4.12'
-    compile project(":app:libs:searchablespinner")
-    //compile 'gr.escsoft.michaelprimez.searchablespinner:SearchableSpinner:1.0.9'
 }

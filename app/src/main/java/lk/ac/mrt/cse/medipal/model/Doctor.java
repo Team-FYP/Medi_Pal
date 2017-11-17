@@ -1,6 +1,8 @@
 package lk.ac.mrt.cse.medipal.model;
 
 
+import lk.ac.mrt.cse.medipal.constant.Common;
+
 /**
  * Created by chand on 2017-06-13.
  */
@@ -78,6 +80,13 @@ public class Doctor {
     }
 
     public String getImage() {
+        if (image == null){
+            if (gender.equals(Common.MALE_TXT)) {
+                image = Common.URL.ICON_USER_MALE;
+            } else {
+                image = Common.URL.ICON_USER_FEMALE;
+            }
+        }
         return image;
     }
 

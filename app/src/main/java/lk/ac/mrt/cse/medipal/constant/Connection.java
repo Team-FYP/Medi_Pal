@@ -5,6 +5,9 @@ package lk.ac.mrt.cse.medipal.constant;
  */
 
 public class Connection {
+    public class Network{
+        public static final int NETWORK_CALL_RETRY_COUNT = 3;
+    }
     public class Connectivity{
         public static final String CONNECTION_CHECK_URL = "http://clients3.google.com/generate_204";
         public static final String USER_AGENT_KEY = "User-Agent";

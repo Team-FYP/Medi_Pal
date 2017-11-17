@@ -21,7 +21,7 @@
         app:viewpager_headerAdditionalHeight="20dp"
         app:viewpager_displayToolbarWhenSwipe="true"
         app:viewpager_transparentToolbar="true"
-        app:viewpager_animatedHeaderImage="false"
+        app:viewpager_animatedHeaderImage="true"
         app:viewpager_disableToolbar="false"
         app:viewpager_pagerTitleStrip="@layout/material_view_pager_pagertitlestrip_newstand"
         tools:layout_editor_absoluteY="8dp"

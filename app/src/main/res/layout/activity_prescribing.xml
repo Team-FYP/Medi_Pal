@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="lk.ac.mrt.cse.medipal.view.doctor.PrescribingActivity">
+    tools:context="lk.ac.mrt.cse.medipal.view.doctor.PrescribingActivity"
+    android:fitsSystemWindows="true">
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -67,7 +69,6 @@
                 android:id="@+id/condition_layout_relative"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:layout_margin="10dp"
                 android:background="@drawable/rounded_corner_border_rectangle">
 
@@ -101,9 +102,6 @@
                     app:SpinnerExpandHeight="300dp"
                     app:StartSearchTintColor="@color/met_primaryColor" />
             </RelativeLayout>
-
-
-
             <LinearLayout
                 android:id="@+id/pres_med_layout_linear"
                 android:layout_width="match_parent"
@@ -114,13 +112,66 @@
                 android:orientation="vertical">
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_below="@id/pres_med_layout_linear"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <com.rilixtech.materialfancybutton.MaterialFancyButton
+                    android:layout_weight="1"
+                    android:id="@+id/btn_level_down"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    fancy:mfb_icon="@string/fawi_level_down"
+                    fancy:mfb_iconPosition="right"
+                    fancy:mfb_iconPaddingLeft="10dp"
+                    fancy:mfb_textFont="fontawesome.ttf"
+                    fancy:mfb_text="Level\nDown"
+                    fancy:mfb_defaultColor="@color/met_baseColorBlue"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    />
+                <com.rilixtech.materialfancybutton.MaterialFancyButton
+                    android:layout_weight="1"
+                    android:id="@+id/btn_continue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    fancy:mfb_icon="@string/fawi_arrow_right"
+                    fancy:mfb_iconPosition="right"
+                    fancy:mfb_iconPaddingLeft="10dp"
+                    fancy:mfb_textFont="fontawesome.ttf"
+                    fancy:mfb_text="Level\nContinue"
+                    fancy:mfb_defaultColor="@color/met_primaryColor"
+                    android:layout_margin="5dp"
+                    />
+                <com.rilixtech.materialfancybutton.MaterialFancyButton
+                    android:layout_weight="1"
+                    android:id="@+id/btn_level_up"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    fancy:mfb_icon="@string/fawi_level_up"
+                    fancy:mfb_iconPosition="right"
+                    fancy:mfb_iconPaddingLeft="10dp"
+                    fancy:mfb_textFont="fontawesome.ttf"
+                    fancy:mfb_text="Level\nUp"
+                    fancy:mfb_defaultColor="@color/met_errorColor"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    />
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
-    <ProgressBar
+    <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/progress_bar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
+        android:layout_marginTop="-5dp"
         android:indeterminate="true" />
 </RelativeLayout>

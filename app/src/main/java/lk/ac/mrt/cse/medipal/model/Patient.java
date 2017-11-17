@@ -1,5 +1,7 @@
 package lk.ac.mrt.cse.medipal.model;
 
+import lk.ac.mrt.cse.medipal.constant.Common;
+
 /**
  * Created by Lakshan on 2017-06-01.
  */
@@ -93,6 +95,13 @@ public class Patient {
     }
 
     public String getImage() {
+        if (image == null){
+            if (gender.equals(Common.MALE_TXT)) {
+                image = Common.URL.ICON_USER_MALE;
+            } else {
+                image = Common.URL.ICON_USER_FEMALE;
+            }
+        }
         return image;
     }
 

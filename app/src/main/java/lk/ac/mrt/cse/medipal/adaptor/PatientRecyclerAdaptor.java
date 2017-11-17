@@ -70,10 +70,6 @@ public class PatientRecyclerAdaptor extends RecyclerView.Adapter<PatientRecycler
                             .setOldController(holder.contact_icon.getController())
                             .setUri(imageUri)
                             .build());
-        } else if (patient.getGender().equals(Common.FEMALE_TXT)){
-            holder.contact_icon.setImageResource(R.drawable.icon_user_female);
-        } else if (patient.getGender().equals(Common.MALE_TXT)){
-            holder.contact_icon.setImageResource(R.drawable.icon_user_male);
         }
     }
     @Override

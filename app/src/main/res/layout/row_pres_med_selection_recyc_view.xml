@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/drug_row_layout_rel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/met_baseColor"
+        android:elevation="5dp">
+
+        <TextView
+            android:id="@+id/image_txt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/plain_circle"
+            android:gravity="center"
+            android:text="M"
+            android:textColor="@color/met_primaryColor"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/drugNmae_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/image_txt"
+            android:gravity="center"
+            android:text="Metformin"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/unit_size_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/drugNmae_txt"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="-5dp"
+            android:layout_toRightOf="@id/image_txt"
+            android:gravity="center"
+            android:text="500mg"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dosage_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="3dp"
+            android:text="3 Units 3 Times/day"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/use_time_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/dosage_txt"
+            android:layout_marginEnd="10dp"
+            android:text="After meals"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/duration_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/use_time_txt"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="10dp"
+            android:text="5 days from 2017-11-05"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/met_primaryColor" />
+    </RelativeLayout>
+
+    <com.github.aakira.expandablelayout.ExpandableLinearLayout
+        android:id="@+id/expandablelayout_pres_med_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:ael_duration="1000"
+        app:ael_expanded="false"
+        app:ael_interpolator="linear"
+        app:ael_orientation="vertical"
+        android:layout_marginBottom="-90dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/input_unitsize"
+                    android:layout_width="@dimen/pres_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:hint="@string/txt_unit_size"
+                    android:inputType="number"
+                    app:met_autoValidate="true"
+                    app:met_baseColor="@color/met_baseColor"
+                    app:met_clearButton="true"
+                    app:met_errorColor="@color/met_errorColor"
+                    app:met_floatingLabel="normal"
+                    app:met_iconLeft="@drawable/icon_unit_size"
+                    app:met_primaryColor="@color/met_primaryColor"
+                    app:met_textColor="@color/met_textColor" />
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/unit_type_spinner"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/met_baseColorLight"
+                    android:layout_toEndOf="@id/input_unitsize"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/input_dosage"
+                    android:layout_width="@dimen/pres_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="-3dp"
+                    android:hint="@string/txt_dosage"
+                    android:inputType="number"
+                    app:met_autoValidate="true"
+                    app:met_baseColor="@color/met_baseColor"
+                    app:met_clearButton="true"
+                    app:met_errorColor="@color/met_errorColor"
+                    app:met_floatingLabel="highlight"
+                    app:met_iconLeft="@drawable/icon_dosage"
+                    app:met_primaryColor="@color/met_primaryColor"
+                    app:met_textColor="@color/met_textColor" />
+                <TextView
+                    android:id="@+id/units_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginTop="18dp"
+                    android:text="@string/unit_s"
+                    android:textColor="@color/met_baseColor"
+                    android:layout_toEndOf="@id/input_dosage"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/input_frequency"
+                    android:layout_width="@dimen/pres_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="-3dp"
+                    android:hint="@string/txt_frequency"
+                    android:inputType="number"
+                    app:met_autoValidate="true"
+                    app:met_baseColor="@color/met_baseColor"
+                    app:met_clearButton="true"
+                    app:met_errorColor="@color/met_errorColor"
+                    app:met_floatingLabel="highlight"
+                    app:met_iconLeft="@drawable/icon_frequency"
+                    app:met_primaryColor="@color/met_primaryColor"
+                    app:met_textColor="@color/met_textColor" />
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/frequency_type_spinner"
+                    android:layout_marginTop="13dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/met_baseColorLight"
+                    android:layout_toEndOf="@id/input_frequency"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/input_use_time"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="-3dp"
+                    android:inputType="none"
+                    app:met_autoValidate="true"
+                    app:met_baseColor="@color/met_baseColor"
+                    app:met_clearButton="true"
+                    app:met_errorColor="@color/met_errorColor"
+                    app:met_floatingLabel="highlight"
+                    app:met_iconLeft="@drawable/icon_use_time"
+                    app:met_primaryColor="@color/met_primaryColor"
+                    app:met_textColor="@color/met_textColor"
+                    android:enabled="false"/>
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/use_time_spinner"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/met_baseColorLight"
+                    android:layout_toEndOf="@id/input_use_time"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/input_duration"
+                    android:layout_width="@dimen/pres_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="-3dp"
+                    android:hint="@string/txt_duration"
+                    android:inputType="number"
+                    app:met_autoValidate="true"
+                    app:met_baseColor="@color/met_baseColor"
+                    app:met_clearButton="true"
+                    app:met_errorColor="@color/met_errorColor"
+                    app:met_floatingLabel="highlight"
+                    app:met_iconLeft="@drawable/icon_duration"
+                    app:met_primaryColor="@color/met_primaryColor"
+                    app:met_textColor="@color/met_textColor" />
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/duration_type_spinner"
+                    android:layout_marginTop="13dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/met_baseColorLight"
+                    android:layout_toEndOf="@id/input_duration"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/input_start_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="-3dp"
+                    android:hint="@string/txt_duration"
+                    android:focusable="false"
+                    android:inputType="date"
+                    app:met_autoValidate="true"
+                    app:met_baseColor="@color/met_baseColor"
+                    app:met_clearButton="true"
+                    app:met_errorColor="@color/met_errorColor"
+                    app:met_floatingLabel="highlight"
+                    app:met_iconLeft="@drawable/icon_start_date"
+                    app:met_primaryColor="@color/met_primaryColor"
+                    app:met_textColor="@color/met_textColor" />
+            </RelativeLayout>
+        </LinearLayout>
+    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+</LinearLayout>
