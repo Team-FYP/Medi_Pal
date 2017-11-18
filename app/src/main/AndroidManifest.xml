@@ -44,7 +44,8 @@
         <activity
             android:name=".view.doctor.PrescribingActivity"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
-        <activity android:name=".view.doctor.PrescriptionDrugSelectionActivity"></activity>
+        <activity android:name=".view.doctor.PrescriptionDrugSelectionActivity" />
+        <activity android:name=".view.patient.PrescriptionViewActivity"></activity>
     </application>
 
 </manifest>

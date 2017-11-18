@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.adaptor.PrescriptionRecyclerAdaptor;
+import lk.ac.mrt.cse.medipal.adaptor.PrescriptionSelfRecyclerAdaptor;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.controller.PrescriptionController;
@@ -155,7 +156,7 @@ public class PrescriptionSelfRecyclerFragment extends Fragment {
     }
 
     private void refreshRecyclerView() {
-        mRecyclerView.setAdapter(new PrescriptionRecyclerAdaptor(prescriptionList, getContext()));
+        mRecyclerView.setAdapter(new PrescriptionSelfRecyclerAdaptor(prescriptionList, getContext()));
     }
 
     @Override

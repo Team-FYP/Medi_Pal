@@ -16,4 +16,7 @@
     <color name="met_primaryColor">#FF9800</color>
     <color name="met_primaryColorLight">#20FF9800</color>
     <color name="met_errorColor">#F44336</color>
+    <color name="met_minorColor">#FFD600</color>
+    <color name="met_MediumColor">#FF5722</color>
+    <color name="met_MajorColor">#c81a1a</color>
 </resources>
