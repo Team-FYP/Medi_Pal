@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -20,17 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.rilixtech.materialfancybutton.MaterialFancyButton;
-
 import java.util.ArrayList;
-
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.adaptor.DrugAutoCompleteAdaptor;
 import lk.ac.mrt.cse.medipal.adaptor.PrescriptionDrugSelectionRecyclerAdaptor;
@@ -344,7 +337,6 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 Toast.makeText(PrescriptionDrugSelectionActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
                 btn_confirm_prescription.setVisibility(View.VISIBLE);
             }
-
         };
         Prescription prescription = new Prescription(doctor,patient,disease.getDisease_id(),doctor.getRegistration_id(), prescriptionDrugList);
         PrescriptionController prescriptionController = new PrescriptionController();

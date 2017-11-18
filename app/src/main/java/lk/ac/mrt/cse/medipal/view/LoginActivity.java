@@ -153,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString(SharedPreferencesKeys.PATIENT_OBJECT_KEY, json);
                             editor.apply();
                             Intent intent = new Intent(LoginActivity.this, PatientMainActivity.class);
+                            intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
                             startActivity(intent);
                             finish();
                         } else {

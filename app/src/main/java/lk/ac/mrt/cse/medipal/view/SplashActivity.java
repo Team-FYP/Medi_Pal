@@ -81,7 +81,7 @@ public class SplashActivity extends AppCompatActivity {
         } else if (user_type != null && user_type.equals(UserType.DOCTOR)){
 
             Intent intent = new Intent(this, DoctorMainActivity.class);
-            intent.putExtra(ObjectType.OBJECT_TYPE_DOCTOR, mPrefs.getString(SharedPreferencesKeys.DOCTOR_OBJECT_KEY,null));
+            intent.putExtra(SharedPreferencesKeys.USER_TYPE_DOCTOR, mPrefs.getString(SharedPreferencesKeys.DOCTOR_OBJECT_KEY,null));
             startActivity(intent);
             finish();
 
@@ -89,7 +89,7 @@ public class SplashActivity extends AppCompatActivity {
 
             Intent intent = new Intent(this, PatientMainActivity.class);
             intent.putExtra(SharedPreferencesKeys.USER_TYPE_KEY, UserType.PATIENT);
-            intent.putExtra(SharedPreferencesKeys.PATIENT_OBJECT_KEY, mPrefs.getString(SharedPreferencesKeys.PATIENT_OBJECT_KEY,null));
+            intent.putExtra(SharedPreferencesKeys.USER_TYPE_PATIENT, mPrefs.getString(SharedPreferencesKeys.PATIENT_OBJECT_KEY,null));
             startActivity(intent);
             finish();
         }

@@ -43,6 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Alert;
 import lk.ac.mrt.cse.medipal.constant.Common;
+import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
 import lk.ac.mrt.cse.medipal.controller.PatientController;
 import lk.ac.mrt.cse.medipal.model.Patient;
@@ -251,6 +252,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
                         editor.putString(SharedPreferencesKeys.PATIENT_OBJECT_KEY, json);
                         editor.apply();
                         Intent intent = new Intent(PatientRegisterActivity.this, PatientMainActivity.class);
+                        intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
                         startActivity(intent);
                         finish();
                     }
