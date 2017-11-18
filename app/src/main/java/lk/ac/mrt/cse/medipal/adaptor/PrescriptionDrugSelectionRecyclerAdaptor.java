@@ -503,9 +503,18 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
         public RelativeLayout getDrug_row_layout_rel() {
             return drug_row_layout_rel;
         }
+
         public void collapse(){
-            expandablelayout_pres_med_linear.collapse();
+            if (expandablelayout_pres_med_linear.isExpanded()) {
+                expandablelayout_pres_med_linear.collapse();
+            }
         }
+        public void expand(){
+            if (!expandablelayout_pres_med_linear.isExpanded()) {
+                expandablelayout_pres_med_linear.expand();
+            }
+        }
+
         public void setConflictState(){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 drug_row_layout_rel.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary, context.getTheme()));

@@ -130,7 +130,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
                         viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
                         pres_med_recycler.findViewHolderForAdapterPosition(i);
-                viewHolder.getExpandablelayout_pres_med_linear().expand();
+                viewHolder.expand();
                 viewHolder.getInput_unitsize().setError("Please Fill this field");
                 return false;
             }
@@ -138,7 +138,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
                         viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
                         pres_med_recycler.findViewHolderForAdapterPosition(i);
-                viewHolder.getExpandablelayout_pres_med_linear().expand();
+                viewHolder.expand();
                 viewHolder.getInput_dosage().setError("Please Fill this field");
                 return false;
             }
@@ -146,7 +146,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
                         viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
                         pres_med_recycler.findViewHolderForAdapterPosition(i);
-                viewHolder.getExpandablelayout_pres_med_linear().expand();
+                viewHolder.expand();
                 viewHolder.getInput_frequency().setError("Please Fill this field");
                 return false;
             }
@@ -154,6 +154,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
                         viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
                         pres_med_recycler.findViewHolderForAdapterPosition(i);
+                viewHolder.expand();
                 viewHolder.getInput_duration().setError("Please Fill this field");
                 return false;
             }
