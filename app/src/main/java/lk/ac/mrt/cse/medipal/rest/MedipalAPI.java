@@ -11,6 +11,7 @@ import lk.ac.mrt.cse.medipal.model.network.DataWriteResponse;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.model.network.LoginRequest;
 import lk.ac.mrt.cse.medipal.model.network.DoctorLoginResponse;
+import lk.ac.mrt.cse.medipal.model.network.NotificationResponse;
 import lk.ac.mrt.cse.medipal.model.network.PatientLoginResponse;
 import lk.ac.mrt.cse.medipal.model.network.PrescriptionAllergy;
 import lk.ac.mrt.cse.medipal.model.network.ShareRequest;
@@ -72,4 +73,7 @@ public interface MedipalAPI {
 
     @POST("app/prescription/allergy/addallergy")
     Call<DataWriteResponse> saveAllergy(@Body PrescriptionAllergy prescriptionAllergy);
+
+    @GET("app/notifications/{id}")
+    Call<NotificationResponse> notificationList(@Path("id") String registration_id);
 }

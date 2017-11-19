@@ -44,4 +44,13 @@ public class Common {
 
     }
 
+    public static class Time{
+        public static final String DAYS_AGO = "%d days ago";
+        public static final String HOURS_AGO = "%d hours ago";
+        public static final String MINS_AGO = "%d minutes ago";
+        public static final String SECONDS_AGO = "%d seconds ago";
+        public static final String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+
+    }
+
 }

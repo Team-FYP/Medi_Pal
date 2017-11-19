@@ -1,10 +1,12 @@
 package lk.ac.mrt.cse.medipal.controller;
 
 import lk.ac.mrt.cse.medipal.model.Doctor;
+import lk.ac.mrt.cse.medipal.model.Notification;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.model.network.LoginRequest;
 import lk.ac.mrt.cse.medipal.model.network.DoctorLoginResponse;
+import lk.ac.mrt.cse.medipal.model.network.NotificationResponse;
 import retrofit2.Callback;
 
 /**
@@ -22,5 +24,9 @@ public class DoctorController extends AbstractController{
 
     public void getPatientList(Callback<ListWrapper<Patient>> patientListCallBack, String registration_id) {
         medipalAPI.doctorPatientList(registration_id).enqueue(patientListCallBack);
+    }
+
+    public void getNotificationResponseList(Callback<NotificationResponse> notificationListCallBack, String registration_id) {
+        medipalAPI.notificationList(registration_id).enqueue(notificationListCallBack);
     }
 }
