@@ -53,7 +53,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     compile 'com.rilixtech:materialfancybuttons:1.8.7'
     compile 'com.rilixtech:fontawesome-typeface:4.7.0.4'
-    testCompile 'junit:junit:4.12'
     compile 'com.google.firebase:firebase-messaging:11.6.0'
+    testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,6 +1,7 @@
 package lk.ac.mrt.cse.medipal.adaptor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
 import com.rilixtech.materialfancybutton.MaterialFancyButton;
 
 import org.w3c.dom.Text;
@@ -23,9 +25,12 @@ import java.util.Locale;
 
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Common;
+import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.model.AllergyNotification;
 import lk.ac.mrt.cse.medipal.model.Notification;
+import lk.ac.mrt.cse.medipal.model.PrescriptionNotification;
 import lk.ac.mrt.cse.medipal.model.ShareNotification;
+import lk.ac.mrt.cse.medipal.view.doctor.DoctorPrescriptionView;
 
 /**
  * Created by lakshan on 11/19/17.
@@ -127,9 +132,18 @@ public class NotificationRecyclerViewAdaptor extends RecyclerView.Adapter<Recycl
 
         @Override
         public void onClick(View view) {
+            Notification notification = notificationList.get(getAdapterPosition());
             switch (view.getId()){
                 case R.id.notification_layout:
-
+                    if (notification instanceof AllergyNotification){
+                        Intent intent = new Intent(context, DoctorPrescriptionView.class);
+                        Gson gson = new Gson();
+                        String json = gson.toJson(((AllergyNotification)notification).getPrescription());
+                        intent.putExtra(ObjectType.OBJECT_TYPE_PRESCRIPTION, json);
+                        json = gson.toJson(notification.getPatient());
+                        intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
+                        context.startActivity(intent);
+                    }
                     break;
             }
         }

@@ -13,4 +13,20 @@ public class AllergyNotification extends Notification {
     }
 
     public AllergyNotification(){}
+
+    public Prescription getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(Prescription prescription) {
+        this.prescription = prescription;
+    }
+
+    public PrescriptionAllergy getPrescriptionAllergy() {
+        return prescriptionAllergy;
+    }
+
+    public void setPrescriptionAllergy(PrescriptionAllergy prescriptionAllergy) {
+        this.prescriptionAllergy = prescriptionAllergy;
+    }
 }

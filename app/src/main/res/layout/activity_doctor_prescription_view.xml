@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="lk.ac.mrt.cse.medipal.view.doctor.DoctorPrescriptionView">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="4dp"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/pres_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Prescribed to "
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/doctor_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/pres_txt"
+                android:text="Dr. Lakshan Gamage"
+                android:textColor="@color/met_primaryColor"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/btn_add_allergy"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="5dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/icon_edit" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/doctor_image_drawee"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toLeftOf="@id/btn_add_allergy"
+                app:placeholderImage="@drawable/icon_user_male"
+                app:roundAsCircle="true" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <RelativeLayout
+                android:id="@+id/condition_layout_relative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_corner_border_rectangle">
+
+                <TextView
+                    android:id="@+id/condition_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="7dp"
+                    android:text="@string/condition_txt" />
+
+                <TextView
+                    android:id="@+id/disease_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/condition_txt"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:text="Diabetes Type II"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/pres_med_layout_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/condition_layout_relative"
+                android:background="@color/white"
+                android:elevation="5dp"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/allergy_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pres_med_layout_linear"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Adverse Drug Reaction"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/severity_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="22dp"
+                        android:text="Severity"
+                        android:textColor="@color/met_baseColor"
+                        android:textSize="16sp" />
+
+                    <RadioGroup
+                        android:id="@+id/layout_radio_severity"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="5dp"
+                        android:layout_toEndOf="@id/severity_txt"
+                        android:orientation="horizontal"
+                        android:paddingTop="8dp">
+
+                        <RadioButton
+                            android:id="@+id/radio_minor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:buttonTint="@color/met_baseColor"
+                            android:checked="true"
+                            android:gravity="start|center"
+                            android:text="Minor"
+                            android:textColor="@color/met_minorColor"
+                            app:buttonTint="@color/met_minorColor" />
+
+                        <RadioButton
+                            android:id="@+id/radio_medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:buttonTint="@color/met_baseColor"
+                            android:gravity="start|center"
+                            android:text="Medium"
+                            android:textColor="@color/met_MediumColor"
+                            app:buttonTint="@color/met_MediumColor" />
+
+                        <RadioButton
+                            android:id="@+id/radio_major"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:buttonTint="@color/met_baseColor"
+                            android:gravity="start|center"
+                            android:text="Major"
+                            android:textColor="@color/met_MajorColor"
+                            app:buttonTint="@color/met_MajorColor" />
+                    </RadioGroup>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/allergy_desc_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/green_rectangle"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/desc_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:textColor="@color/met_baseColor"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/allergy_desc_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/desc_txt"
+                        android:background="@color/white"
+                        android:gravity="top|left"
+                        android:inputType="textMultiLine|none"
+                        android:lines="8"
+                        android:maxLines="10"
+                        android:minLines="6"
+                        android:padding="10dp"
+                        android:scrollbars="vertical"
+                        android:textColor="@color/met_primaryColor"
+                        android:textColorHint="@color/met_primaryColor"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar_confirm"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/allergy_linear_layout"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="true" />
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="-5dp"
+        android:indeterminate="true" />
+</RelativeLayout>

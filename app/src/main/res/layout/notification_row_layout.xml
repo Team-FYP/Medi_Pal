@@ -5,7 +5,7 @@
     android:id="@+id/notification_layout"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:background="@color/white"
+    android:background="@color/met_baseColorBlueLight"
     android:paddingBottom="5dp"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
@@ -20,7 +20,28 @@
         android:layout_marginRight="5dp"
         fresco:placeholderImage="@drawable/icon_user_male"
         fresco:roundAsCircle="true" />
-
+    <com.rilixtech.materialfancybutton.MaterialFancyButton
+        android:id="@+id/icon_type"
+        android:layout_width="wrap_content"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        fancy:mfb_iconPaddingLeft="2dp"
+        android:layout_height="wrap_content"
+        fancy:mfb_icon="@string/fawi_check"
+        fancy:mfb_text=""
+        fancy:mfb_fontIconSize="15dp"
+        fancy:mfb_iconPosition="right"
+        fancy:mfb_radius="10dp"
+        fancy:mfb_textFont="fontawesome.ttf"
+        fancy:mfb_defaultColor="@color/met_baseColorBlue"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        />
 
     <TextView
         android:id="@+id/txt_msg"
@@ -28,6 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:maxLines="2"
+        android:layout_toLeftOf="@id/icon_type"
         android:layout_toRightOf="@id/icon_user"
         android:ellipsize="end"
         android:text="@string/patient_name_txt"
@@ -56,29 +79,5 @@
         android:text="934578457v"
         android:textColor="@color/blue_btn_bg_pressed_color"
         android:textSize="12dp" />
-    <com.rilixtech.materialfancybutton.MaterialFancyButton
-        android:id="@+id/icon_type"
-        android:layout_width="wrap_content"
-        android:paddingEnd="5dp"
-        android:paddingStart="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        fancy:mfb_iconPaddingLeft="2dp"
-        android:layout_height="wrap_content"
-        fancy:mfb_icon="@string/fawi_check"
-        fancy:mfb_text=""
-        fancy:mfb_fontIconSize="15dp"
-        fancy:mfb_iconPosition="right"
-        fancy:mfb_radius="10dp"
-        fancy:mfb_textFont="fontawesome.ttf"
-        fancy:mfb_defaultColor="@color/met_baseColorBlue"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        />
-
-
 
 </RelativeLayout>
