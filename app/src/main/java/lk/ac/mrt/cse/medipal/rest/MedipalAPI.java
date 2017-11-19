@@ -12,6 +12,8 @@ import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.model.network.LoginRequest;
 import lk.ac.mrt.cse.medipal.model.network.DoctorLoginResponse;
 import lk.ac.mrt.cse.medipal.model.network.PatientLoginResponse;
+import lk.ac.mrt.cse.medipal.model.network.PrescriptionAllergy;
+import lk.ac.mrt.cse.medipal.model.network.ShareRequest;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -61,4 +63,13 @@ public interface MedipalAPI {
 
     @POST("app/prescription/addprescription")
     Call<DataWriteResponse> savePrescription(@Body Prescription prescription);
+
+    @GET("app/patient/{id}/alldoctors")
+    Call<ListWrapper<Doctor>> patientAllDoctorList(@Path("id") String nic);
+
+    @POST("app/patient/sharehistory")
+    Call<DataWriteResponse> shareDetails(@Body ShareRequest shareRequest);
+
+    @POST("app/prescription/allergy/addallergy")
+    Call<DataWriteResponse> saveAllergy(@Body PrescriptionAllergy prescriptionAllergy);
 }

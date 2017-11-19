@@ -26,26 +26,27 @@
             android:name=".view.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".view.doctor.DoctorMainActivity"
+            android:name=".view.patient.DoctorMainActivity"
             android:theme="@style/doctor_main"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".view.patient.PatientMainActivity" />
         <activity android:name=".view.UserTypeSelectionActivity" />
         <activity
-            android:name=".view.doctor.DoctorRegisterActivity"
+            android:name=".view.patient.DoctorRegisterActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.patient.PatientRegisterActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".view.doctor.PatientInfoActivity" />
+        <activity android:name=".view.patient.PatientInfoActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
         <activity
-            android:name=".view.doctor.PrescribingActivity"
+            android:name=".view.patient.PrescribingActivity"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
-        <activity android:name=".view.doctor.PrescriptionDrugSelectionActivity" />
-        <activity android:name=".view.patient.PrescriptionViewActivity"></activity>
+        <activity android:name=".view.patient.PrescriptionDrugSelectionActivity" />
+        <activity android:name=".view.patient.PrescriptionViewActivity" />
+        <activity android:name=".view.patient.DoctorViewActivity"></activity>
     </application>
 
 </manifest>

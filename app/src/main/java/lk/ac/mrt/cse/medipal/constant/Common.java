@@ -37,4 +37,11 @@ public class Common {
         public static final String BASE_URL = "http://medipal.projects.mrt.ac.lk";
     }
 
+    public static class AllergyTypes{
+        public static final String MINOR = "Minor";
+        public static final String MEDIUM = "Medium";
+        public static final String MAJOR = "Major";
+
+    }
+
 }

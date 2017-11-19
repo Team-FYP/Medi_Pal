@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="lk.ac.mrt.cse.medipal.view.doctor.PatientInfoActivity">
+    tools:context="lk.ac.mrt.cse.medipal.view.patient.PatientInfoActivity">
 
     <com.github.florent37.materialviewpager.MaterialViewPager
         android:id="@+id/materialViewPager"
