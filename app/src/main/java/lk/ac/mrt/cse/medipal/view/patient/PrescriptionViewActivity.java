@@ -32,6 +32,7 @@ import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.controller.PrescriptionAllergyController;
 import lk.ac.mrt.cse.medipal.controller.PrescriptionController;
+import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
 import lk.ac.mrt.cse.medipal.model.network.DataWriteResponse;
@@ -46,6 +47,7 @@ import retrofit2.Response;
 public class PrescriptionViewActivity extends AppCompatActivity implements View.OnClickListener{
     private Context context;
     private Prescription prescription;
+    private Patient patient;
     private Toolbar toolbar;
     private ContentLoadingProgressBar progressBar;
     private TextView doctor_name_txt;
@@ -66,6 +68,7 @@ public class PrescriptionViewActivity extends AppCompatActivity implements View.
         setContentView(R.layout.activity_prescription_view);
         context = this;
         prescription = (Prescription) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_PRESCRIPTION, Prescription.class);
+        patient = (Patient) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_PATIENT, Patient.class);
         getElements();
         setElementValues();
         addListeners();
@@ -212,7 +215,7 @@ public class PrescriptionViewActivity extends AppCompatActivity implements View.
         } else if (radio_major.isChecked()){
             severity = Common.AllergyTypes.MAJOR;
         }
-        PrescriptionAllergy prescriptionAllergy = new PrescriptionAllergy(prescription.getPatient().getNic(), prescription, severity, allergy_desc_txt.getText().toString() );
+        PrescriptionAllergy prescriptionAllergy = new PrescriptionAllergy(patient.getNic(), prescription, severity, allergy_desc_txt.getText().toString() );
         PrescriptionAllergyController prescriptionAllergyController = new PrescriptionAllergyController();
         prescriptionAllergyController.saveAllergy(saveAllergyResponse, prescriptionAllergy);
     }

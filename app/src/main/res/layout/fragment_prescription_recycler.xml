@@ -20,7 +20,7 @@
         android:id="@+id/btn_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_fab"
+        android:src="@drawable/icon_share"
         app:elevation="4dp"
         app:backgroundTint="@color/colorPrimary"
         android:layout_marginEnd="20dp"

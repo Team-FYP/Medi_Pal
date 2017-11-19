@@ -103,12 +103,10 @@ public class PrescriptionSelfRecyclerFragment extends Fragment {
         btn_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PrescribingActivity.class);
+                Intent intent = new Intent(getActivity(), DoctorViewActivity.class);
                 Gson gson = new Gson();
                 String json = gson.toJson(patient);
                 intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
-                json = gson.toJson(doctor);
-                intent.putExtra(ObjectType.OBJECT_TYPE_DOCTOR, json);
                 context.startActivity(intent);
             }
         });
@@ -156,7 +154,7 @@ public class PrescriptionSelfRecyclerFragment extends Fragment {
     }
 
     private void refreshRecyclerView() {
-        mRecyclerView.setAdapter(new PrescriptionSelfRecyclerAdaptor(prescriptionList, getContext()));
+        mRecyclerView.setAdapter(new PrescriptionSelfRecyclerAdaptor(prescriptionList, getContext(), patient));
     }
 
     @Override

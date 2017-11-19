@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
+import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
 import lk.ac.mrt.cse.medipal.util.StringUtil;
@@ -35,10 +36,11 @@ import lk.ac.mrt.cse.medipal.view.patient.PrescriptionViewActivity;
 public class PrescriptionSelfRecyclerAdaptor extends RecyclerView.Adapter<PrescriptionSelfRecyclerAdaptor.PredictionRecyclerViewHolder>{
     private ArrayList<Prescription> prescriptionList;
     private Context context;
-
-    public PrescriptionSelfRecyclerAdaptor(ArrayList<Prescription> prescriptionList, Context context) {
+    private Patient patient;
+    public PrescriptionSelfRecyclerAdaptor(ArrayList<Prescription> prescriptionList, Context context, Patient patient) {
         this.context = context;
         this.prescriptionList = prescriptionList;
+        this.patient = patient;
     }
 
     @Override
@@ -132,6 +134,8 @@ public class PrescriptionSelfRecyclerAdaptor extends RecyclerView.Adapter<Prescr
                 Gson gson = new Gson();
                 String json = gson.toJson(prescriptionList.get(getAdapterPosition()));
                 intent.putExtra(ObjectType.OBJECT_TYPE_PRESCRIPTION, json);
+                json = gson.toJson(patient);
+                intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
                 context.startActivity(intent);
             }
         }

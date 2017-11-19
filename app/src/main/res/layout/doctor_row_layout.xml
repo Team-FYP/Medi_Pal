@@ -11,7 +11,8 @@
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="4dp"
     card_view:cardMaxElevation="6dp"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,7 +21,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingRight="5dp"
         android:background="@color/white"
         android:gravity="center_vertical">
         <com.facebook.drawee.view.SimpleDraweeView
@@ -29,7 +30,6 @@
             android:layout_height="80dp"
             android:layout_centerVertical="true"
             android:layout_gravity="left"
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             fresco:placeholderImage="@drawable/icon_user_male"
             fresco:roundAsCircle="true"
@@ -109,17 +109,18 @@
             android:layout_below="@id/pres_med_recycler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true">
             <com.rilixtech.materialfancybutton.MaterialFancyButton
                 android:id="@+id/btn_share"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:layout_height="wrap_content"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                fancy:mfb_iconPaddingLeft="2dp"
                 fancy:mfb_icon="@string/fawi_paper_plane"
                 fancy:mfb_fontIconSize="15dp"
                 fancy:mfb_iconPosition="right"
@@ -128,7 +129,6 @@
                 fancy:mfb_text="Share"
                 fancy:mfb_defaultColor="@color/met_baseColorBlue"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 />
@@ -136,25 +136,26 @@
                 android:id="@+id/btn_already_share"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                fancy:mfb_iconPaddingLeft="2dp"
                 android:layout_height="wrap_content"
                 fancy:mfb_icon="@string/fawi_check"
                 fancy:mfb_fontIconSize="15dp"
                 fancy:mfb_iconPosition="right"
                 fancy:mfb_radius="5dp"
                 fancy:mfb_textFont="fontawesome.ttf"
-                fancy:mfb_text="Share"
+                fancy:mfb_text="Shared"
                 fancy:mfb_defaultColor="@color/text_color"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 />
             <android.support.v4.widget.ContentLoadingProgressBar
                 android:id="@+id/progress_bar_share"
+                android:layout_alignParentEnd="true"
                 style="@style/Widget.AppCompat.ProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

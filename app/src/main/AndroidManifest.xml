@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <service android:name=".service.PatientNotificationService" android:label="PatientNotification" ></service>
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,27 +27,28 @@
             android:name=".view.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".view.patient.DoctorMainActivity"
+            android:name=".view.doctor.DoctorMainActivity"
             android:theme="@style/doctor_main"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".view.patient.PatientMainActivity" />
         <activity android:name=".view.UserTypeSelectionActivity" />
         <activity
-            android:name=".view.patient.DoctorRegisterActivity"
+            android:name=".view.doctor.DoctorRegisterActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.patient.PatientRegisterActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".view.patient.PatientInfoActivity" />
+        <activity android:name=".view.doctor.PatientInfoActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
         <activity
-            android:name=".view.patient.PrescribingActivity"
+            android:name=".view.doctor.PrescribingActivity"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
-        <activity android:name=".view.patient.PrescriptionDrugSelectionActivity" />
+        <activity android:name=".view.doctor.PrescriptionDrugSelectionActivity" />
         <activity android:name=".view.patient.PrescriptionViewActivity" />
-        <activity android:name=".view.patient.DoctorViewActivity"></activity>
+        <activity android:name=".view.patient.DoctorViewActivity"
+            android:windowSoftInputMode="stateHidden|adjustNothing"></activity>
     </application>
 
 </manifest>

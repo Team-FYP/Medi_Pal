@@ -42,6 +42,7 @@ import lk.ac.mrt.cse.medipal.constant.SharedPreferencesKeys;
 import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
+import lk.ac.mrt.cse.medipal.service.PatientNotificationService;
 import lk.ac.mrt.cse.medipal.util.JsonConvertor;
 import lk.ac.mrt.cse.medipal.util.VectorDrawableUtil;
 import lk.ac.mrt.cse.medipal.view.LoginActivity;
@@ -82,7 +83,7 @@ public class PatientMainActivity extends AppCompatActivity {
         getElements();
         setElementValues();
         addListeners();
-
+        //startService(new Intent(this, PatientNotificationService.class));
     }
 
     private void getElements() {
