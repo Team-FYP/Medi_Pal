@@ -326,12 +326,12 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                         finish();
                     }else {
                         progress_bar_confirm.setVisibility(View.GONE);
-                        Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Tey Again.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Try Again.", Toast.LENGTH_LONG).show();
                         btn_confirm_prescription.setVisibility(View.VISIBLE);
                     }
                 }else {
                     progress_bar_confirm.setVisibility(View.GONE);
-                    Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Tey Again.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Try Again.", Toast.LENGTH_LONG).show();
                     btn_confirm_prescription.setVisibility(View.VISIBLE);
                 }
             }
@@ -355,5 +355,42 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void checkConflicts() {
+        btn_confirm_prescription.setVisibility(View.GONE);
+        progress_bar_confirm.setVisibility(View.VISIBLE);
+
+        Callback<DataWriteResponse> confirmPressResponse = new Callback<DataWriteResponse>() {
+            @Override
+            public void onResponse(Call<DataWriteResponse> call, Response<DataWriteResponse> response) {
+                DataWriteResponse responseObject = response.body();
+                if (response.isSuccessful()) {
+                    if (responseObject.isSuccess()) {
+                        Intent resultIntent = new Intent();
+                        setResult(Activity.RESULT_OK, resultIntent);
+                        finish();
+                    }else {
+                        progress_bar_confirm.setVisibility(View.GONE);
+                        Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Try Again.", Toast.LENGTH_LONG).show();
+                        btn_confirm_prescription.setVisibility(View.VISIBLE);
+                    }
+                }else {
+                    progress_bar_confirm.setVisibility(View.GONE);
+                    Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Try Again.", Toast.LENGTH_LONG).show();
+                    btn_confirm_prescription.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataWriteResponse> call, Throwable t) {
+                progress_bar_confirm.setVisibility(View.GONE);
+                Toast.makeText(PrescriptionDrugSelectionActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
+                btn_confirm_prescription.setVisibility(View.VISIBLE);
+            }
+        };
+        Prescription prescription = new Prescription(doctor,patient,disease.getDisease_id(),doctor.getRegistration_id(), prescriptionDrugList);
+        PrescriptionController prescriptionController = new PrescriptionController();
+        prescriptionController.savePrescription(confirmPressResponse, prescription);
     }
 }
