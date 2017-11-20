@@ -234,7 +234,7 @@ public class PrescriptionEditingActivity extends AppCompatActivity {
         pres_med_recycler.setLayoutManager(prescriptionDruglayoutManager);
         drug_auto_txt.setThreshold(0);
         prescriptionDrugList = prescription.getPrescription_drugs();
-        pres_drug_select_recyc_adaptor = new PrescriptionDrugSelectionRecyclerAdaptor(this, prescriptionDrugList, drugList);
+        pres_drug_select_recyc_adaptor = new PrescriptionDrugSelectionRecyclerAdaptor(this, prescriptionDrugList, drugList, null, patient, disease);
         pres_med_recycler.setAdapter(pres_drug_select_recyc_adaptor);
         pres_med_recycler.setNestedScrollingEnabled(false);
     }

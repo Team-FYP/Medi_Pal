@@ -8,6 +8,8 @@ import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
 import lk.ac.mrt.cse.medipal.model.network.DataWriteResponse;
+import lk.ac.mrt.cse.medipal.model.network.DrugChangeRequest;
+import lk.ac.mrt.cse.medipal.model.network.DrugSuggestion;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.model.network.LoginRequest;
 import lk.ac.mrt.cse.medipal.model.network.DoctorLoginResponse;
@@ -68,7 +70,7 @@ public interface MedipalAPI {
     @GET("app/patient/{id}/alldoctors")
     Call<ListWrapper<Doctor>> patientAllDoctorList(@Path("id") String nic);
 
-    @POST("app/patient/sharehistory")
+    @POST("app/share/sharehistory")
     Call<DataWriteResponse> shareDetails(@Body ShareRequest shareRequest);
 
     @POST("app/prescription/allergy/addallergy")
@@ -82,4 +84,7 @@ public interface MedipalAPI {
 
     @GET("app/prediction/leveldowndruglist/{id}/{disease_name}")
     Call<ListWrapper<Drug>> levelDownPrescription(@Path("id") String nic, @Path("disease_name") String disease_name );
+
+    @POST("app/prediction/suggestedlist")
+    Call<DrugSuggestion> drugSuggestions(@Body DrugChangeRequest drugChangeRequest);
 }

@@ -120,15 +120,16 @@ public class DoctorRecyclerAdaptor extends RecyclerView.Adapter<DoctorRecyclerAd
                     DataWriteResponse responseObject = response.body();
                     if (response.isSuccessful()) {
                         if (responseObject.isSuccess()) {
-
+                            progress_bar_share.setVisibility(View.GONE);
+                            btn_already_share.setVisibility(View.VISIBLE);
                         }else {
                             progress_bar_share.setVisibility(View.GONE);
-                            Toast.makeText(context, "Error saving prescription. Tey Again.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Error sharing history. Try Again.", Toast.LENGTH_LONG).show();
                             btn_share.setVisibility(View.VISIBLE);
                         }
                     }else {
                         progress_bar_share.setVisibility(View.GONE);
-                        Toast.makeText(context, "Error saving prescription. Tey Again.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Error sharing history. Try Again.", Toast.LENGTH_LONG).show();
                         btn_share.setVisibility(View.VISIBLE);
                     }
                 }

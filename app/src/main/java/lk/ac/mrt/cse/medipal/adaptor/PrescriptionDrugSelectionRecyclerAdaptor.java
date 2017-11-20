@@ -1,7 +1,9 @@
 package lk.ac.mrt.cse.medipal.adaptor;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,10 +34,19 @@ import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.controller.DrugCategoryController;
 import lk.ac.mrt.cse.medipal.controller.DrugController;
+import lk.ac.mrt.cse.medipal.controller.PredictionController;
+import lk.ac.mrt.cse.medipal.controller.PrescriptionController;
+import lk.ac.mrt.cse.medipal.model.ConflictScoreValue;
+import lk.ac.mrt.cse.medipal.model.Disease;
 import lk.ac.mrt.cse.medipal.model.Drug;
+import lk.ac.mrt.cse.medipal.model.Patient;
+import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
+import lk.ac.mrt.cse.medipal.model.network.DrugChangeRequest;
+import lk.ac.mrt.cse.medipal.model.network.DrugSuggestion;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.util.StringUtil;
+import lk.ac.mrt.cse.medipal.view.doctor.PrescriptionDrugSelectionActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,18 +57,25 @@ import retrofit2.Response;
 
 public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapter<PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder>  {
     private Context context;
+    private Patient patient;
+    private Disease disease;
     final Calendar calendar = Calendar.getInstance();
     private ArrayList<PrescriptionDrug> prescriptionDrugList;
     private ArrayList<Drug> drugList;
+    private PrescriptionDrug lastPrescriptionDrug;
     private String[] unitTypes = {"mg", "ml", "N/A"};
     private String[] frequencyTypes = {"day", "week", "month"};
     private String[] useTimes = {Common.Prescription.USE_TIME_BEFORE_MEAL, Common.Prescription.USE_TIME_AFTER_MEAL};
     private String[] durationTypes = {Common.Prescription.DAYS_TXT, Common.Prescription.WEEKS_TXT, Common.Prescription.MONTHS_TXT};
+    private ArrayList<ConflictScoreValue> conflictScoreValues;
 
-    public PrescriptionDrugSelectionRecyclerAdaptor(Context context, ArrayList<PrescriptionDrug> prescriptionDrugList, ArrayList<Drug> drugList) {
+    public PrescriptionDrugSelectionRecyclerAdaptor(Context context, ArrayList<PrescriptionDrug> prescriptionDrugList, ArrayList<Drug> drugList, PrescriptionDrug lastPrescriptionDrug, Patient patient, Disease disease) {
         this.context = context;
         this.prescriptionDrugList = prescriptionDrugList;
         this.drugList = drugList;
+        this.lastPrescriptionDrug = lastPrescriptionDrug;
+        this.patient = patient;
+        this.disease = disease;
     }
 
     @Override
@@ -69,13 +87,12 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
     @Override
     public void onBindViewHolder(PrescriptiontionDrugRecyclerViewHolder holder, int position) {
 
-
-
         setElementValues(holder, position);
+        holder.setNoConflictState();
         holder.setIsRecyclable(false);
         holder.expandablelayout_pres_med_linear.initLayout();
         holder.expandablelayout_pres_med_linear.setInRecyclerView(true);
-        holder.expandablelayout_pres_med_linear.collapse();
+        holder.collapse();
     }
 
     @Override
@@ -109,6 +126,7 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
         private DatePickerDialog.OnDateSetListener date;
         private ProgressBar progress_bar;
         private MaterialFancyButton btn_show_alternatives;
+        private MaterialFancyButton btn_show_conflicts;
         private RecyclerView alternative_recycler_view;
         private LinearLayoutManager alternativeDruglayoutManager;
         private DrugAlternativesAdaptor drugAlternativesAdaptor;
@@ -135,6 +153,7 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
             progress_bar = view.findViewById(R.id.progress_bar);
             alternative_recycler_view = view.findViewById(R.id.alternative_recycler_view);
             btn_show_alternatives = view.findViewById(R.id.btn_show_alternatives);
+            btn_show_conflicts = view.findViewById(R.id.btn_show_conflicts);
 
             drug_row_layout_rel.setOnClickListener(this);
             expandablelayout_pres_med_linear.collapse();
@@ -179,6 +198,7 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
             };
             input_start_date.setOnClickListener(this);
             btn_show_alternatives.setOnClickListener(this);
+            btn_show_conflicts.setOnClickListener(this);
         }
 
         @Override
@@ -225,9 +245,21 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
                             }
                         };
                         alternative_recycler_view.addOnItemTouchListener(mScrollTouchListener);
-                        retrieveCategoryDrugs();
+                        if (!categoryDrugList.isEmpty()) {
+                            alternative_recycler_view.setVisibility(View.VISIBLE);
+                            btn_show_alternatives.setText(Common.Prescription.TXT_HIDE_ALTERNATIVES);
+                            btn_show_alternatives.setIconResource("\uf077");
+                        } else {
+                            retrieveCategoryDrugs();
+                        }
+                        //retrieveCategoryDrugs();
                     } else {
                         hideAltDrugRecycler();
+                    }
+                    break;
+                case R.id.btn_show_conflicts:
+                    if (conflictScoreValues != null) {
+                        ((PrescriptionDrugSelectionActivity) context).showBottomSheet(conflictScoreValues);
                     }
                     break;
             }
@@ -251,7 +283,17 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
                                     break;
                                 }
                             }
-                            refreshAlternativeRecycler();
+                            if (!categoryDrugList.isEmpty()){
+                                alternative_recycler_view.setVisibility(View.VISIBLE);
+                                btn_show_alternatives.setText(Common.Prescription.TXT_HIDE_ALTERNATIVES);
+                                btn_show_alternatives.setIconResource("\uf077");
+                                refreshAlternativeRecycler();
+                            } else {
+                                Toast.makeText(context, "No Alternatives were found.",Toast.LENGTH_LONG );
+                            }
+
+                        } else {
+                            Toast.makeText(context, "No Alternatives were found.",Toast.LENGTH_LONG );
                         }
                     } else {
                         Toast.makeText(context, Common.ERROR_OCCURED_TXT + response.message(), Toast.LENGTH_LONG).show();
@@ -272,9 +314,6 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
         public void refreshAlternativeRecycler(){
             drugAlternativesAdaptor = new DrugAlternativesAdaptor(context, categoryDrugList, this);
             alternative_recycler_view.setAdapter(drugAlternativesAdaptor);
-            alternative_recycler_view.setVisibility(View.VISIBLE);
-            btn_show_alternatives.setText(Common.Prescription.TXT_HIDE_ALTERNATIVES);
-            btn_show_alternatives.setIconResource("\uf077");
         }
 
         public void hideAltDrugRecycler(){
@@ -521,6 +560,7 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
             }else {
                 drug_row_layout_rel.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
             }
+            btn_show_conflicts.setVisibility(View.VISIBLE);
         }
         public void setNoConflictState(){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -528,11 +568,66 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
             }else {
                 drug_row_layout_rel.setBackgroundColor(context.getResources().getColor(R.color.met_baseColor));
             }
+            btn_show_conflicts.setVisibility(View.GONE);
         }
+
         public void exchangeDrug(Drug newDrug){
             prescriptionDrugList.get(getAdapterPosition()).setDrug(newDrug);
+            lastPrescriptionDrug = prescriptionDrugList.get(getAdapterPosition());
             hideAltDrugRecycler();
             notifyDataSetChanged();
+        }
+
+
+        private void checkConflicts() {
+            progress_bar.setVisibility(View.VISIBLE);
+
+            final Callback<DrugSuggestion> suggestionResponse = new Callback<DrugSuggestion>() {
+                @Override
+                public void onResponse(Call<DrugSuggestion> call, Response<DrugSuggestion> response) {
+                    DrugSuggestion responseObject = response.body();
+                    if (response.isSuccessful()) {
+                        if (responseObject.getConflictScoreValueArrayList() != null && !responseObject.getConflictScoreValueArrayList().isEmpty()) {
+                            conflictScoreValues = responseObject.getConflictScoreValueArrayList();
+                            setConflictState();
+                            expand();
+                            progress_bar.setVisibility(View.GONE);
+                        }else {
+                            conflictScoreValues = null;
+                            progress_bar.setVisibility(View.GONE);
+                            setNoConflictState();
+                        }
+                        if (responseObject.getSuggested_drugs() != null){
+                            categoryDrugList = new ArrayList<>();
+                            categoryDrugList.addAll(responseObject.getSuggested_drugs());
+                            Drug currentDrug = prescriptionDrugList.get(getAdapterPosition()).getDrug();
+                            for (int i=0; i< categoryDrugList.size(); i++){
+                                if (categoryDrugList.get(i).getDrug_id().equals(currentDrug.getDrug_id())){
+                                    categoryDrugList.remove(i);
+                                    break;
+                                }
+                            }
+                            refreshAlternativeRecycler();
+                        }
+                    }else {
+                        progress_bar.setVisibility(View.GONE);
+                        Toast.makeText(context, "Error checking conflicts. Try Again.", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DrugSuggestion> call, Throwable t) {
+                    progress_bar.setVisibility(View.GONE);
+                    Toast.makeText(context, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
+                }
+            };
+            ArrayList<Drug> currentDrugList = new ArrayList<>();
+            for (PrescriptionDrug prescriptionDrug : prescriptionDrugList){
+                currentDrugList.add(prescriptionDrug.getDrug());
+            }
+            DrugChangeRequest drugChangeRequest = new DrugChangeRequest(lastPrescriptionDrug.getDrug(),currentDrugList, patient.getNic(), disease.getDisease_name());
+            PredictionController predictionController = new PredictionController();
+            predictionController.getDrugSuggestions(suggestionResponse, drugChangeRequest);
         }
     }
 
@@ -590,7 +685,11 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
         } else {
             holder.input_start_date.setText(getCurrentDate());
         }
-        holder.progress_bar.setVisibility(View.GONE);
+        if (lastPrescriptionDrug != null && prescriptionDrugList.get(position).getDrug().getDrug_id().equals(lastPrescriptionDrug.getDrug().getDrug_id())) {
+            holder.checkConflicts();
+        } else {
+            holder.progress_bar.setVisibility(View.GONE);
+        }
         holder.alternative_recycler_view.setVisibility(View.GONE);
     }
     private String getCurrentDate(){
@@ -600,5 +699,10 @@ public class PrescriptionDrugSelectionRecyclerAdaptor extends RecyclerView.Adapt
         String format = Common.DATE_FORMAT;
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(calendar.getTime());
+    }
+
+    public void setLastPrescriptionDrug(PrescriptionDrug lastPrescriptionDrug){
+        this.lastPrescriptionDrug = lastPrescriptionDrug;
+
     }
 }
