@@ -44,6 +44,13 @@ public class Common {
 
     }
 
+    public static class NotificationStatus{
+        public static final String NEW = "NEW";
+        public static final String SENT = "SENT";
+        public static final String SEEN = "SEEN";
+
+    }
+
     public static class Time{
         public static final String DAYS_AGO = "%d days ago";
         public static final String HOURS_AGO = "%d hours ago";

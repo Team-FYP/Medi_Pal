@@ -1,6 +1,8 @@
 package lk.ac.mrt.cse.medipal.view.doctor;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.ActionBar;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
+import lk.ac.mrt.cse.medipal.model.AllergyNotification;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
@@ -33,6 +36,7 @@ import lk.ac.mrt.cse.medipal.util.JsonConvertor;
 import lk.ac.mrt.cse.medipal.util.StringUtil;
 
 public class DoctorPrescriptionView extends AppCompatActivity implements View.OnClickListener{
+    private static final int ACTIVITY_RESULT_KEY = 225;
     private Context context;
     private Prescription prescription;
     private Patient patient;
@@ -145,6 +149,12 @@ public class DoctorPrescriptionView extends AppCompatActivity implements View.On
         Gson gson = new Gson();
         switch (view.getId()) {
             case R.id.btn_add_allergy:
+                Intent intent = new Intent(DoctorPrescriptionView.this, PrescriptionEditingActivity.class);
+                String json = gson.toJson(prescription);
+                intent.putExtra(ObjectType.OBJECT_TYPE_PRESCRIPTION, json);
+                json = gson.toJson(patient);
+                intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
+                ((Activity)context).startActivityForResult(intent, ACTIVITY_RESULT_KEY);
                 break;
         }
     }
@@ -159,5 +169,17 @@ public class DoctorPrescriptionView extends AppCompatActivity implements View.On
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (ACTIVITY_RESULT_KEY) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    finish();
+                }
+                break;
+            }
+        }
+    }
 }
 

@@ -18,6 +18,9 @@
         <service
             android:name=".service.PatientNotificationService"
             android:label="PatientNotification" />
+        <service
+            android:name=".service.DoctorNotificationService"
+            android:label="DoctorNotificationService" />
 
         <activity android:name=".view.SplashActivity">
             <intent-filter>
@@ -53,7 +56,8 @@
         <activity
             android:name=".view.patient.DoctorViewActivity"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
-        <activity android:name=".view.doctor.DoctorPrescriptionView"></activity>
+        <activity android:name=".view.doctor.DoctorPrescriptionView" />
+        <activity android:name=".view.doctor.PrescriptionEditingActivity"></activity>
     </application>
 
 </manifest>

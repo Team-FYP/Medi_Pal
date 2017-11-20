@@ -10,6 +10,7 @@ import java.util.Locale;
 import lk.ac.mrt.cse.medipal.constant.Common;
 
 public abstract class Notification implements Comparable {
+    private int  notification_id;
     private Patient patient;
     private Doctor doctor;
     private String message;
@@ -86,5 +87,13 @@ public abstract class Notification implements Comparable {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public int getNotification_id() {
+        return notification_id;
+    }
+
+    public void setNotification_id(int notification_id) {
+        this.notification_id = notification_id;
     }
 }

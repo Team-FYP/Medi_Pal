@@ -47,6 +47,7 @@ import lk.ac.mrt.cse.medipal.model.Notification;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.model.network.NotificationResponse;
+import lk.ac.mrt.cse.medipal.service.DoctorNotificationService;
 import lk.ac.mrt.cse.medipal.util.JsonConvertor;
 import lk.ac.mrt.cse.medipal.view.LoginActivity;
 import retrofit2.Call;
@@ -94,6 +95,7 @@ public class DoctorMainActivity extends AppCompatActivity {
         loadRecyclerData();
         configureSearchText();
         retireveNotifications();
+        startService(new Intent(this, DoctorNotificationService.class));
         //configureNotification();
     }
 

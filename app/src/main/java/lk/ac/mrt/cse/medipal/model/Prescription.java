@@ -11,6 +11,7 @@ public class Prescription {
     private Doctor doctor;
     private Patient patient;
     private String disease_id;
+    private String disease_name;
     private String doctor_id;
     private String prescription_date;
     private ArrayList<PrescriptionDrug> prescription_drugs;
@@ -100,6 +101,14 @@ public class Prescription {
 
     public void setPrescription_allergy(PrescriptionAllergy prescription_allergy) {
         this.prescription_allergy = prescription_allergy;
+    }
+
+    public String getDisease_name() {
+        return disease_name;
+    }
+
+    public void setDisease_name(String disease_name) {
+        this.disease_name = disease_name;
     }
 }
 
