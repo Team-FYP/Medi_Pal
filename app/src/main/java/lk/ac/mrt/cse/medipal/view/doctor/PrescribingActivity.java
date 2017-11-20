@@ -33,6 +33,7 @@ import lk.ac.mrt.cse.medipal.controller.DiseaseController;
 import lk.ac.mrt.cse.medipal.controller.PrescriptionController;
 import lk.ac.mrt.cse.medipal.model.Disease;
 import lk.ac.mrt.cse.medipal.model.Doctor;
+import lk.ac.mrt.cse.medipal.model.Drug;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
@@ -42,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PrescribingActivity extends AppCompatActivity implements View.OnClickListener{
+public class PrescribingActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int PRESCRIPTION_DRUG_SELECTION_REQUEST_CODE = 125;
     private Context context;
     private Doctor doctor;
@@ -62,6 +63,7 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
     private MaterialFancyButton btn_level_down;
     private MaterialFancyButton btn_level_up;
     private MaterialFancyButton btn_continue;
+    private LinearLayout btn_layout_linear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +88,9 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
         disease_spinner_adaptor = new DiseaseSpinnerAdaptor(this, diseaseList);
         pres_med_layout_linear = findViewById(R.id.pres_med_layout_linear);
         btn_level_down = findViewById(R.id.btn_level_down);
-        btn_level_up= findViewById(R.id.btn_level_up);
+        btn_level_up = findViewById(R.id.btn_level_up);
         btn_continue = findViewById(R.id.btn_continue);
+        btn_layout_linear = findViewById(R.id.btn_layout_linear);
     }
 
     private void setElementValues() {
@@ -157,6 +160,7 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
                 prescribingDisease = diseaseList.get(position);
                 retrieveCurrentPrescription(prescribingDisease.getDisease_id());
             }
+
             @Override
             public void onNothingSelected() {
 
@@ -220,7 +224,7 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
                     TextView dosage_txt = single_medication_row.findViewById(R.id.dosage_txt);
                     TextView use_time_txt = single_medication_row.findViewById(R.id.use_time_txt);
                     TextView duration_txt = single_medication_row.findViewById(R.id.duration_txt);
-                    image_txt.setText(prescriptionDrug.getDrug().getDrug_name().substring(0,1).toUpperCase());
+                    image_txt.setText(prescriptionDrug.getDrug().getDrug_name().substring(0, 1).toUpperCase());
                     drugNmae_txt.setText(prescriptionDrug.getDrug().getDrug_name());
                     unit_size_txt.setText(prescriptionDrug.getUnitSize());
                     dosage_txt.setText(prescriptionDrug.getDosage() + " " + prescriptionDrug.getFrequency());
@@ -235,19 +239,19 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         if (prescribingDisease != null) {
-            Intent intent = new Intent(PrescribingActivity.this, PrescriptionDrugSelectionActivity.class);
-            Gson gson = new Gson();
+
             switch (view.getId()) {
+                case R.id.btn_continue:
+                    continuePrescription();
+                    break;
+                case R.id.btn_level_down:
+                    leveDownPrescription();
+                    break;
                 case R.id.btn_level_up:
-                    String json = gson.toJson(patient);
-                    intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
-                    json = gson.toJson(doctor);
-                    intent.putExtra(ObjectType.OBJECT_TYPE_DOCTOR, json);
-                    json = gson.toJson(prescribingDisease);
-                    intent.putExtra(ObjectType.OBJECT_TYPE_DISEASE, json);
+                    leveUpPrescription();
                     break;
             }
-            startActivityForResult(intent, PRESCRIPTION_DRUG_SELECTION_REQUEST_CODE);
+
         } else {
             Toast.makeText(context, "Select a disease first", Toast.LENGTH_LONG).show();
         }
@@ -256,13 +260,107 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (PRESCRIPTION_DRUG_SELECTION_REQUEST_CODE) : {
+        switch (requestCode) {
+            case (PRESCRIPTION_DRUG_SELECTION_REQUEST_CODE): {
                 if (resultCode == Activity.RESULT_OK) {
                     finish();
                 }
                 break;
             }
         }
+    }
+
+    private void continuePrescription() {
+        Intent intent = new Intent(PrescribingActivity.this, PrescriptionDrugSelectionActivity.class);
+        Gson gson = new Gson();
+        String json = gson.toJson(patient);
+        intent.putExtra(ObjectType.OBJECT_TYPE_PATIENT, json);
+        json = gson.toJson(doctor);
+        intent.putExtra(ObjectType.OBJECT_TYPE_DOCTOR, json);
+        json = gson.toJson(prescribingDisease);
+        intent.putExtra(ObjectType.OBJECT_TYPE_DISEASE, json);
+        json = gson.toJson(currentPrescription);
+        intent.putExtra(ObjectType.OBJECT_TYPE_PRESCRIPTION, json);
+        startActivityForResult(intent, PRESCRIPTION_DRUG_SELECTION_REQUEST_CODE);
+        progressBar.setVisibility(View.GONE);
+        btn_layout_linear.setVisibility(View.VISIBLE);
+    }
+
+    private void leveDownPrescription() {
+        progressBar.setVisibility(View.VISIBLE);
+        btn_layout_linear.setVisibility(View.GONE);
+
+        Callback<ListWrapper<Drug>> levelDownResponse = new Callback<ListWrapper<Drug>>() {
+            @Override
+            public void onResponse(Call<ListWrapper<Drug>> call, Response<ListWrapper<Drug>> response) {
+                ListWrapper<Drug> responseObject = response.body();
+                if (response.isSuccessful()) {
+                    if (responseObject.getItems() != null) {
+                        ArrayList<PrescriptionDrug> prescriptionDrugs = new ArrayList<>();
+                        for (Drug drug : responseObject.getItems()){
+                            prescriptionDrugs.add(new PrescriptionDrug(drug));
+                        }
+                        currentPrescription = new Prescription(doctor,patient,prescribingDisease.getDisease_id(),doctor.getRegistration_id(),prescriptionDrugs);
+                        continuePrescription();
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(PrescribingActivity.this, "Error getting prescription. Try Again.", Toast.LENGTH_LONG).show();
+                        btn_layout_linear.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(PrescribingActivity.this, "Error getting prescription. Try Again.", Toast.LENGTH_LONG).show();
+                    btn_layout_linear.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListWrapper<Drug>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(PrescribingActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
+                btn_layout_linear.setVisibility(View.VISIBLE);
+            }
+        };
+        PrescriptionController prescriptionController = new PrescriptionController();
+        prescriptionController.levelDownPrescription(levelDownResponse, patient.getNic(), prescribingDisease.getDisease_name());
+    }
+
+    private void leveUpPrescription() {
+        progressBar.setVisibility(View.VISIBLE);
+        btn_layout_linear.setVisibility(View.GONE);
+
+        Callback<ListWrapper<Drug>> levelUpResponse = new Callback<ListWrapper<Drug>>() {
+            @Override
+            public void onResponse(Call<ListWrapper<Drug>> call, Response<ListWrapper<Drug>> response) {
+                ListWrapper<Drug> responseObject = response.body();
+                if (response.isSuccessful()) {
+                    if (responseObject.getItems() != null) {
+                        ArrayList<PrescriptionDrug> prescriptionDrugs = new ArrayList<>();
+                        for (Drug drug : responseObject.getItems()){
+                            prescriptionDrugs.add(new PrescriptionDrug(drug));
+                        }
+                        currentPrescription = new Prescription(doctor,patient,prescribingDisease.getDisease_id(),doctor.getRegistration_id(),prescriptionDrugs);
+                        continuePrescription();
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(PrescribingActivity.this, "Error getting prescription. Try Again.", Toast.LENGTH_LONG).show();
+                        btn_layout_linear.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(PrescribingActivity.this, "Error getting prescription. Try Again.", Toast.LENGTH_LONG).show();
+                    btn_layout_linear.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListWrapper<Drug>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(PrescribingActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
+                btn_layout_linear.setVisibility(View.VISIBLE);
+            }
+        };
+        PrescriptionController prescriptionController = new PrescriptionController();
+        prescriptionController.levelUpPrescription(levelUpResponse, patient.getNic(), prescribingDisease.getDisease_name());
     }
 }

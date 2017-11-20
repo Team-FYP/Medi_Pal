@@ -76,4 +76,10 @@ public interface MedipalAPI {
 
     @GET("app/notifications/{id}")
     Call<NotificationResponse> notificationList(@Path("id") String registration_id);
+
+    @GET("app/prediction/levelupdruglist/{id}/{disease_name}")
+    Call<ListWrapper<Drug>> levelUpPrescription(@Path("id") String nic, @Path("disease_name") String disease_name );
+
+    @GET("app/prediction/leveldowndruglist/{id}/{disease_name}")
+    Call<ListWrapper<Drug>> levelDownPrescription(@Path("id") String nic, @Path("disease_name") String disease_name );
 }

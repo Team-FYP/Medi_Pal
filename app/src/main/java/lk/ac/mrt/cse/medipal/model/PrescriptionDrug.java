@@ -23,6 +23,10 @@ public class PrescriptionDrug {
 
     }
 
+    public PrescriptionDrug(Drug drug) {
+        this.drug = drug;
+    }
+
     public String getUnitSize() {
         return unitSize;
     }

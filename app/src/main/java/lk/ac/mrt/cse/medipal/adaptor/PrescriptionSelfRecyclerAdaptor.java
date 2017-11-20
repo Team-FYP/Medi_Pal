@@ -64,14 +64,15 @@ public class PrescriptionSelfRecyclerAdaptor extends RecyclerView.Adapter<Prescr
                         .setOldController(holder.doctor_image_drawee.getController())
                         .setUri(doc_image_uri)
                         .build());
-        holder.disease_txt.setText(prescription.getDisease_id());
+        holder.disease_txt.setText(prescription.getDisease_name());
         ArrayList<PrescriptionDrug> prescriptionDrugs = prescription.getPrescription_drugs();
         if (prescriptionDrugs.size() <= 2){
             holder.btn_view_more.setVisibility(View.GONE);
         } else {
             holder.btn_view_more.setVisibility(View.VISIBLE);
         }
-
+        holder.layout_curr_med_linear.removeAllViews();
+        holder.expandable_curr_med_linear.removeAllViews();
         for (int i = 0; i < prescriptionDrugs.size(); i++){
             if (i < 2) {
                 addMedicinetoLinear(prescriptionDrugs.get(i), holder.layout_curr_med_linear);

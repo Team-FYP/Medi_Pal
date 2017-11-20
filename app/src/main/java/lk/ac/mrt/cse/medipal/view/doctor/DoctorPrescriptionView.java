@@ -101,7 +101,7 @@ public class DoctorPrescriptionView extends AppCompatActivity implements View.On
                         .setOldController(patient_image_drawee.getController())
                         .setUri(image_uri)
                         .build());
-        disease_txt.setText(prescription.getDisease_id());
+        disease_txt.setText(prescription.getDisease_name());
 
         progressBar.setVisibility(View.GONE);
         progress_bar_confirm.setVisibility(View.GONE);

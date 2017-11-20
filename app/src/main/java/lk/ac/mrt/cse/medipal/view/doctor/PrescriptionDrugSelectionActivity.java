@@ -49,6 +49,7 @@ import retrofit2.Response;
 public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
     private Context context;
     private Doctor doctor;
+    private Prescription prescription;
     private Disease disease;
     private Patient patient;
     private Toolbar toolbar;
@@ -74,6 +75,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         patient = (Patient) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_PATIENT, Patient.class);
         doctor = (Doctor) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_DOCTOR, Doctor.class);
         disease = (Disease) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_DISEASE, Disease.class);
+        prescription = (Prescription) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_PRESCRIPTION, Prescription.class);
         getElements();
         setElementValues();
         retrieveDiseaseMedicine();
@@ -213,6 +215,9 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
     }
 
     private void setElementValues() {
+        if (prescription != null) {
+            prescriptionDrugList = prescription.getPrescription_drugs();
+        }
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             ActionBar actionBar = getSupportActionBar();

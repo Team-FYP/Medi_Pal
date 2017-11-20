@@ -95,7 +95,7 @@ public class DoctorMainActivity extends AppCompatActivity {
         loadRecyclerData();
         configureSearchText();
         retireveNotifications();
-        startService(new Intent(this, DoctorNotificationService.class));
+        //startService(new Intent(this, DoctorNotificationService.class));
         //configureNotification();
     }
 
@@ -381,6 +381,7 @@ public class DoctorMainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferencs.edit();
         editor.clear();
         editor.apply();
+        //stopService(new Intent(this, DoctorNotificationService.class));
         Intent intent = new Intent(DoctorMainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();

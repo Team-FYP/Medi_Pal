@@ -162,4 +162,5 @@ public class DoctorNotificationService extends Service {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(notification.getNotification_id(), mBuilder.build());
     }
+
 }
