@@ -15,6 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <service
+            android:name=".service.PatientNotificationService"
+            android:label="PatientNotification" />
+        <service
+            android:name=".service.DoctorNotificationService"
+            android:label="DoctorNotificationService" />
+
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +51,13 @@
         <activity
             android:name=".view.doctor.PrescribingActivity"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
-        <activity android:name=".view.doctor.PrescriptionDrugSelectionActivity"></activity>
+        <activity android:name=".view.doctor.PrescriptionDrugSelectionActivity" />
+        <activity android:name=".view.patient.PrescriptionViewActivity" />
+        <activity
+            android:name=".view.patient.DoctorViewActivity"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
+        <activity android:name=".view.doctor.DoctorPrescriptionView" />
+        <activity android:name=".view.doctor.PrescriptionEditingActivity"></activity>
     </application>
 
 </manifest>

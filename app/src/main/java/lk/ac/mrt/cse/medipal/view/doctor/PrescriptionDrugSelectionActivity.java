@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -16,21 +16,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.mingle.sweetpick.CustomDelegate;
+import com.mingle.sweetpick.SweetSheet;
 import com.rilixtech.materialfancybutton.MaterialFancyButton;
-
 import java.util.ArrayList;
-
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.adaptor.DrugAutoCompleteAdaptor;
 import lk.ac.mrt.cse.medipal.adaptor.PrescriptionDrugSelectionRecyclerAdaptor;
@@ -39,6 +40,7 @@ import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.controller.DrugCategoryController;
 import lk.ac.mrt.cse.medipal.controller.DrugController;
 import lk.ac.mrt.cse.medipal.controller.PrescriptionController;
+import lk.ac.mrt.cse.medipal.model.ConflictScoreValue;
 import lk.ac.mrt.cse.medipal.model.Disease;
 import lk.ac.mrt.cse.medipal.model.Doctor;
 import lk.ac.mrt.cse.medipal.model.Drug;
@@ -56,6 +58,7 @@ import retrofit2.Response;
 public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
     private Context context;
     private Doctor doctor;
+    private Prescription prescription;
     private Disease disease;
     private Patient patient;
     private Toolbar toolbar;
@@ -72,6 +75,11 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
     private DrugAutoCompleteAdaptor drugAutoCompleteAdaptor;
     private LinearLayoutManager prescriptionDruglayoutManager;
     private PrescriptionDrugSelectionRecyclerAdaptor pres_drug_select_recyc_adaptor;
+    private RelativeLayout drug_selection_outer_relative;
+    private SweetSheet bottomSweetSheet;
+    private CustomDelegate customDelegate;
+    private View bottomView;
+    private LinearLayout bottom_sheet_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +89,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         patient = (Patient) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_PATIENT, Patient.class);
         doctor = (Doctor) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_DOCTOR, Doctor.class);
         disease = (Disease) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_DISEASE, Disease.class);
+        prescription = (Prescription) JsonConvertor.getElementObject(getIntent(), ObjectType.OBJECT_TYPE_PRESCRIPTION, Prescription.class);
         getElements();
         setElementValues();
         retrieveDiseaseMedicine();
@@ -98,6 +107,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 PrescriptionDrug prescriptionDrug = new PrescriptionDrug();
                 prescriptionDrug.setDrug(drug);
                 prescriptionDrugList.add(prescriptionDrug);
+                pres_drug_select_recyc_adaptor.setLastPrescriptionDrug(prescriptionDrug);
                 refreshRecyclerView();
                 drug_auto_txt.setText("");
             }
@@ -130,7 +140,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
                         viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
                         pres_med_recycler.findViewHolderForAdapterPosition(i);
-                viewHolder.getExpandablelayout_pres_med_linear().expand();
+                viewHolder.expand();
                 viewHolder.getInput_unitsize().setError("Please Fill this field");
                 return false;
             }
@@ -138,7 +148,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
                         viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
                         pres_med_recycler.findViewHolderForAdapterPosition(i);
-                viewHolder.getExpandablelayout_pres_med_linear().expand();
+                viewHolder.expand();
                 viewHolder.getInput_dosage().setError("Please Fill this field");
                 return false;
             }
@@ -146,7 +156,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
                         viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
                         pres_med_recycler.findViewHolderForAdapterPosition(i);
-                viewHolder.getExpandablelayout_pres_med_linear().expand();
+                viewHolder.expand();
                 viewHolder.getInput_frequency().setError("Please Fill this field");
                 return false;
             }
@@ -154,6 +164,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder
                         viewHolder= (PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)
                         pres_med_recycler.findViewHolderForAdapterPosition(i);
+                viewHolder.expand();
                 viewHolder.getInput_duration().setError("Please Fill this field");
                 return false;
             }
@@ -178,6 +189,9 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         pres_med_recycler = findViewById(R.id.pres_med_recycler);
         prescriptionDruglayoutManager = new LinearLayoutManager(this);
         btn_confirm_prescription = findViewById(R.id.btn_confirm_prescription);
+        drug_selection_outer_relative = findViewById(R.id.drug_selection_outer_relative);
+        bottomSweetSheet = new SweetSheet(drug_selection_outer_relative);
+        customDelegate = new CustomDelegate(true, CustomDelegate.AnimationType.DuangLayoutAnimation);
         attachRecycleItemTouchHelper();
     }
 
@@ -219,6 +233,9 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
     }
 
     private void setElementValues() {
+        if (prescription != null) {
+            prescriptionDrugList = prescription.getPrescription_drugs();
+        }
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             ActionBar actionBar = getSupportActionBar();
@@ -239,7 +256,7 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         progress_bar_confirm.setVisibility(View.GONE);
         pres_med_recycler.setLayoutManager(prescriptionDruglayoutManager);
         drug_auto_txt.setThreshold(0);
-        pres_drug_select_recyc_adaptor = new PrescriptionDrugSelectionRecyclerAdaptor(this, prescriptionDrugList, drugList);
+        pres_drug_select_recyc_adaptor = new PrescriptionDrugSelectionRecyclerAdaptor(this, prescriptionDrugList, drugList, null, patient, disease);
         pres_med_recycler.setAdapter(pres_drug_select_recyc_adaptor);
         pres_med_recycler.setNestedScrollingEnabled(false);
     }
@@ -327,12 +344,12 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                         finish();
                     }else {
                         progress_bar_confirm.setVisibility(View.GONE);
-                        Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Tey Again.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Try Again.", Toast.LENGTH_LONG).show();
                         btn_confirm_prescription.setVisibility(View.VISIBLE);
                     }
                 }else {
                     progress_bar_confirm.setVisibility(View.GONE);
-                    Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Tey Again.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Try Again.", Toast.LENGTH_LONG).show();
                     btn_confirm_prescription.setVisibility(View.VISIBLE);
                 }
             }
@@ -343,7 +360,6 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 Toast.makeText(PrescriptionDrugSelectionActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
                 btn_confirm_prescription.setVisibility(View.VISIBLE);
             }
-
         };
         Prescription prescription = new Prescription(doctor,patient,disease.getDisease_id(),doctor.getRegistration_id(), prescriptionDrugList);
         PrescriptionController prescriptionController = new PrescriptionController();
@@ -357,5 +373,99 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void checkConflicts() {
+        btn_confirm_prescription.setVisibility(View.GONE);
+        progress_bar_confirm.setVisibility(View.VISIBLE);
+
+        Callback<DataWriteResponse> confirmPressResponse = new Callback<DataWriteResponse>() {
+            @Override
+            public void onResponse(Call<DataWriteResponse> call, Response<DataWriteResponse> response) {
+                DataWriteResponse responseObject = response.body();
+                if (response.isSuccessful()) {
+                    if (responseObject.isSuccess()) {
+                        Intent resultIntent = new Intent();
+                        setResult(Activity.RESULT_OK, resultIntent);
+                        finish();
+                    }else {
+                        progress_bar_confirm.setVisibility(View.GONE);
+                        Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Try Again.", Toast.LENGTH_LONG).show();
+                        btn_confirm_prescription.setVisibility(View.VISIBLE);
+                    }
+                }else {
+                    progress_bar_confirm.setVisibility(View.GONE);
+                    Toast.makeText(PrescriptionDrugSelectionActivity.this, "Error saving prescription. Try Again.", Toast.LENGTH_LONG).show();
+                    btn_confirm_prescription.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataWriteResponse> call, Throwable t) {
+                progress_bar_confirm.setVisibility(View.GONE);
+                Toast.makeText(PrescriptionDrugSelectionActivity.this, Common.ERROR_NETWORK, Toast.LENGTH_LONG).show();
+                btn_confirm_prescription.setVisibility(View.VISIBLE);
+            }
+        };
+        Prescription prescription = new Prescription(doctor,patient,disease.getDisease_id(),doctor.getRegistration_id(), prescriptionDrugList);
+        PrescriptionController prescriptionController = new PrescriptionController();
+        prescriptionController.savePrescription(confirmPressResponse, prescription);
+    }
+
+    public void showBottomSheet(ArrayList<ConflictScoreValue> drugList){
+        bottomView = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_layout, null, false);
+        bottom_sheet_layout = bottomView.findViewById(R.id. bottom_sheet_layout);
+        bottom_sheet_layout.removeAllViews();
+        View view;
+        TextView drug_name_txt;
+        ProgressBar progress_bar;
+        int max = getMaxScore(drugList);
+        for (ConflictScoreValue conflictScoreValue : drugList){
+            if (conflictScoreValue.getScore() == 0){
+                continue;
+            }
+            view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_row, null, false);
+            drug_name_txt = view.findViewById(R.id.drug_name_txt);
+            progress_bar = view.findViewById(R.id.progress_bar);
+            drug_name_txt.setText(conflictScoreValue.getDrugName());
+            progress_bar.setMax(max);
+            progress_bar.setProgress(conflictScoreValue.getScore());
+            if (conflictScoreValue.getScore() > max * 2 / 3 ) {
+                progress_bar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.met_MajorColor)));
+                drug_name_txt.setTextColor(getResources().getColor(R.color.met_MajorColor));
+            } else if(conflictScoreValue.getScore() > max / 3){
+                progress_bar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.met_MediumColor)));
+                drug_name_txt.setTextColor(getResources().getColor(R.color.met_MediumColor));
+            } else {
+                progress_bar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.met_minorColor)));
+                drug_name_txt.setTextColor(getResources().getColor(R.color.met_minorColor));
+            }
+            bottom_sheet_layout.addView(view);
+        }
+        customDelegate.setCustomView(bottomView);
+        bottomSweetSheet.setDelegate(customDelegate);
+        bottomSweetSheet.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(bottomSweetSheet.isShow()){
+
+            bottomSweetSheet.dismiss();
+        }
+        else{
+            super.onBackPressed();
+        }
+    }
+
+    private int getMaxScore(ArrayList<ConflictScoreValue> conflictScoreValues){
+        int max = conflictScoreValues.get(0).getScore();
+        for (int i = 1; i < conflictScoreValues.size(); i++) {
+            if (conflictScoreValues.get(i).getScore() > max) {
+                max = conflictScoreValues.get(i).getScore();
+            }
+        }
+        return max;
     }
 }

@@ -8,10 +8,15 @@ import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
 import lk.ac.mrt.cse.medipal.model.network.DataWriteResponse;
+import lk.ac.mrt.cse.medipal.model.network.DrugChangeRequest;
+import lk.ac.mrt.cse.medipal.model.network.DrugSuggestion;
 import lk.ac.mrt.cse.medipal.model.network.ListWrapper;
 import lk.ac.mrt.cse.medipal.model.network.LoginRequest;
 import lk.ac.mrt.cse.medipal.model.network.DoctorLoginResponse;
+import lk.ac.mrt.cse.medipal.model.network.NotificationResponse;
 import lk.ac.mrt.cse.medipal.model.network.PatientLoginResponse;
+import lk.ac.mrt.cse.medipal.model.network.PrescriptionAllergy;
+import lk.ac.mrt.cse.medipal.model.network.ShareRequest;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -61,4 +66,25 @@ public interface MedipalAPI {
 
     @POST("app/prescription/addprescription")
     Call<DataWriteResponse> savePrescription(@Body Prescription prescription);
+
+    @GET("app/patient/{id}/alldoctors")
+    Call<ListWrapper<Doctor>> patientAllDoctorList(@Path("id") String nic);
+
+    @POST("app/share/sharehistory")
+    Call<DataWriteResponse> shareDetails(@Body ShareRequest shareRequest);
+
+    @POST("app/prescription/allergy/addallergy")
+    Call<DataWriteResponse> saveAllergy(@Body PrescriptionAllergy prescriptionAllergy);
+
+    @GET("app/notifications/{id}")
+    Call<NotificationResponse> notificationList(@Path("id") String registration_id);
+
+    @GET("app/prediction/levelupdruglist/{id}/{disease_name}")
+    Call<ListWrapper<Drug>> levelUpPrescription(@Path("id") String nic, @Path("disease_name") String disease_name );
+
+    @GET("app/prediction/leveldowndruglist/{id}/{disease_name}")
+    Call<ListWrapper<Drug>> levelDownPrescription(@Path("id") String nic, @Path("disease_name") String disease_name );
+
+    @POST("app/prediction/suggestedlist")
+    Call<DrugSuggestion> drugSuggestions(@Body DrugChangeRequest drugChangeRequest);
 }

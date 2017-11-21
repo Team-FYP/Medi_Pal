@@ -17,9 +17,15 @@ import lk.ac.mrt.cse.medipal.model.Drug;
 public class DrugAlternativesAdaptor extends RecyclerView.Adapter<DrugAlternativesAdaptor.DrugAlternativesViewHolder>   {
     private Context context;
     private ArrayList<Drug> drugList;
-    private PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder viewHolder;
+    private RecyclerView.ViewHolder viewHolder;
 
     public DrugAlternativesAdaptor(Context context, ArrayList<Drug> drugList, PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder viewHolder)  {
+        this.context = context;
+        this.drugList = drugList;
+        this.viewHolder = viewHolder;
+    }
+
+    public DrugAlternativesAdaptor(Context context, ArrayList<Drug> drugList, PrescriptionEditDrugAdapter.PrescriptiontionDrugRecyclerViewHolder viewHolder)  {
         this.context = context;
         this.drugList = drugList;
         this.viewHolder = viewHolder;
@@ -52,7 +58,11 @@ public class DrugAlternativesAdaptor extends RecyclerView.Adapter<DrugAlternativ
 
         @Override
         public void onClick(View view) {
-            viewHolder.exchangeDrug(drugList.get(getAdapterPosition()));
+            if (viewHolder instanceof PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder) {
+                ((PrescriptionDrugSelectionRecyclerAdaptor.PrescriptiontionDrugRecyclerViewHolder)viewHolder).exchangeDrug(drugList.get(getAdapterPosition()));
+            } else {
+                ((PrescriptionEditDrugAdapter.PrescriptiontionDrugRecyclerViewHolder)viewHolder).exchangeDrug(drugList.get(getAdapterPosition()));
+            }
         }
     }
 }

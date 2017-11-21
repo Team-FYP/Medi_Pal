@@ -37,4 +37,27 @@ public class Common {
         public static final String BASE_URL = "http://medipal.projects.mrt.ac.lk";
     }
 
+    public static class AllergyTypes{
+        public static final String MINOR = "Minor";
+        public static final String MEDIUM = "Medium";
+        public static final String MAJOR = "Major";
+
+    }
+
+    public static class NotificationStatus{
+        public static final String NEW = "NEW";
+        public static final String SENT = "SENT";
+        public static final String SEEN = "SEEN";
+
+    }
+
+    public static class Time{
+        public static final String DAYS_AGO = "%d days ago";
+        public static final String HOURS_AGO = "%d hours ago";
+        public static final String MINS_AGO = "%d minutes ago";
+        public static final String SECONDS_AGO = "%d seconds ago";
+        public static final String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+
+    }
+
 }

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="lk.ac.mrt.cse.medipal.view.doctor.PrescriptionEditingActivity"
+    android:fitsSystemWindows="true">
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="4dp"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/pres_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/txt_prescribing_for"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/disease_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pres_txt"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="20dp"
+                android:text="Diabetes Type II"
+                android:textColor="@color/met_primaryColor"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/patient_image_drawee"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                app:placeholderImage="@drawable/icon_user_male"
+                app:roundAsCircle="true" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/drug_layout_relative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_corner_border_rectangle">
+
+                <TextView
+                    android:id="@+id/condition_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="7dp"
+                    android:text="@string/txt_select_a_medicine" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/drug_auto_txt"
+                    android:layout_below="@id/condition_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="90dp"
+                    android:hint="Medicine"
+                    android:textColorHint="@color/met_primaryColor"
+                    android:textColor="@color/met_baseColor"
+                    android:gravity="center"
+                    android:textSize="18dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/pres_med_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/drug_layout_relative"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:orientation="vertical">
+            </android.support.v7.widget.RecyclerView>
+            <RelativeLayout
+                android:layout_below="@id/pres_med_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <com.rilixtech.materialfancybutton.MaterialFancyButton
+                    android:id="@+id/btn_confirm_prescription"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content"
+                    fancy:mfb_icon="@string/fawi_check_square_o"
+                    fancy:mfb_fontIconSize="20dp"
+                    fancy:mfb_iconPosition="left"
+                    fancy:mfb_radius="5dp"
+                    fancy:mfb_textFont="fontawesome.ttf"
+                    fancy:mfb_text="Confirm Prescription"
+                    fancy:mfb_defaultColor="@color/met_errorColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    />
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/progress_bar_confirm"
+                    style="@style/Widget.AppCompat.ProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="-5dp"
+        android:indeterminate="true" />
+</RelativeLayout>

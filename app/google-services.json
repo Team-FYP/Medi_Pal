@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "943604727978",
+    "firebase_url": "https://medipalcse.firebaseio.com",
+    "project_id": "medipalcse",
+    "storage_bucket": "medipalcse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943604727978:android:4066deab6704c3ea",
+        "android_client_info": {
+          "package_name": "lk.ac.mrt.cse.medipal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943604727978-tdfm9usbqri0ukefhh4qmb25vgpomt3o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzD0pj7w3X1Hty_rHXSmva4foaQDpUPls"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
