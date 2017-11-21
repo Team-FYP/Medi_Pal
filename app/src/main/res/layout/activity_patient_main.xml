@@ -56,8 +56,8 @@
                 android:layout_height="match_parent">
                 <com.github.florent37.materialviewpager.MaterialViewPager
                     android:id="@+id/materialViewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="368dp"
+                    android:layout_height="576dp"
                     app:viewpager_logoMarginTop="80dp"
                     app:viewpager_color="@color/colorPrimary"
                     app:viewpager_headerHeight="200dp"
@@ -73,10 +73,6 @@
                     tools:layout_editor_absoluteX="8dp" />
                 <!--app:viewpager_logo="@layout/image_patient_header"-->
             </android.support.constraint.ConstraintLayout>
-            <zemin.notification.NotificationBoard
-                android:id="@+id/board"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
         </RelativeLayout>
     <android.support.design.widget.NavigationView
         android:layout_width="match_parent"
@@ -96,4 +92,12 @@
             >
         </RelativeLayout>
     </android.support.design.widget.NavigationView>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view_notification"
+        android:background="@color/white"
+        android:layout_gravity ="end">
+
+    </android.support.v7.widget.RecyclerView>
 </android.support.v4.widget.DrawerLayout>

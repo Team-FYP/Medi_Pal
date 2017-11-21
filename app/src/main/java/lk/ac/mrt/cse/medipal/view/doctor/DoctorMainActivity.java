@@ -431,7 +431,11 @@ public class DoctorMainActivity extends AppCompatActivity {
                             newCount++;
                         }
                     }
+                    text_notification_count.setVisibility(View.VISIBLE);
                     text_notification_count.setText(String.valueOf(newCount));
+                    if (newCount == 0){
+                        text_notification_count.setVisibility(View.GONE);
+                    }
                     configureNotificationRecyclerView();
                 } else {
                     Toast.makeText(DoctorMainActivity.this, Common.ERROR_OCCURED_TXT + response.message(), Toast.LENGTH_LONG).show();
