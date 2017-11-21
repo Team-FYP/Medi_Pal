@@ -106,6 +106,11 @@ public class NotificationRecyclerViewAdaptor extends RecyclerView.Adapter<Recycl
             viewHolder.icon_type.setIconResource("\uf044");
             viewHolder.icon_type.setBackgroundColor(context.getResources().getColor(R.color.met_primaryColor));
         }
+        if (notification.isStatus().equals(Common.NotificationStatus.SEEN)){
+            viewHolder.notification_layout.setBackgroundColor(context.getResources().getColor(R.color.white));
+        } else {
+            viewHolder.notification_layout.setBackgroundColor(context.getResources().getColor(R.color.met_baseColorBlueLight));
+        }
     }
 
     @Override

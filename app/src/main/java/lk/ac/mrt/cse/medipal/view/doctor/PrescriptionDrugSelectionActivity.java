@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.ActionBar;
@@ -190,8 +192,6 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
         drug_selection_outer_relative = findViewById(R.id.drug_selection_outer_relative);
         bottomSweetSheet = new SweetSheet(drug_selection_outer_relative);
         customDelegate = new CustomDelegate(true, CustomDelegate.AnimationType.DuangLayoutAnimation);
-        bottomView = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_layout, null, false);
-        bottom_sheet_layout = bottomView.findViewById(R.id. bottom_sheet_layout);
         attachRecycleItemTouchHelper();
     }
 
@@ -413,18 +413,33 @@ public class PrescriptionDrugSelectionActivity extends AppCompatActivity {
     }
 
     public void showBottomSheet(ArrayList<ConflictScoreValue> drugList){
+        bottomView = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_layout, null, false);
+        bottom_sheet_layout = bottomView.findViewById(R.id. bottom_sheet_layout);
         bottom_sheet_layout.removeAllViews();
         View view;
         TextView drug_name_txt;
         ProgressBar progress_bar;
         int max = getMaxScore(drugList);
         for (ConflictScoreValue conflictScoreValue : drugList){
+            if (conflictScoreValue.getScore() == 0){
+                continue;
+            }
             view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_row, null, false);
             drug_name_txt = view.findViewById(R.id.drug_name_txt);
             progress_bar = view.findViewById(R.id.progress_bar);
             drug_name_txt.setText(conflictScoreValue.getDrugName());
             progress_bar.setMax(max);
             progress_bar.setProgress(conflictScoreValue.getScore());
+            if (conflictScoreValue.getScore() > max * 2 / 3 ) {
+                progress_bar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.met_MajorColor)));
+                drug_name_txt.setTextColor(getResources().getColor(R.color.met_MajorColor));
+            } else if(conflictScoreValue.getScore() > max / 3){
+                progress_bar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.met_MediumColor)));
+                drug_name_txt.setTextColor(getResources().getColor(R.color.met_MediumColor));
+            } else {
+                progress_bar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.met_minorColor)));
+                drug_name_txt.setTextColor(getResources().getColor(R.color.met_minorColor));
+            }
             bottom_sheet_layout.addView(view);
         }
         customDelegate.setCustomView(bottomView);

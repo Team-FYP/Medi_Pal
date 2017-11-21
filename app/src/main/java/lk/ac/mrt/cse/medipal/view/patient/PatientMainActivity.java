@@ -83,7 +83,7 @@ public class PatientMainActivity extends AppCompatActivity {
         getElements();
         setElementValues();
         addListeners();
-        //startService(new Intent(this, PatientNotificationService.class));
+        startService(new Intent(this, PatientNotificationService.class));
     }
 
     private void getElements() {

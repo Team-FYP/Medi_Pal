@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.DraweeView;
 
+import java.security.acl.NotOwnerException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -424,6 +425,13 @@ public class DoctorMainActivity extends AppCompatActivity {
                         notificationList.addAll(responseObject.getPrescription_notifications());
                     }
                     Collections.sort(notificationList);
+                    int newCount = 0;
+                    for (Notification notification : notificationList){
+                        if (!notification.isStatus().equals(Common.NotificationStatus.SEEN)){
+                            newCount++;
+                        }
+                    }
+                    text_notification_count.setText(String.valueOf(newCount));
                     configureNotificationRecyclerView();
                 } else {
                     Toast.makeText(DoctorMainActivity.this, Common.ERROR_OCCURED_TXT + response.message(), Toast.LENGTH_LONG).show();
