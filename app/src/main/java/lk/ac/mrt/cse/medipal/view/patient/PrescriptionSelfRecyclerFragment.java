@@ -52,7 +52,7 @@ public class PrescriptionSelfRecyclerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_prescription_recycler, container, false);
+        return inflater.inflate(R.layout.fragment_patient_prescription_recycler, container, false);
     }
 
     @Override

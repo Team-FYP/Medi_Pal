@@ -1,8 +1,6 @@
 package lk.ac.mrt.cse.medipal.view.patient;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.ActionBar;
@@ -31,7 +29,6 @@ import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
 import lk.ac.mrt.cse.medipal.controller.PrescriptionAllergyController;
-import lk.ac.mrt.cse.medipal.controller.PrescriptionController;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
@@ -39,7 +36,6 @@ import lk.ac.mrt.cse.medipal.model.network.DataWriteResponse;
 import lk.ac.mrt.cse.medipal.model.network.PrescriptionAllergy;
 import lk.ac.mrt.cse.medipal.util.JsonConvertor;
 import lk.ac.mrt.cse.medipal.util.StringUtil;
-import lk.ac.mrt.cse.medipal.view.doctor.PrescriptionDrugSelectionActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -109,13 +105,13 @@ public class PrescriptionViewActivity extends AppCompatActivity implements View.
                         .setOldController(doctor_image_drawee.getController())
                         .setUri(image_uri)
                         .build());
-        disease_txt.setText(prescription.getDisease_id());
+        disease_txt.setText(prescription.getDisease_name());
 
         progressBar.setVisibility(View.GONE);
         progress_bar_confirm.setVisibility(View.GONE);
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        if (prescription.getPrescription_allergy() != null){
-            PrescriptionAllergy prescriptionAllergy = prescription.getPrescription_allergy();
+        if (prescription.getPrescriptionAllergy() != null){
+            PrescriptionAllergy prescriptionAllergy = prescription.getPrescriptionAllergy();
             btn_add_allergy.setVisibility(View.GONE);
             allergy_linear_layout.setVisibility(View.VISIBLE);
             if (prescriptionAllergy.getSeverity().equals(Common.AllergyTypes.MEDIUM)) radio_medium.setChecked(true);

@@ -162,7 +162,7 @@
                     android:layout_marginTop="3dp"
                     fancy:mfb_defaultColor="@color/white"
                     fancy:mfb_fontIconSize="12dp"
-                    fancy:mfb_icon="@string/fawi_chevron_down"
+                    fancy:mfb_icon="@string/fawi_eye"
                     fancy:mfb_iconPosition="left"
                     fancy:mfb_radius="5dp"
                     fancy:mfb_text="Conflict Effect"

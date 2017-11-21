@@ -22,18 +22,16 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
-import com.rilixtech.materialfancybutton.MaterialFancyButton;
+
 import java.util.ArrayList;
 import lk.ac.mrt.cse.medipal.R;
 import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.constant.ObjectType;
-import lk.ac.mrt.cse.medipal.model.AllergyNotification;
 import lk.ac.mrt.cse.medipal.model.Patient;
 import lk.ac.mrt.cse.medipal.model.Prescription;
 import lk.ac.mrt.cse.medipal.model.PrescriptionDrug;
 import lk.ac.mrt.cse.medipal.model.network.PrescriptionAllergy;
 import lk.ac.mrt.cse.medipal.util.JsonConvertor;
-import lk.ac.mrt.cse.medipal.util.StringUtil;
 
 public class DoctorPrescriptionView extends AppCompatActivity implements View.OnClickListener{
     private static final int ACTIVITY_RESULT_KEY = 225;
@@ -106,12 +104,14 @@ public class DoctorPrescriptionView extends AppCompatActivity implements View.On
         progressBar.setVisibility(View.GONE);
         progress_bar_confirm.setVisibility(View.GONE);
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        if (prescription.getPrescription_allergy() != null){
-            PrescriptionAllergy prescriptionAllergy = prescription.getPrescription_allergy();
+        if (prescription.getPrescriptionAllergy() != null){
+            PrescriptionAllergy prescriptionAllergy = prescription.getPrescriptionAllergy();
             allergy_linear_layout.setVisibility(View.VISIBLE);
             if (prescriptionAllergy.getSeverity().equals(Common.AllergyTypes.MEDIUM)) radio_medium.setChecked(true);
             else if (prescriptionAllergy.getSeverity().equals(Common.AllergyTypes.MAJOR)) radio_major.setChecked(true);
             else radio_minor.setChecked(true);
+            allergy_desc_txt.setText(prescriptionAllergy.getAllergy_description());
+            allergy_desc_txt.setEnabled(false);
         }
     }
 

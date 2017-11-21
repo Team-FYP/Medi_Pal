@@ -2,7 +2,6 @@ package lk.ac.mrt.cse.medipal.model;
 
 import java.util.ArrayList;
 
-import lk.ac.mrt.cse.medipal.constant.Common;
 import lk.ac.mrt.cse.medipal.model.network.PrescriptionAllergy;
 
 public class Prescription {
@@ -15,7 +14,7 @@ public class Prescription {
     private String doctor_id;
     private String prescription_date;
     private ArrayList<PrescriptionDrug> prescription_drugs;
-    private PrescriptionAllergy prescription_allergy;
+    private PrescriptionAllergy prescriptionAllergy;
 
     public Prescription(Doctor doctor, Patient patient, String disease_id, String doctor_id, ArrayList<PrescriptionDrug> prescription_drugs) {
         this.doctor = doctor;
@@ -95,12 +94,12 @@ public class Prescription {
     public Prescription(){
     }
 
-    public PrescriptionAllergy getPrescription_allergy() {
-        return prescription_allergy;
+    public PrescriptionAllergy getPrescriptionAllergy() {
+        return prescriptionAllergy;
     }
 
-    public void setPrescription_allergy(PrescriptionAllergy prescription_allergy) {
-        this.prescription_allergy = prescription_allergy;
+    public void setPrescriptionAllergy(PrescriptionAllergy prescriptionAllergy) {
+        this.prescriptionAllergy = prescriptionAllergy;
     }
 
     public String getDisease_name() {

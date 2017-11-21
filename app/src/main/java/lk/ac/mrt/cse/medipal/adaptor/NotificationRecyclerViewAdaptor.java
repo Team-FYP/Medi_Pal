@@ -101,7 +101,7 @@ public class NotificationRecyclerViewAdaptor extends RecyclerView.Adapter<Recycl
             viewHolder.icon_user.setController(
                     Fresco.newDraweeControllerBuilder()
                             .setOldController(viewHolder.icon_user.getController())
-                            .setUri(notification.getPatient().getImage())
+                            .setUri(notification.getDoctor().getImage())
                             .build());
             viewHolder.icon_type.setIconResource("\uf044");
             viewHolder.icon_type.setBackgroundColor(context.getResources().getColor(R.color.met_primaryColor));
