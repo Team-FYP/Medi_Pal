@@ -179,9 +179,9 @@ public class PatientMainActivity extends AppCompatActivity {
             @Override
             public CharSequence getPageTitle(int position) {
                 switch (position % TAB_COUNT) {
-                    case 0:
-                        return Common.TAB_INFORMATION;
                     case 1:
+                        return Common.TAB_INFORMATION;
+                    case 0:
                         return Common.TAB_PRESCRITIONS;
                 }
                 return "";

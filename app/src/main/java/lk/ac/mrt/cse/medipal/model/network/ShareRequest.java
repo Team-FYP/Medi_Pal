@@ -11,12 +11,12 @@ import lk.ac.mrt.cse.medipal.util.StringUtil;
 public class ShareRequest {
     private String patient_id;
     private String doctor_id;
-    private boolean status;
+    private String status;
 
     public ShareRequest() {
     }
 
-    public ShareRequest(String patient_id, String doctor_id, boolean status) {
+    public ShareRequest(String patient_id, String doctor_id, String status) {
         this.patient_id = patient_id;
         this.doctor_id = doctor_id;
         this.status = status;
@@ -43,11 +43,11 @@ public class ShareRequest {
         this.doctor_id = doctor_id;
     }
 
-    public boolean isStatus() {
+    public String isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

@@ -141,7 +141,7 @@ public class DoctorRecyclerAdaptor extends RecyclerView.Adapter<DoctorRecyclerAd
                     btn_already_share.setVisibility(View.VISIBLE);
                 }
             };
-            ShareRequest shareRequest = new ShareRequest(patient.getNic(), doctorList.get(getAdapterPosition()).getRegistration_id(), false);
+            ShareRequest shareRequest = new ShareRequest(patient.getNic(), doctorList.get(getAdapterPosition()).getRegistration_id(), Common.NotificationStatus.NEW);
             PatientController patientController = new PatientController();
             patientController.shareDetails(shareResponse, shareRequest);
         }

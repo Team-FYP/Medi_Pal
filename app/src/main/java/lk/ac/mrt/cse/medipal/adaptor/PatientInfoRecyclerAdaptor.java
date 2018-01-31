@@ -77,7 +77,7 @@ public class PatientInfoRecyclerAdaptor extends RecyclerView.Adapter<RecyclerVie
                 } else {
                     medHolder.btn_view_more.setVisibility(View.VISIBLE);
                 }
-
+                medHolder.layout_curr_med_linear.removeAllViews();
                 for (int i = 0; i < prescriptionDrugs.size(); i++){
                     if (i < 3) {
                         addMedicinetoLinear(prescriptionDrugs.get(i), medHolder.layout_curr_med_linear);

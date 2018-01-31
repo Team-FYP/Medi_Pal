@@ -227,9 +227,15 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
                     image_txt.setText(prescriptionDrug.getDrug().getDrug_name().substring(0, 1).toUpperCase());
                     drugNmae_txt.setText(prescriptionDrug.getDrug().getDrug_name());
                     unit_size_txt.setText(prescriptionDrug.getUnitSize());
-                    dosage_txt.setText(prescriptionDrug.getDosage() + " " + prescriptionDrug.getFrequency());
-                    use_time_txt.setText(prescriptionDrug.getUseTime());
-                    duration_txt.setText(String.format(Common.DURATION_TXT_VALUE, prescriptionDrug.getDuration(), prescriptionDrug.getStartDate()));
+                    if (prescriptionDrug.getDosage() != null) {
+                        dosage_txt.setText(prescriptionDrug.getDosage() + " " + prescriptionDrug.getFrequency());
+                        use_time_txt.setText(prescriptionDrug.getUseTime());
+                        duration_txt.setText(String.format(Common.DURATION_TXT_VALUE, prescriptionDrug.getDuration(), prescriptionDrug.getStartDate()));
+                    } else {
+                        dosage_txt.setText("");
+                        use_time_txt.setText("");
+                        duration_txt.setText("");
+                    }
                     pres_med_layout_linear.addView(single_medication_row);
                 }
             }
@@ -297,10 +303,10 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
                 if (response.isSuccessful()) {
                     if (responseObject.getItems() != null) {
                         ArrayList<PrescriptionDrug> prescriptionDrugs = new ArrayList<>();
-                        for (Drug drug : responseObject.getItems()){
+                        for (Drug drug : responseObject.getItems()) {
                             prescriptionDrugs.add(new PrescriptionDrug(drug));
                         }
-                        currentPrescription = new Prescription(doctor,patient,prescribingDisease.getDisease_id(),doctor.getRegistration_id(),prescriptionDrugs);
+                        currentPrescription = new Prescription(doctor, patient, prescribingDisease.getDisease_id(), doctor.getRegistration_id(), prescriptionDrugs);
                         continuePrescription();
                     } else {
                         progressBar.setVisibility(View.GONE);
@@ -336,10 +342,10 @@ public class PrescribingActivity extends AppCompatActivity implements View.OnCli
                 if (response.isSuccessful()) {
                     if (responseObject.getItems() != null) {
                         ArrayList<PrescriptionDrug> prescriptionDrugs = new ArrayList<>();
-                        for (Drug drug : responseObject.getItems()){
+                        for (Drug drug : responseObject.getItems()) {
                             prescriptionDrugs.add(new PrescriptionDrug(drug));
                         }
-                        currentPrescription = new Prescription(doctor,patient,prescribingDisease.getDisease_id(),doctor.getRegistration_id(),prescriptionDrugs);
+                        currentPrescription = new Prescription(doctor, patient, prescribingDisease.getDisease_id(), doctor.getRegistration_id(), prescriptionDrugs);
                         continuePrescription();
                     } else {
                         progressBar.setVisibility(View.GONE);
